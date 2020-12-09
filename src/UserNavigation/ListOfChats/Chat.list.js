@@ -24,6 +24,11 @@ export default class ChatList extends React.Component {
         this.props.socket.socket.emit('getChats', {}, (error, response) => {
             if (error === null) {
                 this.setState({chats: response, isFetching: false})
+
+                this.props.socket.socket.emit('joinChats', response, (error, another_response) => {
+                    if (error) console.log(`Error in chat.list.js ${error}`)
+                    else console.log(`response in joining chats ${another_response}`)
+                })
             }
         })
     }

@@ -22,6 +22,14 @@ export default class MessagesList extends React.Component {
             }
         })
 
+        this.context.socket.on('newMessage', (data) => {
+            console.log(data.chatID)
+            if (data.chatID === this.props.chatId) {
+                this.setState({
+                    messages: [...this.state.messages.reverse(), data]
+                })
+            }
+        })
     }
 
     componentDidMount() {

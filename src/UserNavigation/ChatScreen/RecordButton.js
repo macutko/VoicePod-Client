@@ -4,6 +4,7 @@ import {PermissionsAndroid, TouchableOpacity} from "react-native";
 import {SocketContext} from "../SocketContextWrapper";
 import * as RNFS from 'react-native-fs'
 import Icon from "react-native-vector-icons/FontAwesome";
+import LanguageSelect from "./LanguageSelect";
 
 const options = {
     sampleRate: 16000,  // default 44100
@@ -21,8 +22,10 @@ export default class RecordButton extends React.Component {
         super(props);
         this.state = {
             recording: false,
+            modalOpen: false,
+            language: 'en-EN',
         }
-        this.recording = []
+
 
     }
 
@@ -38,9 +41,6 @@ export default class RecordButton extends React.Component {
         if (!this.state.recording) {
             this.setState({recording: true}, () => {
                 AudioRecord.start()
-                AudioRecord.on('data', data => {
-                    this.recording = this.recording + data
-                });
             })
         } else {
             AudioRecord.stop().then(r => {
@@ -51,6 +51,7 @@ export default class RecordButton extends React.Component {
 
                         this.context.socket.emit('sendingAudioMessage', {
                             chatId: this.props.chatId,
+                            language: this.state.language,
                             sound: data
                         }, (error, response) => {
                             console.log(error, response)
@@ -66,13 +67,32 @@ export default class RecordButton extends React.Component {
         AudioRecord.stop().then(r => console.log(r))
     }
 
+    languageOption = () => {
+        this.setState({
+            modalOpen: true
+        })
+    }
+    closeModal = () => {
+        this.setState({
+            modalOpen: false
+        })
+    }
+    setLanguage = (option) => {
+        this.setState({
+            language: option
+        })
+    }
+
     render() {
         return (
             <>
-                <TouchableOpacity onPress={() => this.record()}>
+                <TouchableOpacity onLongPress={() => this.languageOption()} onPress={() => this.record()}>
                     <Icon name="microphone" color={this.state.recording ? "#FF0000" : "#000"} size={30}/>
                 </TouchableOpacity>
-                {/*<Button title={this.state.rec} onPress={() => this.record()}/>*/}
+
+                <LanguageSelect modalOpen={this.state.modalOpen}
+                                setLanguage={this.setLanguage} close={this.closeModal}/>
+
             </>
         );
     }

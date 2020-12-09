@@ -33,7 +33,9 @@ export default class SocketWrapper extends React.Component {
         });
 
     }
-
+    componentWillUnmount() {
+        this.state.socket.emit('terminate')
+    }
 
     render() {
         return (

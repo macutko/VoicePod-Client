@@ -28,7 +28,7 @@ export default class NewMessageBox extends React.Component {
             message: this.state.message,
             chatId: this.props.chatId
         }, (error, response) => {
-            console.log(error, response)
+            // console.log(error, response)
         })
     }
 
