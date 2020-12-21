@@ -1,5 +1,5 @@
 const config = {
-  baseURL: "http://192.168.0.90:12345/",
+  baseURL: "https://tldl-server.herokuapp.com/",
 };
 
 export default config;
