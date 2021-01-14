@@ -1,7 +1,7 @@
 import React from "react"
 import AudioRecord from 'react-native-audio-record';
 import {PermissionsAndroid, TouchableOpacity} from "react-native";
-import {SocketContext} from "../SocketContextWrapper";
+import {SocketContext} from "../../SocketContextWrapper";
 import * as RNFS from 'react-native-fs'
 import Icon from "react-native-vector-icons/FontAwesome";
 import LanguageSelect from "./LanguageSelect";

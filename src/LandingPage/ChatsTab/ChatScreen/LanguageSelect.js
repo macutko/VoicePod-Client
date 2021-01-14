@@ -1,6 +1,6 @@
 import React from "react"
 import {FlatList, Modal} from "react-native";
-import {SocketContext} from "../SocketContextWrapper";
+import {SocketContext} from "../../SocketContextWrapper";
 import LanguageOption from "./LanguageOption";
 
 

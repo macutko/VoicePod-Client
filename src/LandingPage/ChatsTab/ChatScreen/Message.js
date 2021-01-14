@@ -1,7 +1,7 @@
 import React from "react"
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {colorScheme} from "../../constants/Colors";
-import GlobalContext from "../../GlobalState";
+import {colorScheme} from "../../../constants/Colors";
+import GlobalContext from "../../../GlobalState";
 import * as RNFS from 'react-native-fs'
 import Sound from "react-native-sound";
 

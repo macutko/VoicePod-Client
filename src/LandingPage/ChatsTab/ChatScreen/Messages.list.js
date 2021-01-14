@@ -1,7 +1,7 @@
 import {FlatList} from "react-native";
 import React from "react";
 import Message from "./Message";
-import {SocketContext} from "../SocketContextWrapper";
+import {SocketContext} from "../../SocketContextWrapper";
 
 export default class MessagesList extends React.Component {
     static contextType = SocketContext

@@ -1,10 +1,9 @@
 import React from "react";
-import StartChatButton from "../StartChatModal/StartChatButton";
 import {FlatList, RefreshControl} from "react-native";
 import ChatListItem from "./ChatList.item";
 
 
-export default class ChatList extends React.Component {
+export default class ChatTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,7 +51,6 @@ export default class ChatList extends React.Component {
                 />
 
 
-                <StartChatButton refreshList={this.onRefresh}/>
             </>
         );
     }

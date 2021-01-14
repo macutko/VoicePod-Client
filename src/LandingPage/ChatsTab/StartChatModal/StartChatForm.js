@@ -1,9 +1,9 @@
 import React from "react"
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Input} from "react-native-elements";
-import {colorScheme} from "../../constants/Colors";
-import {axiosInstance} from "../../helpers/connectionInstances";
-import GlobalContext from "../../GlobalState";
+import {colorScheme} from "../../../constants/Colors";
+import {axiosInstance} from "../../../helpers/connectionInstances";
+import GlobalContext from "../../../GlobalState";
 
 export default class StartChatForm extends React.Component {
     static contextType = GlobalContext;

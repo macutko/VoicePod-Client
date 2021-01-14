@@ -1,6 +1,6 @@
 import React from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {colorScheme} from "../../constants/Colors";
+import {colorScheme} from "../../../constants/Colors";
 
 
 export default class LanguageSelect extends React.Component {

@@ -1,20 +1,20 @@
 import React from "react"
 import StartChatForm from "./StartChatForm";
-import {FormOverlay} from "../../WelcomeScreen/FormOverlay";
 import {StyleSheet} from "react-native"
 import {FloatingAction} from "react-native-floating-action";
+import {Modal, Portal} from "react-native-paper";
 
 
 const actions = [
     {
         text: "New Message",
-        icon: require("../../assets/images/voice-message.png"),
+        icon: require("../../../assets/images/voice-message.png"),
         name: "bt_new_message",
         position: 1
     },
     {
         text: "Settings",
-        icon: require("../../assets/images/settings.png"),
+        icon: require("../../../assets/images/settings.png"),
         name: "bt_settings",
         position: 2
     }
@@ -40,21 +40,27 @@ export default class StartChatButton extends React.Component {
     render() {
         return (
             <>
-                <FormOverlay
-                    visible={this.state.modalOpen}
-                    close={() => this.toggleModal()}
-                >
-                    <StartChatForm toggleModal={this.toggleModal} {...this.props}/>
-                </FormOverlay>
+                <Portal>
+                    <Modal
+                        visible={this.state.modalOpen}
+                        onDismiss={() => this.toggleModal()}
+                        animationType="fade"
+                    >
 
-                <FloatingAction
-                    actions={actions}
-                    onPressItem={name => {
-                        if (name === 'bt_new_message') {
-                            this.toggleModal()
-                        }
-                    }}
-                />
+
+                        <StartChatForm toggleModal={this.toggleModal} {...this.props}/>
+
+
+                        <FloatingAction
+                            actions={actions}
+                            onPressItem={name => {
+                                if (name === 'bt_new_message') {
+                                    this.toggleModal()
+                                }
+                            }}
+                        />
+                    </Modal>
+                </Portal>
             </>
         );
     }

@@ -4,7 +4,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
 import {StatusBar} from "react-native-web";
 import {WelcomeScreen} from "./WelcomeScreen/WelcomeScreen";
-import ChatsAndMessagesWrapper from "./UserNavigation/ListOfChats/ChatsAndMessagesWrapper";
+import {TabNavWrapper} from "./LandingPage/TabNavWrapper";
 import {getFromMemory} from "./helpers/utils";
 import {axiosInstance} from "./helpers/connectionInstances";
 
@@ -74,7 +74,7 @@ export default class Main extends React.Component {
                     <StatusBar hidden={true}/>
                     <MainStack.Navigator screenOptions={{headerShown: false}}>
                         <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
-                        <MainStack.Screen name="ChatsAndMessagesWrapper" component={ChatsAndMessagesWrapper}/>
+                        <MainStack.Screen name="ChatsAndMessagesWrapper" component={TabNavWrapper}/>
                     </MainStack.Navigator>
                 </NavigationContainer>
             </GlobalContext.Provider>
