@@ -7,29 +7,33 @@ import UserProfile from "./UserProfile";
 import PrivacySettings from "./PrivacySettings";
 import Payments from "./Payments";
 import ContactSupport from "./ContactSupport";
-import GlobalContext from "../../GlobalState";
 
 const SettingsStack = createStackNavigator();
 
-const SettingsTab = () => {
+const SettingsTab = (inheritance) => {
     return (
         <SettingsStack.Navigator screenOptions={{headerShown: false}}>
             <SettingsStack.Screen name="Settings">
-                {props => <Settings params={props}/>}
+                {props => <Settings {...props} {...inheritance}/>}
             </SettingsStack.Screen>
-            <SettingsStack.Screen name="UserProfile" component={UserProfile}/>
-            <SettingsStack.Screen name="PrivacySettings" component={PrivacySettings}/>
-            <SettingsStack.Screen name="Payments" component={Payments} initialParams={{...props}}/>
-            <SettingsStack.Screen name="ContactSupport" component={ContactSupport}/>
+            <SettingsStack.Screen name="UserProfile">
+                {props => <UserProfile {...props} {...inheritance}/>}
+            </SettingsStack.Screen>
+            <SettingsStack.Screen name="PrivacySettings">
+                {props => <PrivacySettings {...props} {...inheritance}/>}
+            </SettingsStack.Screen>
+            <SettingsStack.Screen name="Payments">
+                {props => <Payments {...props} {...inheritance}/>}
+            </SettingsStack.Screen>
+            <SettingsStack.Screen name="ContactSupport">
+                {props => <ContactSupport {...props} {...inheritance}/>}
+            </SettingsStack.Screen>
         </SettingsStack.Navigator>)
 }
 
 export class Settings extends React.Component {
-    static contextType = GlobalContext
-
     constructor(props) {
         super(props);
-        console.log(props.params)
     }
 
 
@@ -47,11 +51,11 @@ export class Settings extends React.Component {
 
                 <List.Item titleStyle={styles.profile}
                            onPress={() => this.props.navigation.navigate('UserProfile')}
-                           title="User Name"
+                           title={this.props.globalState.user.firstName + " " + this.props.globalState.user.lastName}
                            left={props => <List.Icon {...props} style={styles.profilePic}
                                                      icon={props => <Avatar.Image source={{
-                                                         uri: `data:image/${this.context.globalState.user.pictureType};base64,
-                                                                                                  ${this.context.globalState.user.profilePicture}`
+                                                         uri: `data:image/${this.props.globalState.user.pictureType};base64,
+                                                                                                  ${this.props.globalState.user.profilePicture}`
                                                      }}/>}/>}
                 />
                 <List.Item
@@ -71,6 +75,10 @@ export class Settings extends React.Component {
                     title="Contact Support"
                     onPress={() => this.props.navigation.navigate('ContactSupport')}
                     left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'call'}/>}/>}
+                />
+                <List.Item
+                    title="Logout"
+                    left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'log-out'}/>}/>}
                 />
                 <List.Item
                     title="Delete Account"

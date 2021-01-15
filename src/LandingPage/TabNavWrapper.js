@@ -35,7 +35,7 @@ export const TabNavWrapper = () => {
                                             <Ionicons name={'chatbubble-ellipses'} size={26} color={color}/>
                                         ),
                                     }}>
-                                        {props => <ChatTab {...props} socket={socket} globalState={globalState}/>}
+                                        {props => <ChatTab {...props} {...socket} {...globalState}/>}
                                     </TabNav.Screen>
 
                                     <TabNav.Screen name="Search" options={{
@@ -44,7 +44,7 @@ export const TabNavWrapper = () => {
                                             <Ionicons name={'search'} size={26} color={color}/>
                                         ),
                                     }}>
-                                        {props => <SearchTab {...props} socket={socket} globalState={globalState}/>}
+                                        {props => <SearchTab {...props} {...socket} {...globalState}/>}
                                     </TabNav.Screen>
 
                                     <TabNav.Screen name="Settings" options={{

@@ -63,9 +63,9 @@ export default class RecordButton extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        AudioRecord.stop().then(r => console.log(r))
-    }
+    // componentWillUnmount() {
+    //     AudioRecord.stop().then(r => console.log(r))
+    // }
 
     languageOption = () => {
         this.setState({

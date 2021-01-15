@@ -7,12 +7,15 @@ import BusinessProfile from "./BusinessProfile";
 export const navigationRef = React.createRef();
 const SearchStack = createStackNavigator();
 
-const SearchTab = (props) => {
-
+const SearchTab = (inheritance) => {
     return (
-        <SearchStack.Navigator screenOptions={{headerShown: false, props:props}}>
-            <SearchStack.Screen name="SearchPage" component={Search} />
-            <SearchStack.Screen name="BusinessProfile" component={BusinessProfile}/>
+        <SearchStack.Navigator screenOptions={{headerShown: false}}>
+            <SearchStack.Screen name="SearchPage">
+                {props => <Search {...props} {...inheritance}/>}
+            </SearchStack.Screen>
+            <SearchStack.Screen name="BusinessProfile">
+                {props => <BusinessProfile {...props} {...inheritance}/>}
+            </SearchStack.Screen>
         </SearchStack.Navigator>)
 }
 
@@ -30,7 +33,7 @@ class Search extends React.Component {
         this.setState({
             searchQuery: e
         }, () => {
-            this.props.route.params.props.socket.socket.emit('search', {searchQuery: this.state.searchQuery}, (error, response) => {
+            this.props.socket.emit('search', {searchQuery: this.state.searchQuery}, (error, response) => {
                 if (error) console.log(`Error in Search ${error}`)
                 if (response) this.setState({results: response},
                     () => console.log(`Length of response object ${response.length}`))
@@ -66,7 +69,7 @@ class Search extends React.Component {
                                                                                                   ${object.profilePicture}`
                                                                                                   }}/>}/>}
                                 />
-                                <Divider/>
+                                <Divider key={`divider_${i}`}/>
                             </>
                         );
                     })}
