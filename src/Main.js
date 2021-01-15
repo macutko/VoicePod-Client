@@ -29,6 +29,28 @@ export default class Main extends React.Component {
 
     }
 
+    refreshState = (token, callback = null) => {
+        axiosInstance
+            .get("/user/getCurrent", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            })
+            .then((response) => {
+                console.log(`Tried checking current user ${JSON.stringify(response.data.user.username)}`)
+                if (response.data.user.username != null) {
+                    this.updateGlobalState(response.data.user, token, () => {
+                        callback !== null ? callback() : null
+                    })
+
+                }
+            })
+            .catch((error) => {
+                console.log(`Error in App.js ${error}`)
+                console.log(error);
+            });
+
+    }
 
     componentDidMount() {
 
@@ -38,28 +60,13 @@ export default class Main extends React.Component {
             else if (this.state.globalState.token != null) token = this.state.globalState.token
 
             if (token != null) {
-                axiosInstance
-                    .get("/user/getCurrent", {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                    })
-                    .then((response) => {
-                        console.log(`Tried checking current user ${JSON.stringify(response.data)}`)
-                        if (response.data.user.username != null) {
-                            // if this is a valid token, store the user object and the token into the global state
-                            // for future use
-                            // move to the user navigation
-                            this.updateGlobalState(response.data.user, token, () => {
-                                    navigationRef.current?.navigate("ChatsAndMessagesWrapper");
-                                }
-                            )
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(`Error in App.js ${error}`)
-                        console.log(error);
-                    });
+
+                // if this is a valid token, store the user object and the token into the global state
+                // for future use
+                // move to the user navigation
+
+                this.refreshState(token, () => navigationRef.current?.navigate("LandingPage"))
+
             }
 
         });
@@ -68,13 +75,17 @@ export default class Main extends React.Component {
     render() {
         return (
             <GlobalContext.Provider
-                value={{globalState: this.state.globalState, updateGlobalState: this.updateGlobalState}}
+                value={{
+                    globalState: this.state.globalState,
+                    updateGlobalState: this.updateGlobalState,
+                    refreshState: this.refreshState
+                }}
             >
                 <NavigationContainer ref={navigationRef}>
                     <StatusBar hidden={true}/>
                     <MainStack.Navigator screenOptions={{headerShown: false}}>
                         <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
-                        <MainStack.Screen name="ChatsAndMessagesWrapper" component={TabNavWrapper}/>
+                        <MainStack.Screen name="LandingPage" component={TabNavWrapper}/>
                     </MainStack.Navigator>
                 </NavigationContainer>
             </GlobalContext.Provider>

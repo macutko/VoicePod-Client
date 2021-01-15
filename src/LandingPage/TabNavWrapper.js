@@ -53,7 +53,7 @@ export const TabNavWrapper = () => {
                                             <Ionicons name={'settings'} size={26} color={color}/>
                                         ),
                                     }}>
-                                        {props => <SettingsTab {...props} socket={socket} globalState={globalState}/>}
+                                        {props => <SettingsTab {...props} {...socket} {...globalState}/>}
                                     </TabNav.Screen>
 
 
