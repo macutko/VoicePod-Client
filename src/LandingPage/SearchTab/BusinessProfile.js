@@ -1,12 +1,17 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {Avatar, Text, Title} from "react-native-paper";
+import {Avatar, Button, Title} from "react-native-paper";
+import Text from "react-native-paper/src/components/Typography/Text";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default class BusinessProfile extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.route.params.props)
+    }
+
+    navigateToChat = () => {
+        this.props.mainNav.navigate('IntroOffer')
     }
 
     render() {
@@ -14,23 +19,27 @@ export default class BusinessProfile extends React.Component {
             <View style={styles.containerStyle}>
 
                 <Avatar.Image size={200}
-                              source={{uri: `data:image/${this.props.route.params.props.pictureType};base64,${this.props.route.params.props.profilePicture}`}}/>
+                              source={{uri: `data:image/${this.props.globalState.user.pictureType};base64,${this.props.globalState.user.profilePicture}`}}/>
 
-                <Text style={styles.handle}>@{this.props.route.params.props.username}</Text>
+                <Text style={styles.handle}>@{this.props.globalState.user.username}</Text>
                 <Title
-                    style={styles.nameTag}>{this.props.route.params.props.firstName} {this.props.route.params.props.lastName}</Title>
+                    style={styles.nameTag}>{this.props.globalState.user.firstName} {this.props.globalState.user.lastName}</Title>
 
-                <Text style={styles.description}>{this.props.route.params.props.description}</Text>
-
+                <Text style={styles.description}>{this.props.globalState.user.description}</Text>
+                <Button mode="contained" icon={props => <Ionicons {...props} name={'send'}/>}
+                        onPress={() => this.navigateToChat()} style={styles.buttonStyle}>
+                    Send Offer
+                </Button>
             </View>);
     }
 }
 
 const styles = StyleSheet.create({
-    modalStyle: {backgroundColor: 'white', padding: 20, marginHorizontal: "5%"},
     buttonStyle: {
         alignItems: "center",
         justifyContent: "center",
+        marginTop: 15,
+        width: "80%"
     },
     nameTag: {
         marginTop: 20,
@@ -41,14 +50,11 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontStyle: 'italic'
     },
-    inputStyle: {
-        marginBottom: "5%",
-    },
     description: {
         paddingTop: 10,
         fontSize: 20,
-        paddingHorizontal: "10%",
-        textAlign: 'left'
+        width: "80%",
+        textAlign: 'justify'
     },
     containerStyle: {
         paddingTop: 20,

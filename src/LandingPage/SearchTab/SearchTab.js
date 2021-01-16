@@ -1,10 +1,9 @@
 import React from "react";
 import {Avatar, Divider, List, Searchbar} from "react-native-paper";
-import {StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {createStackNavigator} from "@react-navigation/stack";
 import BusinessProfile from "./BusinessProfile";
 
-export const navigationRef = React.createRef();
 const SearchStack = createStackNavigator();
 
 const SearchTab = (inheritance) => {
@@ -14,7 +13,7 @@ const SearchTab = (inheritance) => {
                 {props => <Search {...props} {...inheritance}/>}
             </SearchStack.Screen>
             <SearchStack.Screen name="BusinessProfile">
-                {props => <BusinessProfile {...props} {...inheritance}/>}
+                {props => <BusinessProfile {...props} {...inheritance} />}
             </SearchStack.Screen>
         </SearchStack.Navigator>)
 }
@@ -50,12 +49,11 @@ class Search extends React.Component {
                     value={this.state.searchQuery}
                 />
                 <List.Section>
-                    {this.state.results.map((object, i) => {
-                        return (<>
+                    {this.state.results.map((object, i) => (<View key={`wrapper_${i}`}>
                                 <List.Item titleStyle={styles.profileTitle}
                                            style={styles.container}
                                            descriptionStyle={styles.profileDesc}
-                                           onPress={() => this.props.navigation.navigate('BusinessProfile', {props: object})}
+                                           onPress={() => this.props.navigation.push("BusinessProfile")}
                                            title={object.firstName + ' ' + object.lastName}
                                            description={object.description}
                                            descriptionNumberOfLines={2}
@@ -70,9 +68,9 @@ class Search extends React.Component {
                                                                                                   }}/>}/>}
                                 />
                                 <Divider key={`divider_${i}`}/>
-                            </>
-                        );
-                    })}
+                            </View>
+                        )
+                    )}
 
 
                 </List.Section>

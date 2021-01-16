@@ -1,13 +1,13 @@
 import {StyleSheet} from "react-native";
 import * as React from "react";
-import {axiosInstance} from "../helpers/connectionInstances";
-import {storeData} from "../helpers/utils"
-import GLOBAL_VAR from "../constants/Global";
-import {CustomFieldValidator} from "../helpers/validator/CustomFieldValidator";
-import {CustomExistenceValidator} from "../helpers/validator/CustomExistenceValidator";
-import {colorScheme} from "../constants/Colors";
+import GLOBAL_VAR from "../components/constants/Global";
 import GlobalContext from "../GlobalState";
 import {Button, Modal, Portal, TextInput} from "react-native-paper";
+import {CustomFieldValidator} from "../components/helpers/validator/CustomFieldValidator";
+import {CustomExistenceValidator} from "../components/helpers/validator/CustomExistenceValidator";
+import {axiosInstance} from "../components/helpers/connectionInstances";
+import {storeData} from "../components/helpers/utils";
+import {colorScheme} from "../components/constants/Colors";
 
 
 export class SignUpForm extends React.Component {
@@ -54,10 +54,9 @@ export class SignUpForm extends React.Component {
                 password: this.state.password,
             })
             .then((response) => {
-                this.context.updateGlobalState(response.data.user, response.data.token)
                 storeData("token", response.data.token).then();
-                this.props.close();
-                this.props.navigation.navigate("ChatsAndMessagesWrapper");
+                this.context.updateGlobalState(response.data.user, response.data.token, true)
+                // this.props.close();
             })
             .catch((error) => {
                 console.log(`Error in Signup Form ${error}`);

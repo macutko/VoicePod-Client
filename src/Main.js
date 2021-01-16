@@ -1,27 +1,23 @@
 import React from 'react';
 import GlobalContext from "./GlobalState";
-import {createStackNavigator} from "@react-navigation/stack";
-import {NavigationContainer} from "@react-navigation/native";
-import {StatusBar} from "react-native-web";
 import {WelcomeScreen} from "./WelcomeScreen/WelcomeScreen";
-import {TabNavWrapper} from "./LandingPage/TabNavWrapper";
-import {getFromMemory} from "./helpers/utils";
-import {axiosInstance} from "./helpers/connectionInstances";
+import {LandingPage} from "./LandingPage/LandingPage";
+import {axiosInstance} from "./components/helpers/connectionInstances";
+import {getFromMemory} from "./components/helpers/utils";
 
-export const navigationRef = React.createRef();
-const MainStack = createStackNavigator();
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            globalState: {}
+            globalState: {},
         }
     }
 
-    updateGlobalState = (user, token, callback = null) => {
+    updateGlobalState = (user, token, loggedIn = false, callback = null) => {
         this.setState({
             globalState: {
+                loggedIn: loggedIn,
                 user: user,
                 token: token
             }
@@ -39,7 +35,7 @@ export default class Main extends React.Component {
             .then((response) => {
                 console.log(`Tried checking current user ${JSON.stringify(response.data.user.username)}`)
                 if (response.data.user.username != null) {
-                    this.updateGlobalState(response.data.user, token, () => {
+                    this.updateGlobalState(response.data.user, token, true, () => {
                         callback !== null ? callback() : null
                     })
 
@@ -63,9 +59,8 @@ export default class Main extends React.Component {
 
                 // if this is a valid token, store the user object and the token into the global state
                 // for future use
-                // move to the user navigation
 
-                this.refreshState(token, () => navigationRef.current?.navigate("LandingPage"))
+                this.refreshState(token)
 
             }
 
@@ -81,13 +76,9 @@ export default class Main extends React.Component {
                     refreshState: this.refreshState
                 }}
             >
-                <NavigationContainer ref={navigationRef}>
-                    <StatusBar hidden={true}/>
-                    <MainStack.Navigator screenOptions={{headerShown: false}}>
-                        <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
-                        <MainStack.Screen name="LandingPage" component={TabNavWrapper}/>
-                    </MainStack.Navigator>
-                </NavigationContainer>
+
+                {this.state.globalState.loggedIn ? <LandingPage/> : <WelcomeScreen/>}
+
             </GlobalContext.Provider>
         );
     }

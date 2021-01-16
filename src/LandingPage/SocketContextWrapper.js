@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as io from "socket.io-client";
 import GlobalContext from "../GlobalState";
-import config from "../constants/Config";
+import config from "../components/constants/Config";
 
 const SocketContext = React.createContext();
 
@@ -19,7 +19,7 @@ export default class SocketWrapper extends React.Component {
     }
 
     componentDidMount() {
-        let socket = io.connect(config.baseURL, {'forceNew': true});
+        let socket = io.connect(config.baseURL, {'forceNew': false});
         socket.on('connect', () => {
             socket.emit('authenticate', {token: this.context.globalState.token})
         })
@@ -33,10 +33,6 @@ export default class SocketWrapper extends React.Component {
         });
 
     }
-    // componentWillUnmount() {
-    //  DEPRECATED: causing memory leak
-    //     this.state.socket.emit('terminate')
-    // }
 
     render() {
         return (

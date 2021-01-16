@@ -3,7 +3,7 @@ import * as React from "react";
 import LoginForm from "./LoginForm";
 import {SignUpForm} from "./SignUpForm";
 import {Button} from 'react-native-paper';
-import {colorScheme} from "../constants/Colors";
+import {colorScheme} from "../components/constants/Colors";
 
 export class WelcomeScreen extends React.Component {
     constructor(props) {

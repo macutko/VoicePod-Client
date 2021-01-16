@@ -2,7 +2,8 @@ import React from 'react';
 
 import Main from "./src/Main";
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import {colorScheme} from "./src/constants/Colors";
+import {colorScheme} from "./src/components/constants/Colors";
+
 
 const theme = {
     ...DefaultTheme,

@@ -32,10 +32,10 @@ const SettingsTab = (inheritance) => {
 }
 
 export class Settings extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
+    logOut = () => {
+        this.props.updateGlobalState({}, '', false)
+    }
 
     render() {
         return (
@@ -78,6 +78,7 @@ export class Settings extends React.Component {
                 />
                 <List.Item
                     title="Logout"
+                    onPress={() => this.logOut()}
                     left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'log-out'}/>}/>}
                 />
                 <List.Item

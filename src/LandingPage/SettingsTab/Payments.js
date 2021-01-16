@@ -2,8 +2,9 @@ import React from "react";
 import {StyleSheet} from "react-native";
 import {List} from "react-native-paper";
 import Switch from "react-native-paper/src/components/Switch";
-import {axiosInstance} from "../../helpers/connectionInstances";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {axiosInstance} from "../../components/helpers/connectionInstances";
 
 export default class Payments extends React.Component {
     constructor(props) {

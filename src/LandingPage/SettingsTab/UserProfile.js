@@ -3,9 +3,9 @@ import React from "react";
 import {PermissionsAndroid, StyleSheet, TouchableOpacity, View} from "react-native";
 import GlobalContext from "../../GlobalState";
 import {launchImageLibrary} from 'react-native-image-picker';
-import {axiosInstance} from "../../helpers/connectionInstances";
 import * as RNFS from "react-native-fs";
 import {log} from "react-native-reanimated";
+import {axiosInstance} from "../../components/helpers/connectionInstances";
 
 export default class UserProfile extends React.Component {
     static contextType = GlobalContext;

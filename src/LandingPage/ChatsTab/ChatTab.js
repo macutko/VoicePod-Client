@@ -1,6 +1,5 @@
 import React from "react";
-import {FlatList, RefreshControl} from "react-native";
-import ChatListItem from "./ChatList.item";
+import Title from "react-native-paper/src/components/Typography/Title";
 
 
 export default class ChatTab extends React.Component {
@@ -33,22 +32,22 @@ export default class ChatTab extends React.Component {
     }
 
     componentDidMount() {
-        this.getChats()
+        // this.getChats()
     }
 
     render() {
         return (
             <>
-
-                <FlatList
-                    data={this.state.chats}
-                    refreshControl={<RefreshControl
-                        colors={["#9Bd35A", "#689F38"]}
-                        refreshing={this.state.isFetching}
-                        onRefresh={() => this.onRefresh()}/>}
-                    renderItem={({item}) => <ChatListItem {...this.props} data={item}/>}
-                    keyExtractor={item => item.chatId}
-                />
+                <Title>Chats</Title>
+                {/*<FlatList*/}
+                {/*    data={this.state.chats}*/}
+                {/*    refreshControl={<RefreshControl*/}
+                {/*        colors={["#9Bd35A", "#689F38"]}*/}
+                {/*        refreshing={this.state.isFetching}*/}
+                {/*        onRefresh={() => this.onRefresh()}/>}*/}
+                {/*    renderItem={({item}) => <ChatListItem {...this.props} data={item}/>}*/}
+                {/*    keyExtractor={item => item.chatId}*/}
+                {/*/>*/}
 
 
             </>

@@ -1,10 +1,11 @@
 import {StyleSheet} from "react-native";
 import * as React from "react";
-import {axiosInstance} from "../helpers/connectionInstances";
-import {storeData} from "../helpers/utils"
 import GlobalContext from "../GlobalState";
 import {Button, Modal, Portal, TextInput} from "react-native-paper";
-import {colorScheme} from "../constants/Colors";
+import {axiosInstance} from "../components/helpers/connectionInstances";
+import {colorScheme} from "../components/constants/Colors";
+import {storeData} from "../components/helpers/utils";
+
 
 
 export default class LoginForm extends React.Component {
@@ -33,10 +34,9 @@ export default class LoginForm extends React.Component {
                 password: this.state.password,
             })
             .then((response) => {
-                this.context.updateGlobalState(response.data.user, response.data.token)
                 storeData("token", response.data.token).then();
-                this.props.close();
-                this.props.navigation.navigate("ChatsAndMessagesWrapper");
+                this.context.updateGlobalState(response.data.user, response.data.token,true)
+                // this.props.close();
             })
             .catch((error) => {
                 if (error.response == null) console.log(`Error in LoginForm ${error}`)
