@@ -10,8 +10,8 @@ export default class BusinessProfile extends React.Component {
         super(props);
     }
 
-    navigateToChat = () => {
-        this.props.mainNav.navigate('IntroOffer')
+    navigateToOfferCreation = () => {
+        this.props.mainNav.navigate('IntroOffer',{...this.props.route.params})
     }
 
     render() {
@@ -19,15 +19,15 @@ export default class BusinessProfile extends React.Component {
             <View style={styles.containerStyle}>
 
                 <Avatar.Image size={200}
-                              source={{uri: `data:image/${this.props.globalState.user.pictureType};base64,${this.props.globalState.user.profilePicture}`}}/>
+                              source={{uri: `data:image/${this.props.route.params.pictureType};base64,${this.props.route.params.profilePicture}`}}/>
 
-                <Text style={styles.handle}>@{this.props.globalState.user.username}</Text>
+                <Text style={styles.handle}>@{this.props.route.params.username}</Text>
                 <Title
-                    style={styles.nameTag}>{this.props.globalState.user.firstName} {this.props.globalState.user.lastName}</Title>
+                    style={styles.nameTag}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Title>
 
-                <Text style={styles.description}>{this.props.globalState.user.description}</Text>
+                <Text style={styles.description}>{this.props.route.params.description}</Text>
                 <Button mode="contained" icon={props => <Ionicons {...props} name={'send'}/>}
-                        onPress={() => this.navigateToChat()} style={styles.buttonStyle}>
+                        onPress={() => this.navigateToOfferCreation()} style={styles.buttonStyle}>
                     Send Offer
                 </Button>
             </View>);

@@ -2,7 +2,7 @@ import React from "react"
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {colorScheme} from "../../../constants/Colors";
 import {Input} from "react-native-elements";
-import {SocketContext} from "../../SocketContextWrapper";
+import {SocketContext} from "../../../SocketContextWrapper";
 import RecordButton from "./RecordButton";
 import Icon from 'react-native-vector-icons/FontAwesome';
 

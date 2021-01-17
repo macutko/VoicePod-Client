@@ -43,7 +43,7 @@ export default class OfferTemplate extends React.Component {
     }
 
     tick = () => {
-        if (this.state.counter >= 5) {
+        if (this.state.counter >= 60) {
             this.record()
         } else {
             this.setState({

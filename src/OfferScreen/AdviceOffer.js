@@ -10,8 +10,9 @@ export default class AdviceOffer extends React.Component {
 
 
     submit = (voiceClip) => {
-        this.props.navigation.navigate('BudgetOffer', {
-            intro: this.props.route.params.who,
+        this.props.navigation.navigate('OutcomeOffer', {
+            ...this.props.route.params,
+            intro: this.props.route.params.intro,
             problem: this.props.route.params.problem,
             advice: voiceClip
         })
@@ -21,7 +22,7 @@ export default class AdviceOffer extends React.Component {
     render() {
         return (
             <OfferTemplate {...this.props} submit={(voiceClip) => this.submit(voiceClip)} current={'AdviceOffer'}
-                           navTo={'BudgetOffer'} topPart={
+                           navTo={'OutcomeOffer'} topPart={
                 <>
                     <Title style={styles.title}>What type of advice are you hoping to get?</Title>
                     <Text style={styles.description}>Try to understand the background your mate. A rocket scientist

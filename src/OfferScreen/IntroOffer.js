@@ -7,14 +7,19 @@ import {colorScheme} from "../components/constants/Colors";
 
 
 export default class IntroOffer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
 
     submit = (voiceClip) => {
-        this.props.navigation.navigate('ProblemOffer', {intro: voiceClip})
+        this.props.navigation.navigate('ProblemOffer', {...this.props.route.params,intro: voiceClip})
     }
 
     render() {
         return (
-            <OfferTemplate {...this.props} submit={(voiceClip) => this.submit(voiceClip)} current={'IntroOffer'} navTo={'ProblemOffer'}
+            <OfferTemplate {...this.props} submit={(voiceClip) => this.submit(voiceClip)} current={'IntroOffer'}
+                           navTo={'ProblemOffer'}
                            topPart={
                                <>
                                    <Title style={styles.title}>Who are you</Title>

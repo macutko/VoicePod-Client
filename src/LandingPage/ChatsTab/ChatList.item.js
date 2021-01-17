@@ -1,62 +1,96 @@
 import React from "react"
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {colorScheme} from "../../constants/Colors";
+import {StyleSheet} from "react-native";
+import {Avatar, Divider, List} from "react-native-paper";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import {colorScheme} from "../../components/constants/Colors";
+
 
 export default class ChatListItem extends React.Component {
     constructor(props) {
         super(props);
+        if (props.data.noob == null) {
+            this.state = {
+                user: {...props.data.consultant, consultant: true}
+            }
+        } else {
+            this.state = {
+                user: {...props.data.noob, consultant: false}
+            }
+        }
     }
 
-    toChat = () => {
-        this.props.navigation.navigate("ChatScreen", {data: this.props.data})
-    }
 
-    render = () => {
+    render() {
         return (
             <>
-                <TouchableOpacity onPress={() => this.toChat()}>
-                    <View style={styles.container}>
-                        <View style={{flex: 1}}>
-                            <Text style={styles.profilePic}/>
-                        </View>
-                        <View style={{flex: 2}}>
-                            <Text style={styles.text}>{this.props.data.username}</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.divider}/>
+                <List.Item
+                    titleStyle={this.state.user.consultant ? styles.profileTitle_consultant : styles.profileTitle_noob}
+                    style={this.state.user.consultant ? styles.container_consultant : styles.container_noob}
+                    description={this.state.user.consultant ? 'Advisor' : 'Client'}
+                    descriptionStyle={this.state.user.consultant ? styles.profileDesc_consultant : styles.profileDesc_noob}
+                    onPress={() => this.props.mainNav.push('Chat', {id: this.props.data.id, ...this.state.user})}
+                    title={this.state.user.firstName + ' ' + this.state.user.lastName}
+                    right={props => <List.Icon {...props}
+                                               icon={props => <Ionicons {...props}
+                                                                        style={this.state.user.consultant ? {color: colorScheme.background} : {color: colorScheme.neutral}}
+                                                                        name={this.state.user.consultant ? 'book' : 'cash'}/>}/>}
+                    left={props => <List.Icon {...props}
+                                              style={styles.profilePic_noob}
+                                              icon={props => <Avatar.Image source={{
+                                                  uri: `data:image/${this.state.user.pictureType};base64,${this.state.user.profilePicture}`
+                                              }}/>}/>}
+                />
+                <Divider style={styles.divider}/>
             </>
+
+            // }
+
+
         )
     }
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-        // backgroundColor: colorScheme.containerColor,
-        paddingTop: 7,
-        paddingBottom: 5,
-        alignSelf: 'stretch',
-        textAlign: 'center',
-        flexDirection: "row"
-    },
-    text: {
-        fontSize: 30,
-
-    },
     divider: {
-        backgroundColor: colorScheme.divider,
-        alignSelf: 'stretch',
-        textAlign: 'center',
-        minHeight: 1
+        height: 1
     },
-    profilePic: {
-        backgroundColor: colorScheme.divider,
-        marginLeft: 15,
-        width: 50,
-        height: 50,
-        borderRadius: 50 / 2
-    }
+    container_consultant: {
+        backgroundColor: colorScheme.neutral,
+        paddingVertical: 15
+    },
+    profileTitle_consultant: {
+        paddingLeft: 10,
+        color: colorScheme.background,
+        fontWeight: "bold",
+    },
+    profileDesc_consultant: {
+        paddingLeft: 10,
+        color: colorScheme.background_subtle
+    },
+    profilePic_consultant: {
+        paddingLeft: 5,
+        alignItems: "center",
+        justifyContent: "center",
+    },
 
+
+    container_noob: {
+        backgroundColor: colorScheme.background,
+    },
+    profileTitle_noob: {
+        paddingLeft: 10,
+        fontWeight: "bold",
+        color: colorScheme.neutral
+    },
+    profileDesc_noob: {
+        paddingLeft: 10,
+        color: colorScheme.neutral_subtle
+    },
+    profilePic_noob: {
+        paddingLeft: 5,
+        alignItems: "center",
+        justifyContent: "center",
+    }
 
 });

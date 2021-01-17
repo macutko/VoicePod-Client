@@ -9,7 +9,7 @@ import {colorScheme} from "../components/constants/Colors";
 export default class ProblemOffer extends React.Component {
 
     submit = (voiceClip) => {
-        this.props.navigation.navigate('AdviceOffer', {intro: this.props.route.params.who, problem: voiceClip})
+        this.props.navigation.navigate('AdviceOffer', {...this.props.route.params,intro: this.props.route.params.intro, problem: voiceClip})
     }
 
 

@@ -13,5 +13,6 @@ export const colorScheme = {
     neutral_subtle: "#282828",
     error: "#da1b1b",
     background: "#fff",
+    background_subtle: "#cfcfcf",
 };
 

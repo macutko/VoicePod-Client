@@ -10,10 +10,10 @@ const SearchTab = (inheritance) => {
     return (
         <SearchStack.Navigator screenOptions={{headerShown: false}}>
             <SearchStack.Screen name="SearchPage">
-                {props => <Search {...props} {...inheritance}/>}
+                {props => <Search {...inheritance} {...props} />}
             </SearchStack.Screen>
             <SearchStack.Screen name="BusinessProfile">
-                {props => <BusinessProfile {...props} {...inheritance} />}
+                {props => <BusinessProfile {...inheritance} {...props}  />}
             </SearchStack.Screen>
         </SearchStack.Navigator>)
 }
@@ -49,11 +49,12 @@ class Search extends React.Component {
                     value={this.state.searchQuery}
                 />
                 <List.Section>
+                    {/*TODO: change to flatlist*/}
                     {this.state.results.map((object, i) => (<View key={`wrapper_${i}`}>
                                 <List.Item titleStyle={styles.profileTitle}
                                            style={styles.container}
                                            descriptionStyle={styles.profileDesc}
-                                           onPress={() => this.props.navigation.push("BusinessProfile")}
+                                           onPress={() => this.props.navigation.push("BusinessProfile", {...object})}
                                            title={object.firstName + ' ' + object.lastName}
                                            description={object.description}
                                            descriptionNumberOfLines={2}
