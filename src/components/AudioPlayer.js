@@ -1,17 +1,42 @@
-import {Button} from "react-native-paper";
+import {IconButton} from "react-native-paper";
 import React from "react";
 import Sound from "react-native-sound";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {View} from "react-native";
+import {StyleSheet, View} from "react-native";
+import * as RNFS from "react-native-fs";
+import Slider from "@react-native-community/slider";
+import {colorScheme} from "./constants/Colors";
 
 export default class AudioPlayer extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            playing: false,
+            duration: 0,
+            sound: null,
+            start: 0
+        }
+    }
 
-    playSound = () => {
-        // let buff = Buffer.Buffer.from(this.props.data.sound_bits, 'base64');
-        // let path = RNFS.DocumentDirectoryPath + `${this.props.data.id}.wav`;
-        let path = this.props.pathToSound
+    componentWillUnmount() {
+        this.state.sound.release();
+    }
 
+    async componentDidMount() {
+        await this.loadSound()
+    }
+
+    loadSound = async () => {
+
+        let path
+
+        if (this.props.soundBits) {
+            path = RNFS.DocumentDirectoryPath + `${this.props.pathToSound}.wav`;
+            await RNFS.writeFile(path, this.props.soundBits, 'base64')
+        } else if (this.props.pathToSound) {
+            path = this.props.pathToSound
+        }
 
         Sound.setCategory('Playback');
 
@@ -20,34 +45,91 @@ export default class AudioPlayer extends React.Component {
                 console.log('failed to load the sound', error);
                 return;
             }
+            this.setState({
+                sound: s,
+                duration: s.getDuration()
+            })
+        })
+    }
 
-            // loaded successfully
-            console.log('duration in seconds: ' + s.getDuration() + 'number of channels: ' + s.getNumberOfChannels());
 
-            // Play the sound with an onEnd callback
-            s.play((success) => {
-                if (success) {
-                    console.log('successfully finished playing');
-                } else {
-                    console.log('playback failed due to audio decoding errors');
-                }
-            });
-        });
+    playSound = async () => {
+        if (!this.state.playing) {
+            this.setState({
+                playing: true
+            }, () => {
+                this.state.sound.setCurrentTime(this.state.start)
+                this.state.sound.getCurrentTime((seconds) => console.log('at ' + seconds))
+                this.state.sound.play((success) => {
+                    if (success) {
+                        this.setState({
+                                playing: false
+                            }, () => console.log('successfully finished playing')
+                        )
+                    } else {
+                        console.log('playback failed due to audio decoding errors');
+                    }
+                });
 
-        // Release the audio player resource
-        s.release();
+            })
+        }
+    }
 
+    seek = (e) => {
+        // TODO: finish seeking and playback timer to indicate current position https://github.com/zmxv/react-native-sound/issues/235
+        if (this.state.playing) {
+            this.setState({
+                playing: false,
+                start: e
+            }, () => this.state.sound.pause())
+
+        }
     }
 
     render() {
         return (
             <View style={this.props.style}>
-                <Button mode="contained"
-                        icon={props => <Ionicons {...props} name={'play'}/>}
-                        onPress={() => this.playSound()}>
-                    Play
-                </Button>
+                <View style={styles.mainContainer}>
+                    <View style={styles.container}>
+                        <IconButton
+                            style={styles.button}
+                            icon={props => <Ionicons {...props} name={'play'}/>}
+                            // size={20}
+                            onPress={() => this.playSound()}/>
+
+                        <Slider
+                            style={styles.slider}
+                            minimumValue={0}
+                            maximumValue={this.state.duration}
+                            value={this.state.start}
+                            onValueChange={this.seek}
+                            minimumTrackTintColor={colorScheme.background}
+                            maximumTrackTintColor={colorScheme.accent}
+                        />
+                    </View>
+                </View>
             </View>
         );
     }
 }
+const styles = StyleSheet.create({
+    slider: {
+        height: 65,
+        // width: "90%",
+        flexGrow: 1
+    },
+    button: {
+        alignSelf: "center",
+        // width: "10%",
+        // paddingLeft: 15,
+    },
+    mainContainer: {
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: "100%"
+    },
+    container: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+})

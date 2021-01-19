@@ -8,7 +8,6 @@ import AudioPlayer from "../components/AudioPlayer";
 import IconButton from "react-native-paper/src/components/IconButton";
 import * as RNFS from "react-native-fs";
 import {colorScheme} from "../components/constants/Colors";
-import TouchableRipple from "react-native-paper/src/components/TouchableRipple/TouchableRipple";
 
 const options = {
     sampleRate: 16000,  // default 44100
@@ -88,16 +87,13 @@ export default class OfferTemplate extends React.Component {
             <View style={styles.background}>
                 {this.props.topPart}
 
-                <TouchableRipple
-                    rippleColor="rgba(0, 0, 0, .32)"
-                >
-                    <IconButton
-                        icon={props => <Ionicons {...props} name={'mic'}/>}
-                        color={colorScheme.accent}
-                        size={40}
-                        onPress={() => this.record()}
-                    />
-                </TouchableRipple>
+
+                <IconButton
+                    icon={props => <Ionicons {...props} name={'mic'}/>}
+                    color={colorScheme.accent}
+                    size={40}
+                    onPress={() => this.record()}
+                />
 
 
                 <Text style={styles.counter}>{this.state.counter}</Text>

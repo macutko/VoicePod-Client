@@ -28,7 +28,11 @@ export default class ChatListItem extends React.Component {
                     style={this.state.user.consultant ? styles.container_consultant : styles.container_noob}
                     description={this.state.user.consultant ? 'Advisor' : 'Client'}
                     descriptionStyle={this.state.user.consultant ? styles.profileDesc_consultant : styles.profileDesc_noob}
-                    onPress={() => this.props.mainNav.push('Chat', {id: this.props.data.id, ...this.state.user})}
+                    onPress={() => this.props.mainNav.push('Chat', {
+                        id: this.props.data.id, ...this.state.user,
+                        lastMessage: this.props.data.lastMessage,
+                        offerId: this.props.data.offer
+                    })}
                     title={this.state.user.firstName + ' ' + this.state.user.lastName}
                     right={props => <List.Icon {...props}
                                                icon={props => <Ionicons {...props}

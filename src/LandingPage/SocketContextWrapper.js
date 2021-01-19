@@ -7,19 +7,21 @@ const SocketContext = React.createContext();
 
 export {SocketContext};
 
+let socket;
 
 export default class SocketWrapper extends React.Component {
     static contextType = GlobalContext;
 
     constructor(props) {
         super(props);
-        this.state = {
-            socket: undefined
-        }
+    }
+
+    componentWillUnmount() {
+        socket.off('some event');
     }
 
     componentDidMount() {
-        let socket = io.connect(config.baseURL, {'forceNew': false});
+        socket = io.connect(config.baseURL, {'forceNew': true});
         socket.on('connect', () => {
             socket.emit('authenticate', {token: this.context.globalState.token})
         })
@@ -36,8 +38,8 @@ export default class SocketWrapper extends React.Component {
 
     render() {
         return (
-            <SocketContext.Provider value={{socket: this.state.socket}}>
-                {this.state.socket ? this.props.children : null}
+            <SocketContext.Provider value={{socket: socket}}>
+                {socket ? this.props.children : null}
             </SocketContext.Provider>
 
         )

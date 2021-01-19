@@ -51,7 +51,7 @@ export default class Payments extends React.Component {
 
     toggleBusinessAccount = () => {
         let newUser = this.props.globalState.user
-        newUser.businessActivated = !this.props.globalState.user
+        newUser.businessActivated = !this.props.globalState.user.businessActivated
 
         this.props.updateGlobalState(newUser, this.props.globalState.token, true,
             () => {
