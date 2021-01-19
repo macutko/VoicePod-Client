@@ -1,27 +1,23 @@
 import React from 'react';
 import GlobalContext from "./GlobalState";
-import {createStackNavigator} from "@react-navigation/stack";
-import {NavigationContainer} from "@react-navigation/native";
-import {StatusBar} from "react-native-web";
 import {WelcomeScreen} from "./WelcomeScreen/WelcomeScreen";
-import ChatsAndMessagesWrapper from "./UserNavigation/ListOfChats/ChatsAndMessagesWrapper";
-import {getFromMemory} from "./helpers/utils";
-import {axiosInstance} from "./helpers/connectionInstances";
+import {LandingPage} from "./LandingPage/LandingPage";
+import {axiosInstance} from "./components/helpers/connectionInstances";
+import {getFromMemory} from "./components/helpers/utils";
 
-export const navigationRef = React.createRef();
-const MainStack = createStackNavigator();
 
 export default class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            globalState: {}
+            globalState: {},
         }
     }
 
-    updateGlobalState = (user, token, callback = null) => {
+    updateGlobalState = (user, token, loggedIn = false, callback = null) => {
         this.setState({
             globalState: {
+                loggedIn: loggedIn,
                 user: user,
                 token: token
             }
@@ -29,6 +25,28 @@ export default class Main extends React.Component {
 
     }
 
+    refreshState = (token, callback = null) => {
+        axiosInstance
+            .get("/user/getCurrent", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            })
+            .then((response) => {
+                console.log(`Tried checking current user ${JSON.stringify(response.data.user.username)}`)
+                if (response.data.user.username != null) {
+                    this.updateGlobalState(response.data.user, token, true, () => {
+                        callback !== null ? callback() : null
+                    })
+
+                }
+            })
+            .catch((error) => {
+                console.log(`Error in App.js ${error}`)
+                console.log(error);
+            });
+
+    }
 
     componentDidMount() {
 
@@ -38,28 +56,12 @@ export default class Main extends React.Component {
             else if (this.state.globalState.token != null) token = this.state.globalState.token
 
             if (token != null) {
-                axiosInstance
-                    .get("/user/getCurrent", {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                    })
-                    .then((response) => {
-                        console.log(`Tried checking current user ${JSON.stringify(response.data)}`)
-                        if (response.data.user.username != null) {
-                            // if this is a valid token, store the user object and the token into the global state
-                            // for future use
-                            // move to the user navigation
-                            this.updateGlobalState(response.data.user, token, () => {
-                                    navigationRef.current?.navigate("ChatsAndMessagesWrapper");
-                                }
-                            )
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(`Error in App.js ${error}`)
-                        console.log(error);
-                    });
+
+                // if this is a valid token, store the user object and the token into the global state
+                // for future use
+
+                this.refreshState(token)
+
             }
 
         });
@@ -68,15 +70,15 @@ export default class Main extends React.Component {
     render() {
         return (
             <GlobalContext.Provider
-                value={{globalState: this.state.globalState, updateGlobalState: this.updateGlobalState}}
+                value={{
+                    globalState: this.state.globalState,
+                    updateGlobalState: this.updateGlobalState,
+                    refreshState: this.refreshState
+                }}
             >
-                <NavigationContainer ref={navigationRef}>
-                    <StatusBar hidden={true}/>
-                    <MainStack.Navigator screenOptions={{headerShown: false}}>
-                        <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
-                        <MainStack.Screen name="ChatsAndMessagesWrapper" component={ChatsAndMessagesWrapper}/>
-                    </MainStack.Navigator>
-                </NavigationContainer>
+
+                {this.state.globalState.loggedIn ? <LandingPage/> : <WelcomeScreen/>}
+
             </GlobalContext.Provider>
         );
     }

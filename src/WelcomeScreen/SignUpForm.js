@@ -1,13 +1,13 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet} from "react-native";
 import * as React from "react";
-import {Input} from "react-native-elements";
-import {axiosInstance} from "../helpers/connectionInstances";
-import {storeData} from "../helpers/utils"
-import GLOBAL_VAR from "../constants/Global";
-import {CustomFieldValidator} from "../helpers/validator/CustomFieldValidator";
-import {CustomExistenceValidator} from "../helpers/validator/CustomExistenceValidator";
-import {colorScheme} from "../constants/Colors";
+import GLOBAL_VAR from "../components/constants/Global";
 import GlobalContext from "../GlobalState";
+import {Button, Modal, Portal, TextInput} from "react-native-paper";
+import {CustomFieldValidator} from "../components/helpers/validator/CustomFieldValidator";
+import {CustomExistenceValidator} from "../components/helpers/validator/CustomExistenceValidator";
+import {axiosInstance} from "../components/helpers/connectionInstances";
+import {storeData} from "../components/helpers/utils";
+import {colorScheme} from "../components/constants/Colors";
 
 
 export class SignUpForm extends React.Component {
@@ -54,10 +54,9 @@ export class SignUpForm extends React.Component {
                 password: this.state.password,
             })
             .then((response) => {
-                this.context.updateGlobalState(response.data.user, response.data.token)
                 storeData("token", response.data.token).then();
-                this.props.close();
-                this.props.navigation.navigate("ChatsAndMessagesWrapper");
+                this.context.updateGlobalState(response.data.user, response.data.token, true)
+                // this.props.close();
             })
             .catch((error) => {
                 console.log(`Error in Signup Form ${error}`);
@@ -66,101 +65,97 @@ export class SignUpForm extends React.Component {
 
     render() {
         return (
-            <View style={{justifyContent: "center", alignItems: "center"}}>
-                <Input
-                    containerStyle={styles.inputOutterContainer}
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.textInputStyle}
-                    placeholder="Email"
-                    onChangeText={(text) =>
-                        this.setState({[GLOBAL_VAR.FIELD_NAME.EMAIL]: text})
-                    }
-                    autoCompleteType={"email"}
-                    onEndEditing={(e) =>
-                        this.onEndEditing(GLOBAL_VAR.FIELD_NAME.EMAIL, e)
-                    }
-                    errorMessage={this.state.emailError}
-                    errorStyle={styles.errorMessage}
-                    placeholderTextColor={colorScheme.FormText}
-                />
-                <Input
-                    containerStyle={styles.inputOutterContainer}
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.textInputStyle}
-                    placeholder="First Name"
-                    onChangeText={(text) =>
-                        this.setState({[GLOBAL_VAR.FIELD_NAME.FIRSTNAME]: text})
-                    }
-                    autoCompleteType={"name"}
-                    onEndEditing={(e) =>
-                        this.onEndEditing(GLOBAL_VAR.FIELD_NAME.FIRSTNAME, e)
-                    }
-                    errorMessage={this.state.firstnameError}
-                    errorStyle={styles.errorMessage}
-                    placeholderTextColor={colorScheme.FormText}
-                />
-                <Input
-                    containerStyle={styles.inputOutterContainer}
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.textInputStyle}
-                    placeholder="Last Name"
-                    onChangeText={(text) =>
-                        this.setState({[GLOBAL_VAR.FIELD_NAME.LASTNAME]: text})
-                    }
-                    autoCompleteType={"name"}
-                    onEndEditing={(e) =>
-                        this.onEndEditing(GLOBAL_VAR.FIELD_NAME.LASTNAME, e)
-                    }
-                    errorMessage={this.state.lastnameError}
-                    errorStyle={styles.errorMessage}
-                    placeholderTextColor={colorScheme.FormText}
-                />
-                <Input
-                    containerStyle={styles.inputOutterContainer}
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={styles.textInputStyle}
-                    placeholder="Username"
-                    onChangeText={(text) =>
-                        this.setState({
-                            [GLOBAL_VAR.FIELD_NAME.USERNAME]: text.toLowerCase(),
-                        })
-                    }
-                    autoCompleteType={"username"}
-                    textContentType={"username"}
-                    onEndEditing={(e) =>
-                        this.onEndEditing(GLOBAL_VAR.FIELD_NAME.USERNAME, e)
-                    }
-                    errorMessage={this.state.usernameError}
-                    errorStyle={styles.errorMessage}
-                    placeholderTextColor={colorScheme.FormText}
-                />
-                <Input
-                    containerStyle={styles.inputOutterContainer}
-                    inputContainerStyle={styles.inputContainer}
-                    inputStyle={[styles.textInputStyle]}
-                    placeholder="Password"
-                    onChangeText={(text) =>
-                        this.setState({[GLOBAL_VAR.FIELD_NAME.PASSWORD]: text})
-                    }
-                    autoCompleteType={"password"}
-                    secureTextEntry={true}
-                    textContentType={"newPassword"}
-                    password={true}
-                    onEndEditing={(e) =>
-                        this.onEndEditing(GLOBAL_VAR.FIELD_NAME.PASSWORD, e)
-                    }
-                    errorMessage={this.state.passwordError}
-                    errorStyle={styles.errorMessage}
-                    placeholderTextColor={colorScheme.FormText}
-                />
-
-                <TouchableOpacity
-                    style={styles.buttonContainer}
-                    onPress={() => this.submitForm()}
+            <Portal>
+                <Modal
+                    visible={this.props.visible}
+                    onDismiss={this.props.close}
+                    animationType="fade"
+                    contentContainerStyle={styles.containerStyle}
                 >
-                    <Text style={styles.buttonText}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
+                    <TextInput
+                        label="Email"
+                        mode='outlined'
+                        autoCompleteType={"email"}
+                        textContentType={"emailAddress"}
+                        onChangeText={(text) =>
+                            this.setState({[GLOBAL_VAR.FIELD_NAME.EMAIL]: text})
+                        }
+                        onEndEditing={(e) =>
+                            this.onEndEditing(GLOBAL_VAR.FIELD_NAME.EMAIL, e)
+                        }
+                        errorMessage={this.state.emailError}
+                        style={styles.inputStyle}
+                    />
+                    <TextInput
+                        label="First Name"
+                        mode='outlined'
+                        textContentType={"givenName"}
+                        onChangeText={(text) =>
+                            this.setState({[GLOBAL_VAR.FIELD_NAME.FIRSTNAME]: text})
+                        }
+                        autoCompleteType={"name"}
+                        onEndEditing={(e) =>
+                            this.onEndEditing(GLOBAL_VAR.FIELD_NAME.FIRSTNAME, e)
+                        }
+                        errorMessage={this.state.firstnameError}
+                        style={styles.inputStyle}
+                    />
+
+                    <TextInput
+                        label="Last Name"
+                        mode='outlined'
+                        textContentType={"familyName"}
+                        onChangeText={(text) =>
+                            this.setState({[GLOBAL_VAR.FIELD_NAME.LASTNAME]: text})
+                        }
+                        autoCompleteType={"name"}
+                        onEndEditing={(e) =>
+                            this.onEndEditing(GLOBAL_VAR.FIELD_NAME.LASTNAME, e)
+                        }
+                        errorMessage={this.state.firstnameError}
+                        style={styles.inputStyle}
+                    />
+
+
+                    <TextInput
+                        label="Username"
+                        mode='outlined'
+                        onChangeText={(text) =>
+                            this.setState({
+                                [GLOBAL_VAR.FIELD_NAME.USERNAME]: text.toLowerCase(),
+                            })
+                        }
+                        autoCompleteType={"username"}
+                        textContentType={"username"}
+                        onEndEditing={(e) =>
+                            this.onEndEditing(GLOBAL_VAR.FIELD_NAME.USERNAME, e)
+                        }
+                        errorMessage={this.state.usernameError}
+                        style={styles.inputStyle}
+                    />
+                    <TextInput
+                        label="Password"
+                        mode='outlined'
+                        onChangeText={(text) =>
+                            this.setState({[GLOBAL_VAR.FIELD_NAME.PASSWORD]: text})
+                        }
+                        autoCompleteType={"password"}
+                        secureTextEntry={true}
+                        textContentType={"newPassword"}
+                        password={true}
+                        onEndEditing={(e) =>
+                            this.onEndEditing(GLOBAL_VAR.FIELD_NAME.PASSWORD, e)
+                        }
+                        errorMessage={this.state.passwordError}
+                        style={styles.inputStyle}
+                    />
+
+
+                    <Button mode="outlined" onPress={() => this.submitForm()} style={styles.buttonStyle}>
+                        Sign Up
+                    </Button>
+                </Modal>
+            </Portal>
         );
     }
 }
@@ -169,35 +164,12 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: colorScheme.error,
     },
-    inputOutterContainer: {
-        marginBottom: 10,
-        marginTop: 10,
+    inputStyle: {
+        marginBottom: "5%",
     },
-    inputContainer: {
-        width: "100%",
-        borderColor: colorScheme.FormText,
-    },
-    textInputStyle: {
-        fontSize: 25,
-        fontFamily: "DimboRegular",
-        color: colorScheme.FormText,
-    },
-    buttonContainer: {
+    buttonStyle: {
         alignItems: "center",
         justifyContent: "center",
-        width: "75%",
-        marginBottom: "7%",
-        marginTop: "7%",
-        height: 70,
-        borderRadius: 50,
-        borderColor: colorScheme.welcomeScreenBackgroundButton,
-        backgroundColor: colorScheme.welcomeScreenText,
-        borderWidth: 5,
-        elevation: 10,
     },
-    buttonText: {
-        color: colorScheme.welcomeScreenBackgroundButton,
-        fontFamily: "DimboRegular",
-        fontSize: 45,
-    },
+    containerStyle: {backgroundColor: 'white', padding: 20, marginHorizontal: "5%"}
 });
