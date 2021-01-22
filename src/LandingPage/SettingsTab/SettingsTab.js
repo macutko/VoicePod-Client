@@ -1,5 +1,5 @@
 import React from "react";
-import {Avatar, List} from "react-native-paper";
+import {Avatar, Button, Dialog, List, Paragraph, Portal} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {StyleSheet} from "react-native";
 import {createStackNavigator} from "@react-navigation/stack";
@@ -7,6 +7,8 @@ import UserProfile from "./UserProfile";
 import PrivacySettings from "./PrivacySettings";
 import Payments from "./Payments";
 import ContactSupport from "./ContactSupport";
+import {axiosInstance} from "../../components/helpers/connectionInstances";
+import {removeFromMemory} from "../../components/helpers/utils";
 
 const SettingsStack = createStackNavigator();
 
@@ -32,9 +34,39 @@ const SettingsTab = (inheritance) => {
 }
 
 export class Settings extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            deleteUserDialog: false
+        }
+    }
+
 
     logOut = () => {
         this.props.updateGlobalState({}, '', false)
+        removeFromMemory("token").then()
+    }
+
+    toggleDialog = () => {
+        this.setState(prevState => ({
+            deleteUserDialog: !prevState.deleteUserDialog
+        }))
+    }
+
+    confirmDelete = async () => {
+        await axiosInstance
+            .get("/user/deleteAccount", {
+                headers: {
+                    Authorization: `Bearer ${this.props.globalState.token}`
+                },
+            })
+            .then((response) => {
+                console.log(`Response on delete User ${response.status}`)
+                this.logOut()
+            })
+            .catch((error) => {
+                console.log(`Error in Payments ${error}`)
+            });
     }
 
     render() {
@@ -83,8 +115,23 @@ export class Settings extends React.Component {
                 />
                 <List.Item
                     title="Delete Account"
+                    onPress={() => this.toggleDialog()}
                     left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'trash-bin'}/>}/>}
                 />
+
+                <Portal>
+                    <Dialog visible={this.state.deleteUserDialog} onDismiss={this.toggleDialog}>
+                        <Dialog.Title>Delete User</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph>Are you sure you want to delete your account? Your data will be permanently and
+                                inadvertently erased</Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button onPress={this.confirmDelete}>Yes!</Button>
+                            <Button onPress={this.toggleDialog}>No!</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
             </List.Section>
 
 

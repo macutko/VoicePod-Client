@@ -8,8 +8,6 @@ export default class Message extends React.Component {
         this.state = {
             ownMessage: this.props.data.from.username === this.props.globalState.user.username
         }
-        console.log(Object.keys(this.props.data))
-        console.log(this.props.data.from.username)
         //    TODO: make "read" prop true when opened
     }
 

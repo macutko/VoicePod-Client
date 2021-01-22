@@ -39,8 +39,22 @@ export default class RecordButton extends React.Component {
 
         this.setState({
             amountLeft: {
-                minutes: nbMinutes,
-                seconds: nbSeconds
+                minutes: parseFloat(nbMinutes.toFixed(0)),
+                seconds: parseFloat(nbSeconds.toFixed(0))
+            }
+        }, () => {
+            if ((this.state.amountLeft.minutes <= 0 && this.state.amountLeft.seconds <= 0.9)) {
+                // stop recording
+                AudioRecord.stop().then(r => {
+                    clearInterval(this.state.timer)
+                    RNFS.readFile(r, 'base64')
+                        .then((data) => {
+                            this.setState({
+                                voiceClip: data,
+                                recording: false,
+                            })
+                        })
+                })
             }
         })
 
@@ -49,33 +63,47 @@ export default class RecordButton extends React.Component {
 
 
     record = () => {
-        if (!this.state.recording) {
+        console.log(`Recording: ${this.state.recording}`)
 
-            // start recording
-            let timer = setInterval(this.tick, 1000);
-            this.setState({
-                recording: true,
-                timer: timer
-            }, () => AudioRecord.start())
-        } else {
-            // stop recording
-            AudioRecord.stop().then(r => {
-                clearInterval(this.state.timer)
-                RNFS.readFile(r, 'base64')
-                    .then((data) => {
-                        this.setState({
-                            voiceClip: data,
-                            recording: false,
+        if (!(this.state.amountLeft.minutes <= 0 && this.state.amountLeft.seconds <= 0.9)) {
+
+
+            if (!this.state.recording) {
+
+                // start recording
+                let timer = setInterval(this.tick, 1000);
+                this.setState({
+                    recording: true,
+                    timer: timer
+                }, () => AudioRecord.start())
+            } else {
+                // stop recording
+                AudioRecord.stop().then(r => {
+                    clearInterval(this.state.timer)
+                    RNFS.readFile(r, 'base64')
+                        .then((data) => {
+                            this.setState({
+                                voiceClip: data,
+                                recording: false,
+                            })
                         })
-                    })
-            })
+                })
+            }
         }
     }
 
+    componentWillUnmount() {
+        clearInterval(this.state.timer)
+        AudioRecord.stop().then()
+        this._isMounted = false
+    }
+
+
     getMinuteBalance = () => {
+
         this.props.socket.emit('getMinutesBalance', {chatId: this.props.chatId}, (err, res) => {
             if (err) console.log(`Error in record button ${err}`)
-            if (res) {
+            if (res && this._isMounted) {
 
                 let newBudget = (60 * res.minutes)
                 let nbMinutes = Math.floor(newBudget / 60)
@@ -84,10 +112,15 @@ export default class RecordButton extends React.Component {
                 this.setState({
                     originalAmount: res.minutes,
                     amountLeft: {
-                        minutes: nbMinutes,
-                        seconds: nbSeconds
+                        minutes: parseFloat(nbMinutes.toFixed(0)),
+                        seconds: parseFloat(nbSeconds.toFixed(0))
                     }
-                }, () => console.log(`Minutes left: ${this.state.amountLeft.minutes}`))
+                }, () => {
+                    console.log(`Minutes left: ${this.state.amountLeft.minutes}`)
+                    if (this.state.amountLeft.minutes <= 0 && this.state.amountLeft.seconds <= 0.9) {
+                        this.props.toggleOfferDialog()
+                    }
+                })
             }
         })
     }
@@ -103,8 +136,8 @@ export default class RecordButton extends React.Component {
 
         this.setState({
             amountLeft: {
-                minutes: nbMinutes,
-                seconds: nbSeconds
+                minutes: parseFloat(nbMinutes.toFixed(0)),
+                seconds: parseFloat(nbSeconds.toFixed(0))
             },
             voiceClip: null
         }, () => cb == null ? null : cb())
@@ -116,15 +149,19 @@ export default class RecordButton extends React.Component {
             voiceClip: this.state.voiceClip
         }, (err, res) => {
             if (err) console.log(`Error in record Button ${err}`)
-            if (res) {
+            if (res && this._isMounted) {
                 console.log(`Res ${res}`)
-                this.cancel(this.getMinuteBalance())
+                this.setState({
+                    voiceClip: null
+                }, () => this.getMinuteBalance())
+
             }
 
         })
     }
 
     async componentDidMount() {
+        this._isMounted = true //TODO: this is an antipattern, however I have not found a working & elegant solution to socket yet
         this.getMinuteBalance()
 
         await PermissionsAndroid.requestMultiple([
@@ -140,8 +177,11 @@ export default class RecordButton extends React.Component {
                         icon={props => <Ionicons {...props} name={'mic'}/>}
                         color={colorScheme.accent}
                         disabled={this.state.amountLeft.minutes === 0 && this.state.amountLeft.seconds === 0}
-                        size={40}
-                        onPress={() => this.record()}
+                        style={styles.recordButton}
+                        // onPressIn={() => console.log("pressed")}
+                        onPress={() => console.log("pressed")}
+                        onPressOut={() => this.record()}
+                        onPressIn={() => this.record()}
                     /> :
                     <>
                         <View style={styles.playContainer}>
@@ -182,6 +222,9 @@ export default class RecordButton extends React.Component {
 
 
 const styles = StyleSheet.create({
+    recordButton: {
+        height: "30%",
+    },
     audioPlayer: {
         width: '70%'
     },
@@ -202,7 +245,7 @@ const styles = StyleSheet.create({
     },
     container: {
         width: '100%',
-        height: 20,
+        // height: 20,
         backgroundColor: colorScheme.accent,
         color: colorScheme.background,
         alignContent: "center",

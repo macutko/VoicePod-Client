@@ -15,12 +15,13 @@ export default class AudioPlayer extends React.Component {
             playing: false,
             duration: 0,
             sound: null,
-            start: 0
+            currentTime: 0
         }
     }
 
     componentWillUnmount() {
         this.state.sound.release();
+        clearInterval(this.state.timer);
     }
 
     async componentDidMount() {
@@ -52,21 +53,40 @@ export default class AudioPlayer extends React.Component {
         })
     }
 
+    tick = () => {
+        this.state.sound.getCurrentTime((seconds) => {
+            this.setState({
+                currentTime: seconds,
+            });
+
+        });
+    }
 
     playSound = async () => {
         if (!this.state.playing) {
             this.setState({
-                playing: true
+                playing: true,
+                timer: setInterval(() => {
+                    this.tick();
+                }, 50)
             }, () => {
-                this.state.sound.setCurrentTime(this.state.start)
-                this.state.sound.getCurrentTime((seconds) => console.log('at ' + seconds))
+
+                this.state.sound.setCurrentTime(this.state.currentTime)
+
                 this.state.sound.play((success) => {
                     if (success) {
+                        clearInterval(this.state.timer);
+
                         this.setState({
-                                playing: false
+                                playing: false,
+                                timer: null,
                             }, () => console.log('successfully finished playing')
                         )
                     } else {
+                        clearInterval(this.state.timer);
+                        this.setState({
+                            timer: null
+                        })
                         console.log('playback failed due to audio decoding errors');
                     }
                 });
@@ -76,13 +96,16 @@ export default class AudioPlayer extends React.Component {
     }
 
     seek = (e) => {
-        // TODO: finish seeking and playback timer to indicate current position https://github.com/zmxv/react-native-sound/issues/235
         if (this.state.playing) {
             this.setState({
                 playing: false,
-                start: e
+                currentTime: e
             }, () => this.state.sound.pause())
 
+        } else {
+            this.setState({
+                currentTime: e
+            })
         }
     }
 
@@ -93,15 +116,14 @@ export default class AudioPlayer extends React.Component {
                     <View style={styles.container}>
                         <IconButton
                             style={styles.button}
-                            icon={props => <Ionicons {...props} name={'play'}/>}
-                            // size={20}
+                            icon={props => <Ionicons {...props} name={'play'} color={colorScheme.accent}/>}
                             onPress={() => this.playSound()}/>
 
                         <Slider
                             style={styles.slider}
                             minimumValue={0}
                             maximumValue={this.state.duration}
-                            value={this.state.start}
+                            value={this.state.currentTime}
                             onValueChange={this.seek}
                             minimumTrackTintColor={colorScheme.background}
                             maximumTrackTintColor={colorScheme.accent}
@@ -120,13 +142,13 @@ const styles = StyleSheet.create({
     },
     button: {
         alignSelf: "center",
-        // width: "10%",
-        // paddingLeft: 15,
     },
     mainContainer: {
         alignContent: 'center',
         justifyContent: 'center',
-        width: "100%"
+        marginHorizontal: 10,
+        backgroundColor: colorScheme.neutral_subtle,
+        borderRadius: 15,
     },
     container: {
         justifyContent: 'space-between',
