@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "TLDL.app"
-               BlueprintName = "TLDL"
-               ReferencedContainer = "container:TLDL.xcodeproj">
+               BuildableName = "conzlt.app"
+               BlueprintName = "conzlt"
+               ReferencedContainer = "container:conzlt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "TLDLTests.xctest"
-               BlueprintName = "TLDLTests"
-               ReferencedContainer = "container:TLDL.xcodeproj">
+               BuildableName = "conzltTests.xctest"
+               BlueprintName = "conzltTests"
+               ReferencedContainer = "container:conzlt.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "TLDL.app"
-            BlueprintName = "TLDL"
-            ReferencedContainer = "container:TLDL.xcodeproj">
+            BuildableName = "conzlt.app"
+            BlueprintName = "conzlt"
+            ReferencedContainer = "container:conzlt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "TLDL.app"
-            BlueprintName = "TLDL"
-            ReferencedContainer = "container:TLDL.xcodeproj">
+            BuildableName = "conzlt.app"
+            BlueprintName = "conzlt"
+            ReferencedContainer = "container:conzlt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

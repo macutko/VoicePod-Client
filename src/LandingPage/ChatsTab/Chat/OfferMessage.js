@@ -14,10 +14,10 @@ export default class OfferMessage extends React.Component {
                 console.log(`Res Offer ${res}`)
             }
         })
-
+        this.props.accept()
     }
     rejectOffer = () => {
-
+        this.props.reject()
     }
 
     render() {
