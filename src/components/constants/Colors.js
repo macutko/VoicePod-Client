@@ -14,5 +14,9 @@ export const colorScheme = {
     error: "#da1b1b",
     background: "#fff",
     background_subtle: "#cfcfcf",
-};
 
+    // New design colors 
+    secondary: "#763890", // light violet
+    primary: "#9c60b5", // dark violet 
+    white: '#f7f7f7'
+};
