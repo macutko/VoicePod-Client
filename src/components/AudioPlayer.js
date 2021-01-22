@@ -111,13 +111,23 @@ export default class AudioPlayer extends React.Component {
 
     render() {
         return (
+
             <View style={this.props.style}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
+                        {this.props.menuPress ?
+                            <IconButton
+                                style={styles.button}
+                                icon={props => <Ionicons {...props} name={'menu'} color={colorScheme.accent}/>}
+                                onPress={() => this.props.menuPress()}
+                            />
+                            : null}
+
                         <IconButton
                             style={styles.button}
                             icon={props => <Ionicons {...props} name={'play'} color={colorScheme.accent}/>}
-                            onPress={() => this.playSound()}/>
+                            onPress={() => this.playSound()}
+                        />
 
                         <Slider
                             style={styles.slider}
