@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     alignItems: "center",
     justifyContent: "center",
-    // top: "12%",
     marginLeft: "auto",
     marginRight: "auto"
   },

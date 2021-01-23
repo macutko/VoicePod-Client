@@ -107,6 +107,6 @@ const styles = StyleSheet.create({
     width: 240,
   },
   logo: {
-    top: "90%",
+    marginTop: 50
   },
 });
