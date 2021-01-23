@@ -1,8 +1,8 @@
-import { StyleSheet, View } from "react-native";
 import * as React from "react";
-import LoginForm from "./LoginForm";
-import { SignUpForm } from "./SignUpForm";
+import { StyleSheet, View } from "react-native";
 import { colorScheme } from "../components/constants/Colors";
+import LoginForm from "./LoginForm";
+import SignUpForm from "./SignUpForm";
 import WelcomeScreenButton from "./components/WelcomeScreenButton";
 import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -46,7 +46,6 @@ export class WelcomeScreen extends React.Component {
 
           <View style={styles.iconButtons}>
             <WelcomeScreenButton
-              key="asdf"
               mode="outlined"
               onPress={() => {
                 console.log("Facebook button pressed");
@@ -85,6 +84,8 @@ export class WelcomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+  // TO DO: make it more responsive, change the font
   container: {
     backgroundColor: colorScheme.background,
     width: "100%",

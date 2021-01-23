@@ -10,7 +10,7 @@ import {storeData} from "../components/helpers/utils";
 import {colorScheme} from "../components/constants/Colors";
 
 
-export class SignUpForm extends React.Component {
+export default class SignUpForm extends React.Component {
     static contextType = GlobalContext;
 
     constructor(props, context) {
