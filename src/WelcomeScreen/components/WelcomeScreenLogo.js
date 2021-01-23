@@ -13,12 +13,12 @@ const WelcomeScreenLogo = (props) => {
 const styles = StyleSheet.create({
   outline: {
     backgroundColor: colorScheme.secondary,
-    height: "16%",
-    width: "78%",
+    height: 100,
+    width: 270,
     borderRadius: 70,
     alignItems: "center",
     justifyContent: "center",
-    top: "12%",
+    // top: "12%",
     marginLeft: "auto",
     marginRight: "auto"
   },

@@ -18,5 +18,6 @@ export const colorScheme = {
     // New design colors 
     secondary: "#763890", // light violet
     primary: "#9c60b5", // dark violet 
+    grey: "#f8f8f8",
     white: '#f7f7f7'
 };
