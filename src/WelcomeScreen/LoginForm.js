@@ -1,11 +1,13 @@
-import { StyleSheet, View } from "react-native";
 import * as React from "react";
+import * as layout from "../components/constants/Layout";
+
+import { Button, Modal, Portal, Text, TextInput } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+
 import GlobalContext from "../GlobalState";
-import { Button, Modal, Portal, TextInput } from "react-native-paper";
 import { axiosInstance } from "../components/helpers/connectionInstances";
 import { colorScheme } from "../components/constants/Colors";
 import { storeData } from "../components/helpers/utils";
-import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
 
 export default class LoginForm extends React.Component {
   static contextType = GlobalContext;
@@ -14,7 +16,8 @@ export default class LoginForm extends React.Component {
     super(props, context);
     this.state = {
       isVisible: false,
-      passwordErrorBool: false,
+      isUsernameWrong: false,
+      isPasswordWrong: false,
     };
   }
 
@@ -41,24 +44,32 @@ export default class LoginForm extends React.Component {
         // this.props.close();
       })
       .catch((error) => {
-        if (error.response == null) console.log(`Error in LoginForm ${error}`);
-        else if (error.response.status === 401) {
-          this.setState(
-            {
-              passwordError: error.response.data.message,
-              passwordErrorBool: true,
-            },
-            () => {
-              setTimeout(() => {
-                this.setState({
-                  passwordError: undefined,
-                  passwordErrorBool: false,
-                });
-              }, 3000);
-            }
-          );
-        } else {
-          console.log("Havent accounted for this error code");
+        if (error.response == null) {
+          console.log(`Error in LoginForm ${error}`);
+          return;
+        }
+        switch (error.response.status) {
+          case 401:
+            this.setState(
+              {
+                passwordError: error.response.data.message,
+                isUsernameWrong: false,
+                isPasswordWrong: true,
+              }
+            );
+            break;
+            case 404:
+              this.setState(
+                {
+                  passwordError: error.response.data.message,
+                  isUsernameWrong: true,
+                  isPasswordWrong: false,
+                }
+              );
+              break;
+          default:
+            console.log("Havent accounted for this error code");
+            break;
         }
       });
   };
@@ -72,8 +83,11 @@ export default class LoginForm extends React.Component {
           animationType="fade"
           contentContainerStyle={styles.containerStyle}
         >
-          <WelcomeScreenLogo />
-          <View style={styles.formOutline}>
+          <View style={styles.oval}></View>
+          <View style={styles.formContainer}>
+            <Text>{this.state.isPasswordWrong || this.state.isUsernameWrong 
+                    ? this.state.passwordError 
+                    : ''}</Text>
             <TextInput
               label="Username"
               mode="flat"
@@ -90,7 +104,7 @@ export default class LoginForm extends React.Component {
               autoCompleteType={"password"}
               password={true}
               errorMessage={this.state.passwordError}
-              error={this.state.passwordErrorBool}
+              error={this.state.isPasswordWrong}
               onChangeText={(text) => this.onChangeText(text, "password")}
               style={styles.inputStyle}
             />
@@ -101,7 +115,7 @@ export default class LoginForm extends React.Component {
               style={styles.buttonStyle}
               labelStyle={styles.buttonLabelStyle}
             >
-              Log In >>
+              Log In &gt;&gt;
             </Button>
           </View>
         </Modal>
@@ -111,17 +125,35 @@ export default class LoginForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  formOutline: {
-    backgroundColor: colorScheme.grey,
-    height: "60%",
+  containerStyle: {
+    backgroundColor: "transparent",
+    position: "relative",
+    left: "-50%",
+    width: "200%",
+    height: layout.default.window.width,
+    padding: 0,
     justifyContent: "center",
+    alignItems: "center"
+  },
+  oval: {
+    position: "absolute",
+    top: layout.default.window.height / 7,
+    left: layout.default.window.width / 2,
+    width: layout.default.window.width,
+    height: "100%",
+    borderRadius: layout.default.window.width*2,
+    transform: [{ scaleX: 2 }],
+    backgroundColor: colorScheme.grey
+  },
+  formContainer: {
+    top: layout.default.window.height / 7,
+    width: "50%",
+    justifyContent: "space-around",
     alignItems: "center",
-    borderRadius: 100,
-    marginTop: 30,
   },
   inputStyle: {
     marginBottom: "5%",
-    backgroundColor: colorScheme.white,
+    backgroundColor: "transparent",
     width: "70%",
   },
   buttonStyle: {
@@ -131,11 +163,7 @@ const styles = StyleSheet.create({
   buttonLabelStyle: {
     fontSize: 20,
   },
-  containerStyle: {
-    backgroundColor: "white",
-    padding: 0,
-    marginHorizontal: "5%",
-  },
+  
   errorMessage: {
     color: colorScheme.error,
   },

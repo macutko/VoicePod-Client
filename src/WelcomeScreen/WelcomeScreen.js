@@ -1,11 +1,13 @@
 import * as React from "react";
+
 import { StyleSheet, View } from "react-native";
-import { colorScheme } from "../components/constants/Colors";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import WelcomeScreenButton from "./components/WelcomeScreenButton";
 import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { colorScheme } from "../components/constants/Colors";
 
 export class WelcomeScreen extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ export class WelcomeScreen extends React.Component {
 
         <View style={styles.buttonContainer}>
           <WelcomeScreenButton
-            mode="outlined"
+            type="login"
             onPress={() => {
               this.toggleModal("login");
             }}
@@ -38,29 +40,27 @@ export class WelcomeScreen extends React.Component {
           </WelcomeScreenButton>
 
           <WelcomeScreenButton
-            mode="contained"
+            type="signup"
             onPress={() => this.toggleModal("signUp")}
           >
             sign up
           </WelcomeScreenButton>
 
-          <View style={styles.iconButtons}>
+          <View style={styles.socialButtons}>
             <WelcomeScreenButton
-              mode="outlined"
+              type="social"
               onPress={() => {
                 console.log("Facebook button pressed");
               }}
-              small
             >
               <Ionicons name={"logo-facebook"} style={styles.icon} />
             </WelcomeScreenButton>
 
             <WelcomeScreenButton
-              mode="outlined"
+              type="social"
               onPress={() => {
                 console.log("Google button pressed");
               }}
-              small
             >
               <Ionicons name={"logo-google"} style={styles.icon} />
             </WelcomeScreenButton>
@@ -84,29 +84,30 @@ export class WelcomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
   // TO DO: make it more responsive, change the font
   container: {
     backgroundColor: colorScheme.background,
     width: "100%",
     height: "100%",
-    position: "absolute",
+    position: "relative",
+    justifyContent: "space-evenly",
+    alignItems: "center"
   },
   buttonContainer: {
-    top: "25%",
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
+    width: "80%",
+    height: "30%",
+    justifyContent: "space-between"
+  },    
   icon: {
     fontSize: 50,
   },
-  iconButtons: {
+  socialButtons: {
     flexDirection: "row",
-    height: "20%",
     justifyContent: "space-between",
-    width: 240,
+    width: "100%",
   },
   logo: {
-    marginTop: 50
+    paddingBottom: 50,
+    backgroundColor: "red"
   },
 });

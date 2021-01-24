@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Button } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { colorScheme } from "../../components/constants/Colors";
@@ -6,16 +7,12 @@ import { colorScheme } from "../../components/constants/Colors";
 const WelcomeScreenButton = (props) => {
   return (
     <Button
-      mode={props.mode}
+      mode={props.type === 'signup' ? 'contained' : 'outlined'}
       onPress={props.onPress}
-      style={[
-        styles.buttonStyle,
-        props.mode == "outlined" && styles.buttonStyleOutlined,
-        props.small && styles.small
-      ]}
+      style={[styles.button, styles[props.type]]}
       labelStyle={[
         styles.labelStyle,
-        props.mode == "outlined" && styles.labelStyleOutlined,
+        props.type !== 'signup' && { color: colorScheme.black },
       ]}
       contentStyle={styles.contentStyle}
     >
@@ -32,24 +29,21 @@ const styles = StyleSheet.create({
   labelStyle: {
     fontSize: 20,
   },
-  buttonStyle: {
+  button: {
     justifyContent: "center",
-    width: 240,
+    width: "100%",
     borderRadius: 6,
-    marginBottom: "5%",
-    height: 80,
+    maxHeight: 80,
     fontSize: 3,
   },
-  labelStyleOutlined: {
-    color: colorScheme.black,
+  login: {
+    backgroundColor: colorScheme.superWhite
+  }, 
+  signup: {},// in case well need specific stying for each
+  social: {
+    width: "45%",
+    backgroundColor: colorScheme.superWhite
   },
-  buttonStyleOutlined: {
-    borderWidth: 2,
-    borderColor: colorScheme.black,
-  },
-  small: {
-    width: 110,
-  }
 });
 
 export default WelcomeScreenButton;
