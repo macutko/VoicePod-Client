@@ -85,7 +85,7 @@ export default class LoginForm extends React.Component {
         >
           <View style={styles.oval}></View>
           <View style={styles.formContainer}>
-            <Text>{this.state.isPasswordWrong || this.state.isUsernameWrong 
+            <Text style={[{color: colorScheme.error}]}>{this.state.isPasswordWrong || this.state.isUsernameWrong 
                     ? this.state.passwordError 
                     : ''}</Text>
             <TextInput

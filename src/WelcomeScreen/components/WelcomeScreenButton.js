@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
     fontSize: 3,
   },
   login: {
-    backgroundColor: colorScheme.superWhite
+    backgroundColor: colorScheme.white
   }, 
   signup: {},// in case well need specific stying for each
   social: {
     width: "45%",
-    backgroundColor: colorScheme.superWhite
+    backgroundColor: colorScheme.white
   },
 });
 
