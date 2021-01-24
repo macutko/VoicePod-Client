@@ -16,8 +16,12 @@ export default class SocketWrapper extends React.Component {
         super(props);
     }
 
+    logOut = () => {
+        socket.disconnect();
+    }
+
     componentWillUnmount() {
-        socket.off('some event');
+        this.logOut()
     }
 
     componentDidMount() {

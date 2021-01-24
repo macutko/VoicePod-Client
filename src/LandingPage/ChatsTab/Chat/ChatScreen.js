@@ -1,9 +1,10 @@
 import React from "react"
 import {FlatList, RefreshControl, StyleSheet, View} from "react-native";
-import {Appbar} from "react-native-paper";
+import {Appbar, Button, Dialog, Paragraph, Portal} from "react-native-paper";
 import OfferMessage from "./OfferMessage";
 import Message from "./Message";
 import RecordButton from "./RecordButton";
+import InChatMenu from "./InChatMenu";
 
 export default class ChatScreen extends React.Component {
     constructor(props) {
@@ -11,32 +12,41 @@ export default class ChatScreen extends React.Component {
         this.state = {
             messages: [],
             offer: null,
+            openMenu: false,
             isFetching: false,
-            thisIsMyClient: !props.route.params.consultant
-        }
+            thisIsMyClient: !props.route.params.consultant,
+            offerEndLifeCycleDialog: false
 
+        }
     }
 
     getMessages = () => {
-        this.props.socket.emit('getMessages', {chatId: this.props.route.params.id}, (err, res) => {
-            if (err != null) console.log(`Error in Chat screen ${err}`)
-            else {
-                this.setState({
-                    messages: res
-                })
-            }
-        })
+        this.setState({
+            isFetching: true
+        }, () =>
+            this.props.socket.emit('getMessages', {chatId: this.props.route.params.id}, (err, res) => {
+                if (err != null) console.log(`Error in Chat screen ${err}`)
+                else {
+                    this.setState({
+                        messages: res.reverse(),
+                        isFetching: false
+                    })
+                }
+            }))
     }
 
     getOffer = () => {
-        this.props.socket.emit('getOffer', {offerId: this.props.route.params.offerId}, (err, res) => {
-            if (err != null) console.log(`Error in Chat screen ${err}`)
-            else {
-                this.setState({
-                    offer: res
-                })
-            }
-        })
+        this.setState({isFetching: true}, () =>
+            this.props.socket.emit('getOffer', {offerId: this.props.route.params.offerId}, (err, res) => {
+                if (err != null) console.log(`Error in Chat screen ${err}`)
+                else {
+
+                    this.setState({
+                        offer: res,
+                        isFetching: false
+                    })
+                }
+            }))
     }
 
     onRefresh() {
@@ -46,14 +56,53 @@ export default class ChatScreen extends React.Component {
     }
 
     componentDidMount() {
+        this._isMounted = true
         this.getMessages()
+        this.getOffer()
 
-        if ((this.props.route.params.lastMessage === null)) {
-            this.getOffer()
-        }
+        this.props.socket.emit('joinChat', {chatId: this.props.route.params.id}, (err, res) => {
+            if (err) console.log(`Error in JoinCHat CHatscreen ${err}`)
+        })
+
+        this.props.socket.on('newMessage', (data) => {
+            if (data.chatId === this.props.route.params.id) {
+                const joined = [data.message].concat(this.state.messages)
+                if (this._isMounted) {
+                    this.setState(prevState => (
+                        {
+                            messages: joined
+                        }
+                    ))
+                }
+            }
+        })
 
     }
 
+    closeChat = () => {
+        this.props.socket.emit('closeChat', {chatId: this.props.route.params.id}, (err, res) => {
+            if (err) console.log(`Error in cHat screen on close chat ${err}`)
+            else {
+                if (res) {
+                    this.toggleOfferDialog()
+                }
+                console.log(`Res ${res}`)
+            }
+        })
+    }
+
+    toggleMenu = () => {
+        this.setState(prevState => ({openMenu: !prevState.openMenu}))
+    }
+
+    toggleOfferDialog = () => {
+        this.setState(prevState => ({offerEndLifeCycleDialog: !prevState.offerEndLifeCycleDialog}))
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false //TODO: antipattern BUT do not have a better solution yet for sockets
+
+    }
 
     render() {
         return (
@@ -64,8 +113,13 @@ export default class ChatScreen extends React.Component {
                                     subtitle={
                                         `This is your ` + (this.props.route.params.consultant ? 'consultant' : 'client')
                                     }/>
-                    <Appbar.Action icon="dots-vertical" onPress={() => console.log('press')}/>
+                    <Appbar.Action icon="dots-vertical" onPress={() => this.setState({
+                        openMenu: true
+                    })}/>
+
                 </Appbar.Header>
+
+                <InChatMenu toggleModal={this.toggleMenu} visible={this.state.openMenu} offer={this.state.offer}/>
 
 
                 <View style={{flexDirection: "column"}}>
@@ -73,6 +127,8 @@ export default class ChatScreen extends React.Component {
                         <>
                             <FlatList
                                 data={this.state.messages}
+                                style={styles.messagesContainer}
+                                inverted={true}
                                 refreshControl={<RefreshControl
                                     // colors={["#9Bd35A", "#689F38"]}
                                     refreshing={this.state.isFetching}
@@ -83,24 +139,44 @@ export default class ChatScreen extends React.Component {
                         </>
                         :
                         <OfferMessage {...this.props} data={this.state.offer}
+                                      accept={() => this.setState({
+                                          offer: {...this.state.offer, accepted: true}
+                                      })}
+                                      reject={() => this.props.navigation.goBack(null)}
                                       thisIsMyClient={this.state.thisIsMyClient}/>}
                 </View>
 
+                <View style={styles.bottom_container}>
 
-                {this.state.offer === null || this.state.offer.accepted ?
+                    <RecordButton {...this.props} chatId={this.props.route.params.id}
+                                  toggleOfferDialog={this.toggleOfferDialog}/>
 
-                    <>
-                        <View style={styles.bottom_container}>
-                            <RecordButton {...this.props} chatId={this.props.route.params.id}/>
+                    {/*{this.state.isFetching ? null*/}
+                    {/*    :*/}
+                    {/*    (this.state.offer === null || this.state.offer.accepted ?*/}
+                    {/*            <>*/}
 
-                        </View>
+                    {/*                /!*TODO: this causes a mem leak!!! /*/}
+                    {/*                */}
 
+                    {/*            </> :*/}
+                    {/*            null*/}
+                    {/*    )}*/}
+                </View>
 
-                    </> :
-                    null
-                }
-
-
+                <Portal>
+                    <Dialog visible={this.state.offerEndLifeCycleDialog} onDismiss={this.toggleOfferDialog}>
+                        <Dialog.Title>Your chat has ended</Dialog.Title>
+                        <Dialog.Content>
+                            <Paragraph>You need to start a new offer in case you are interested to continue this
+                                conversation</Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            {/*<Button onPress={() => console.log('increase budget')}>Increase budget</Button>*/}
+                            <Button onPress={() => this.closeChat()}>Close</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
             </>
         );
     }
@@ -109,8 +185,10 @@ export default class ChatScreen extends React.Component {
 
 const styles = StyleSheet.create({
     bottom_container: {
-        marginTop: "auto",
         alignItems: "center",
-        justifyContent: "center",
+        height: "20%"
+    },
+    messagesContainer: {
+        height: "80%"
     }
 })

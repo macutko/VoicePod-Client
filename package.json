@@ -1,5 +1,5 @@
 {
-  "name": "TLDL",
+  "name": "CONZLT",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -24,7 +24,7 @@
     "react": "16.13.1",
     "react-dom": "~16.9.0",
     "react-error-boundary": "^2.2.3",
-    "react-native": "^0.63.3",
+    "react-native": "0.63.4",
     "react-native-action-button": "^2.8.5",
     "react-native-audio-record": "^0.2.2",
     "react-native-elements": "^1.2.7",
@@ -53,6 +53,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
     "babel-jest": "^25.1.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^6.5.1",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",

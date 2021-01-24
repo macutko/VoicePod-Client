@@ -3,14 +3,14 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'TLDL' do
+target 'conzlt' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  target 'TLDLTests' do
+  target 'conzltTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -25,10 +25,10 @@ target 'TLDL' do
   end
 end
 
-target 'TLDL-tvOS' do
-  # Pods for TLDL-tvOS
+target 'conzlt-tvOS' do
+  # Pods for conzlt-tvOS
 
-  target 'TLDL-tvOSTests' do
+  target 'conzlt-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

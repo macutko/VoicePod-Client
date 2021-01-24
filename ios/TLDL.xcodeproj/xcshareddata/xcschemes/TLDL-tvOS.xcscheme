@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "TLDL-tvOS.app"
-               BlueprintName = "TLDL-tvOS"
-               ReferencedContainer = "container:TLDL.xcodeproj">
+               BuildableName = "conzlt-tvOS.app"
+               BlueprintName = "conzlt-tvOS"
+               ReferencedContainer = "container:conzlt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "TLDL-tvOSTests.xctest"
-               BlueprintName = "TLDL-tvOSTests"
-               ReferencedContainer = "container:TLDL.xcodeproj">
+               BuildableName = "conzlt-tvOSTests.xctest"
+               BlueprintName = "conzlt-tvOSTests"
+               ReferencedContainer = "container:conzlt.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TLDL-tvOS.app"
-            BlueprintName = "TLDL-tvOS"
-            ReferencedContainer = "container:TLDL.xcodeproj">
+            BuildableName = "conzlt-tvOS.app"
+            BlueprintName = "conzlt-tvOS"
+            ReferencedContainer = "container:conzlt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "TLDL-tvOS.app"
-            BlueprintName = "TLDL-tvOS"
-            ReferencedContainer = "container:TLDL.xcodeproj">
+            BuildableName = "conzlt-tvOS.app"
+            BlueprintName = "conzlt-tvOS"
+            ReferencedContainer = "container:conzlt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
