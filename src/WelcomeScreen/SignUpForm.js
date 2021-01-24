@@ -1,14 +1,16 @@
-import { StyleSheet, View } from "react-native";
 import * as React from "react";
+import * as layout from "../components/constants/Layout";
+
+import { Button, Modal, Portal, TextInput } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+
+import { CustomExistenceValidator } from "../components/helpers/validator/CustomExistenceValidator";
+import { CustomFieldValidator } from "../components/helpers/validator/CustomFieldValidator";
 import GLOBAL_VAR from "../components/constants/Global";
 import GlobalContext from "../GlobalState";
-import { Button, Modal, Portal, TextInput } from "react-native-paper";
-import { CustomFieldValidator } from "../components/helpers/validator/CustomFieldValidator";
-import { CustomExistenceValidator } from "../components/helpers/validator/CustomExistenceValidator";
 import { axiosInstance } from "../components/helpers/connectionInstances";
-import { storeData } from "../components/helpers/utils";
 import { colorScheme } from "../components/constants/Colors";
-import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
+import { storeData } from "../components/helpers/utils";
 
 export default class SignUpForm extends React.Component {
   static contextType = GlobalContext;
@@ -75,8 +77,8 @@ export default class SignUpForm extends React.Component {
           animationType="fade"
           contentContainerStyle={styles.containerStyle}
         >
-          <WelcomeScreenLogo />
-          <View style={styles.formOutline}>
+          <View style={styles.oval}></View>
+          <View style={styles.formContainer}>
             <TextInput
               label="Email"
               mode="text"
@@ -153,15 +155,15 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.passwordError}
               style={styles.inputStyle}
             />
-
-            <Button
-              mode="text"
-              uppercase={false}
-              onPress={() => this.submitForm()}
-              style={styles.buttonStyle}
-            >
-              Sign Up >>
-            </Button>
+            <View style={styles.submitContainer}>
+              <Button
+                mode="text"
+                uppercase={false}
+                onPress={() => this.submitForm()}
+              >
+                Sign Up &gt;&gt;
+              </Button>
+            </View>
           </View>
         </Modal>
       </Portal>
@@ -170,30 +172,41 @@ export default class SignUpForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  formOutline: {
-    backgroundColor: colorScheme.grey,
-    height: "60%",
+  containerStyle: {
+    top: layout.default.window.height / 7,
+    position: "relative",
+    left: "-50%",
+    width: "200%",
+    height: layout.default.window.width * 1.3,
+    padding: 0,
     justifyContent: "center",
+    alignItems: "center"
+  },
+  oval: {
+    position: "absolute",
+    left: layout.default.window.width / 2,
+    width: layout.default.window.width,
+    height: "100%",
+    borderRadius: layout.default.window.width*2,
+    transform: [{ scaleX: 2 }],
+    backgroundColor: colorScheme.grey
+  },
+  formContainer: {
+    width: "50%",
+    justifyContent: "space-around",
     alignItems: "center",
-    borderRadius: 100,
-    marginTop: 30,
   },
   inputStyle: {
     marginBottom: "5%",
-    backgroundColor: colorScheme.white,
-    width: "70%",
+    backgroundColor: "transparent",
+    width: "85%",
   },
-  buttonStyle: {
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+  submitContainer: {
+    width: "85%",
+    flexDirection: 'row-reverse'
   },
   buttonLabelStyle: {
     fontSize: 20,
-  },
-  containerStyle: {
-    backgroundColor: "white",
-    padding: 0,
-    marginHorizontal: "5%",
   },
   errorMessage: {
     color: colorScheme.error,

@@ -108,15 +108,16 @@ export default class LoginForm extends React.Component {
               onChangeText={(text) => this.onChangeText(text, "password")}
               style={styles.inputStyle}
             />
-            <Button
-              mode="text"
-              uppercase={false}
-              onPress={() => this.submitForm()}
-              style={styles.buttonStyle}
-              labelStyle={styles.buttonLabelStyle}
-            >
-              Log In &gt;&gt;
-            </Button>
+            <View style={styles.submitContainer}>
+              <Button
+                mode="text"
+                uppercase={false}
+                onPress={() => this.submitForm()}
+                labelStyle={styles.buttonLabelStyle}
+              >
+                Log In &gt;&gt;
+              </Button>
+            </View>
           </View>
         </Modal>
       </Portal>
@@ -126,6 +127,7 @@ export default class LoginForm extends React.Component {
 
 const styles = StyleSheet.create({
   containerStyle: {
+    top: layout.default.window.height / 7,
     backgroundColor: "transparent",
     position: "relative",
     left: "-50%",
@@ -137,7 +139,6 @@ const styles = StyleSheet.create({
   },
   oval: {
     position: "absolute",
-    top: layout.default.window.height / 7,
     left: layout.default.window.width / 2,
     width: layout.default.window.width,
     height: "100%",
@@ -146,7 +147,6 @@ const styles = StyleSheet.create({
     backgroundColor: colorScheme.grey
   },
   formContainer: {
-    top: layout.default.window.height / 7,
     width: "50%",
     justifyContent: "space-around",
     alignItems: "center",
@@ -154,11 +154,11 @@ const styles = StyleSheet.create({
   inputStyle: {
     marginBottom: "5%",
     backgroundColor: "transparent",
-    width: "70%",
+    width: "85%",
   },
-  buttonStyle: {
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+  submitContainer: {
+    width: "85%",
+    flexDirection: "row-reverse"
   },
   buttonLabelStyle: {
     fontSize: 20,

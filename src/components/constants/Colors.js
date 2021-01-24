@@ -1,7 +1,7 @@
 export const colorScheme = {
     blue:"#0B7ACA",
     yellow:"#DDE33B",
-    superWhite: "#fff",
+    white: "#fff",
     black: "#000",
     red: "#da1b1b",
     // Primarily lets use these defs:
@@ -19,5 +19,4 @@ export const colorScheme = {
     secondary: "#753B8E", // dark violet
     primary: "#9B63B3", // light violet 
     grey: "#f8f8f8",
-    white: '#f7f7f7',
 };
