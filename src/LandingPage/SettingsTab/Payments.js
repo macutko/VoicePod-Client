@@ -74,7 +74,6 @@ export default class Payments extends React.Component {
                     Link Stripe account??
                     disable BA
                     Configure BA pricing
-                    send refunds
             */}
                 <List.Subheader>Payments</List.Subheader>
                 <List.Item title="Business account"
@@ -99,7 +98,16 @@ export default class Payments extends React.Component {
                                 onChangeText={this.onChangePrice}
                                 right={<TextInput.Affix text={'$'}/>}
                             />
-
+                            <TextInput
+                                ref={this.textInput}
+                                style={styles.textInput}
+                                label="Default Country"
+                                type={'outlined'}
+                                value={`${this.props.globalState.user.price.toString()}`}
+                                onSubmitEditing={this.onSubmitPrice}
+                                onChangeText={this.onChangePrice}
+                                right={<TextInput.Affix text={'$'}/>}
+                            />
                         </View>
                     </List.Accordion> : null}
 
@@ -118,6 +126,7 @@ const styles = StyleSheet.create({
     textInput: {
         width: "80%",
         paddingHorizontal: "10%",
+        marginBottom: 5,
         backgroundColor: colorScheme.background
     },
 });
