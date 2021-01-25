@@ -1,8 +1,16 @@
 import * as React from "react";
 import * as layout from "../components/constants/Layout";
 
-import { Button, Modal, Portal, TextInput } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import {
+  Button,
+  Modal,
+  Dialog,
+  Portal,
+  TextInput,
+  Checkbox,
+  Text,
+} from "react-native-paper";
+import { StyleSheet, View, ScrollView } from "react-native";
 
 import { CustomExistenceValidator } from "../components/helpers/validator/CustomExistenceValidator";
 import { CustomFieldValidator } from "../components/helpers/validator/CustomFieldValidator";
@@ -11,14 +19,30 @@ import GlobalContext from "../GlobalState";
 import { axiosInstance } from "../components/helpers/connectionInstances";
 import { colorScheme } from "../components/constants/Colors";
 import { storeData } from "../components/helpers/utils";
+import { TermsAndConditions } from "./TermsAndConditions";
 
 export default class SignUpForm extends React.Component {
   static contextType = GlobalContext;
 
   constructor(props, context) {
     super(props, context);
-    this.state = {};
+    this.state = {
+      agreedLicense: false,
+      licenseDialogVisible: false,
+    };
   }
+
+  toggleLicenseAgreement = () => {
+    this.setState((prevState) => ({
+      agreedLicense: !prevState.agreedLicense,
+    }));
+  };
+
+  toggleLicenseDialog = () => {
+    this.setState((prevState) => ({
+      licenseDialogVisible: !prevState.licenseDialogVisible,
+    }));
+  };
 
   onEndEditingAfter = (validation_obj) => {
     this.setState(validation_obj);
@@ -155,6 +179,38 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.passwordError}
               style={styles.inputStyle}
             />
+
+            <View style={styles.licenseContainer}>
+              <Checkbox
+                status={this.state.agreedLicense ? "checked" : "unchecked"}
+                onPress={() => this.toggleLicenseAgreement()}
+                color={colorScheme.secondary}
+                style={styles.licenseCheckbox}
+              />
+              <Text>I accept the </Text>
+              <Text
+                style={styles.licenseAnchor}
+                onPress={() => this.toggleLicenseDialog()}
+              >
+                Terms and Conditions
+              </Text>
+            </View>
+
+            {/* License Dialog - not sure where to put it */}
+            <Portal>
+              <Dialog
+                visible={this.state.licenseDialogVisible}
+                onDismiss={() => this.toggleLicenseDialog()}
+                style={styles.licenseDialog}
+              >
+                <Dialog.ScrollArea>
+                  <ScrollView contentContainerStyle={styles.licenseDialogScrollViewContainer}>
+                    <Text>{TermsAndConditions}</Text>
+                  </ScrollView>
+                </Dialog.ScrollArea>
+              </Dialog>
+            </Portal>
+
             <View style={styles.submitContainer}>
               <Button
                 mode="text"
@@ -174,22 +230,24 @@ export default class SignUpForm extends React.Component {
 const styles = StyleSheet.create({
   containerStyle: {
     top: layout.default.window.height / 7,
+    top: layout.default.window.height / 30, // suggestion
     position: "relative",
     left: "-50%",
     width: "200%",
     height: layout.default.window.width * 1.3,
+    height: layout.default.window.width * 1.5, // suggestion
     padding: 0,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   oval: {
     position: "absolute",
     left: layout.default.window.width / 2,
     width: layout.default.window.width,
     height: "100%",
-    borderRadius: layout.default.window.width*2,
+    borderRadius: layout.default.window.width * 2,
     transform: [{ scaleX: 2 }],
-    backgroundColor: colorScheme.grey
+    backgroundColor: colorScheme.grey,
   },
   formContainer: {
     width: "50%",
@@ -203,7 +261,7 @@ const styles = StyleSheet.create({
   },
   submitContainer: {
     width: "85%",
-    flexDirection: 'row-reverse'
+    flexDirection: "row-reverse",
   },
   buttonLabelStyle: {
     fontSize: 20,
@@ -211,4 +269,18 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: colorScheme.error,
   },
+  licenseContainer: {
+    flexDirection: "row",
+    width: "90%",
+    alignItems: "center",
+  },
+  licenseAnchor: {
+    color: colorScheme.secondary,
+  },
+  licenseCheckbox: {
+    marginBottom: 10,
+  },
+  licenseDialogScrollViewContainer: {
+    padding: 10,
+  }
 });
