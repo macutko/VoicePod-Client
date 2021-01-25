@@ -5,9 +5,9 @@ import { StyleSheet, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
-import WelcomeScreenButton from "./components/WelcomeScreenButton";
-import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
 import { colorScheme } from "../components/constants/Colors";
+import WelcomeScreenLogo from "./components/WelcomeScreenLogo";
+import WelcomeScreenButton from "./components/WelcomeScreenButton";
 
 export class WelcomeScreen extends React.Component {
   constructor(props) {
