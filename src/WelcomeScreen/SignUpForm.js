@@ -204,8 +204,13 @@ export default class SignUpForm extends React.Component {
                 style={styles.licenseDialog}
               >
                 <Dialog.ScrollArea>
-                  <ScrollView contentContainerStyle={styles.licenseDialogScrollViewContainer}>
+                  <ScrollView
+                    contentContainerStyle={
+                      styles.licenseDialogScrollViewContainer
+                    }
+                  >
                     <TermsAndConditions />
+                    <Button onPress={() => this.toggleLicenseDialog()}>OK</Button>
                   </ScrollView>
                 </Dialog.ScrollArea>
               </Dialog>
@@ -282,5 +287,5 @@ const styles = StyleSheet.create({
   },
   licenseDialogScrollViewContainer: {
     padding: 10,
-  }
+  },
 });
