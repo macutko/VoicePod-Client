@@ -12,7 +12,11 @@ export const colorScheme = {
     neutral:"#000",
     neutral_subtle: "#282828",
     error: "#da1b1b",
-    background: "#fff",
+    background: "#F7F7F7",
     background_subtle: "#cfcfcf",
-};
 
+    // New design colors 
+    secondary: "#753B8E", // dark violet
+    primary: "#9B63B3", // light violet 
+    grey: "#f8f8f8",
+};
