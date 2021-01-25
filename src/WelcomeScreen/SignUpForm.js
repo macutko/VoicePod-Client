@@ -205,7 +205,7 @@ export default class SignUpForm extends React.Component {
               >
                 <Dialog.ScrollArea>
                   <ScrollView contentContainerStyle={styles.licenseDialogScrollViewContainer}>
-                    <Text>{TermsAndConditions}</Text>
+                    <TermsAndConditions />
                   </ScrollView>
                 </Dialog.ScrollArea>
               </Dialog>
