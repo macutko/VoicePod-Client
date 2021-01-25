@@ -1,24 +1,23 @@
 import * as React from "react";
-import * as layout from "../components/constants/Layout";
-
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Button,
-  Modal,
-  Dialog,
-  Portal,
-  TextInput,
   Checkbox,
+  Dialog,
+  HelperText,
+  Modal,
+  Portal,
   Text,
+  TextInput,
 } from "react-native-paper";
-import { StyleSheet, View, ScrollView } from "react-native";
-
+import { colorScheme } from "../components/constants/Colors";
+import GLOBAL_VAR from "../components/constants/Global";
+import * as layout from "../components/constants/Layout";
+import { axiosInstance } from "../components/helpers/connectionInstances";
+import { storeData } from "../components/helpers/utils";
 import { CustomExistenceValidator } from "../components/helpers/validator/CustomExistenceValidator";
 import { CustomFieldValidator } from "../components/helpers/validator/CustomFieldValidator";
-import GLOBAL_VAR from "../components/constants/Global";
 import GlobalContext from "../GlobalState";
-import { axiosInstance } from "../components/helpers/connectionInstances";
-import { colorScheme } from "../components/constants/Colors";
-import { storeData } from "../components/helpers/utils";
 import { TermsAndConditions } from "./TermsAndConditions";
 
 export default class SignUpForm extends React.Component {
@@ -27,8 +26,8 @@ export default class SignUpForm extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      agreedLicense: false,
-      licenseDialogVisible: false,
+      // agreedLicense: false,
+      // licenseDialogVisible: false,
     };
   }
 
@@ -117,6 +116,14 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.emailError}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={!this.state.isValid}
+            >
+              {this.state.emailError}
+            </HelperText>
+
             <TextInput
               label="First Name"
               mode="text"
@@ -131,6 +138,13 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.firstnameError}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={!this.state.isValid}
+            >
+              {this.state.firstnameError}
+            </HelperText>
 
             <TextInput
               label="Last Name"
@@ -146,6 +160,13 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.firstnameError}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={!this.state.isValid}
+            >
+              {this.state.lastnameError}
+            </HelperText>
 
             <TextInput
               label="Username"
@@ -163,6 +184,14 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.usernameError}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={!this.state.isValid}
+            >
+              {this.state.usernameError}
+            </HelperText>
+
             <TextInput
               label="Password"
               mode="text"
@@ -179,6 +208,13 @@ export default class SignUpForm extends React.Component {
               errorMessage={this.state.passwordError}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={!this.state.isValid}
+            >
+              {this.state.passwordError}
+            </HelperText>
 
             <View style={styles.licenseContainer}>
               <Checkbox
@@ -210,7 +246,9 @@ export default class SignUpForm extends React.Component {
                     }
                   >
                     <TermsAndConditions />
-                    <Button onPress={() => this.toggleLicenseDialog()}>OK</Button>
+                    <Button onPress={() => this.toggleLicenseDialog()}>
+                      OK
+                    </Button>
                   </ScrollView>
                 </Dialog.ScrollArea>
               </Dialog>
@@ -235,7 +273,7 @@ export default class SignUpForm extends React.Component {
 const styles = StyleSheet.create({
   containerStyle: {
     top: layout.default.window.height / 7,
-    top: layout.default.window.height / 30, // suggestion
+    top: layout.default.window.height / 35, // suggestion
     position: "relative",
     left: "-50%",
     width: "200%",
@@ -260,7 +298,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputStyle: {
-    marginBottom: "5%",
+    // this is no longer needed 
+    // as there is more space from HelperText component
+    // marginBottom: "5%", 
     backgroundColor: "transparent",
     width: "85%",
   },
