@@ -118,11 +118,12 @@ export default class SignUpForm extends React.Component {
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.EMAIL, e)
               }
               style={styles.inputStyle}
+              error={this.state.emailError}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={this.state.emailError != ""}
+              visible={this.state.emailError}
             >
               {this.state.emailError}
             </HelperText>
@@ -139,11 +140,12 @@ export default class SignUpForm extends React.Component {
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.FIRSTNAME, e)
               }
               style={styles.inputStyle}
+              error={this.state.firstnameError}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={this.state.firstnameError != ""}
+              visible={this.state.firstnameError}
             >
               {this.state.firstnameError}
             </HelperText>
@@ -160,11 +162,12 @@ export default class SignUpForm extends React.Component {
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.LASTNAME, e)
               }
               style={styles.inputStyle}
+              error={this.state.lastnameError}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={this.state.lastnameError != ""}
+              visible={this.state.lastnameError}
             >
               {this.state.lastnameError}
             </HelperText>
@@ -183,11 +186,12 @@ export default class SignUpForm extends React.Component {
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.USERNAME, e)
               }
               style={styles.inputStyle}
+              error={this.state.usernameError}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={this.state.usernameError != ""}
+              visible={this.state.usernameError}
             >
               {this.state.usernameError}
             </HelperText>
@@ -206,11 +210,12 @@ export default class SignUpForm extends React.Component {
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.PASSWORD, e)
               }
               style={styles.inputStyle}
+              error={this.state.passwordError}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={this.state.passwordError != ""}
+              visible={this.state.passwordError}
             >
               {this.state.passwordError}
             </HelperText>
