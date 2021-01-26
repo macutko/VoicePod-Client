@@ -78,14 +78,14 @@ export default class SignUpForm extends React.Component {
     return valid;
   };
 
-  async validateField(field_name, text) {
+  validateField(field_name, text) {
     let validation_obj = CustomFieldValidator.validate(field_name, text);
     if (
       validation_obj.isValid &&
       (field_name === GLOBAL_VAR.FIELD_NAME.USERNAME ||
         field_name === GLOBAL_VAR.FIELD_NAME.EMAIL)
     ) {
-      await CustomExistenceValidator.validate(field_name, text)
+      CustomExistenceValidator.validate(field_name, text)
         .then((existence_obj) => {
           validation_obj = { ...validation_obj, ...existence_obj };
           this.setState(validation_obj);
