@@ -180,6 +180,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   errorMessage: {
-    color: colorScheme.error,
+    // color: colorScheme.error,
   },
 });
