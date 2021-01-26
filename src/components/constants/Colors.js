@@ -19,4 +19,5 @@ export const colorScheme = {
     secondary: "#753B8E", // dark violet
     primary: "#9B63B3", // light violet 
     grey: "#f8f8f8",
+    error: "#b1151f"
 };
