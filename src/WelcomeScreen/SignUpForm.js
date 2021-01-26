@@ -26,6 +26,14 @@ export default class SignUpForm extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      user: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        username: "",
+        password: "",
+      },
+
       agreedLicense: false,
       licenseDialogVisible: false,
     };
@@ -43,15 +51,41 @@ export default class SignUpForm extends React.Component {
     }));
   };
 
-  onEndEditing = (field_name, event) => {
-    const text = event.nativeEvent.text;
+  isFormValid = () => {
+    let valid = true;
+    Object.values(GLOBAL_VAR.FIELD_NAME).forEach((field_name) => {
+      const validation_obj = this.validateField(
+        field_name,
+        this.state.user[field_name]
+      );
+      // this.setState(validation_obj);
+      if (!validation_obj.isValid) {
+        valid = false;
+      }
+    });
+
+    // check the license agreement
+    if (!this.state.agreedLicense) {
+      this.setState({
+        licenseError: true,
+      });
+      valid = false;
+    } else {
+      this.setState({
+        licenseError: false,
+      });
+    }
+    return valid;
+  };
+
+  async validateField(field_name, text) {
     let validation_obj = CustomFieldValidator.validate(field_name, text);
     if (
       validation_obj.isValid &&
       (field_name === GLOBAL_VAR.FIELD_NAME.USERNAME ||
         field_name === GLOBAL_VAR.FIELD_NAME.EMAIL)
     ) {
-      CustomExistenceValidator.validate(field_name, text)
+      await CustomExistenceValidator.validate(field_name, text)
         .then((existence_obj) => {
           validation_obj = { ...validation_obj, ...existence_obj };
           this.setState(validation_obj);
@@ -62,24 +96,29 @@ export default class SignUpForm extends React.Component {
     } else {
       this.setState(validation_obj);
     }
+    return validation_obj;
+  }
+
+  onEndEditing = (field_name, event) => {
+    const text = event.nativeEvent.text;
+    const validation_obj = this.validateField(field_name, text);
+    this.setState(validation_obj);
+  };
+
+  onChangeText = (property, value) => {
+    let user = { ...this.state.user };
+    user[property] = value;
+    this.setState({ user });
   };
 
   submitForm = () => {
-    // check the license agreement
-    if (!this.state.agreedLicense) {
-      this.setState({
-        licenseError: true,
-      });
-      return;
-    }
-
     axiosInstance
       .post("/user/create", {
-        firstName: this.state.firstname,
-        lastName: this.state.lastname,
-        email: this.state.email,
-        username: this.state.username,
-        password: this.state.password,
+        firstName: this.state.user.firstname,
+        lastName: this.state.user.lastname,
+        email: this.state.user.email,
+        username: this.state.user.username,
+        password: this.state.user.password,
       })
       .then((response) => {
         storeData("token", response.data.token).then();
@@ -112,7 +151,7 @@ export default class SignUpForm extends React.Component {
               autoCompleteType={"email"}
               textContentType={"emailAddress"}
               onChangeText={(text) =>
-                this.setState({ [GLOBAL_VAR.FIELD_NAME.EMAIL]: text })
+                this.onChangeText(GLOBAL_VAR.FIELD_NAME.EMAIL, text)
               }
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.EMAIL, e)
@@ -133,7 +172,7 @@ export default class SignUpForm extends React.Component {
               mode="text"
               textContentType={"givenName"}
               onChangeText={(text) =>
-                this.setState({ [GLOBAL_VAR.FIELD_NAME.FIRSTNAME]: text })
+                this.onChangeText(GLOBAL_VAR.FIELD_NAME.FIRSTNAME, text)
               }
               autoCompleteType={"name"}
               onEndEditing={(e) =>
@@ -155,7 +194,7 @@ export default class SignUpForm extends React.Component {
               mode="text"
               textContentType={"familyName"}
               onChangeText={(text) =>
-                this.setState({ [GLOBAL_VAR.FIELD_NAME.LASTNAME]: text })
+                this.onChangeText(GLOBAL_VAR.FIELD_NAME.LASTNAME, text)
               }
               autoCompleteType={"name"}
               onEndEditing={(e) =>
@@ -176,9 +215,7 @@ export default class SignUpForm extends React.Component {
               label="Username"
               mode="text"
               onChangeText={(text) =>
-                this.setState({
-                  [GLOBAL_VAR.FIELD_NAME.USERNAME]: text.toLowerCase(),
-                })
+                this.onChangeText(GLOBAL_VAR.FIELD_NAME.USERNAME, text)
               }
               autoCompleteType={"username"}
               textContentType={"username"}
@@ -200,7 +237,7 @@ export default class SignUpForm extends React.Component {
               label="Password"
               mode="text"
               onChangeText={(text) =>
-                this.setState({ [GLOBAL_VAR.FIELD_NAME.PASSWORD]: text })
+                this.onChangeText(GLOBAL_VAR.FIELD_NAME.PASSWORD, text)
               }
               autoCompleteType={"password"}
               secureTextEntry={true}
@@ -268,7 +305,9 @@ export default class SignUpForm extends React.Component {
               <Button
                 mode="text"
                 uppercase={false}
-                onPress={() => this.submitForm()}
+                onPress={() => {
+                  this.isFormValid && this.submitForm();
+                }}
               >
                 Sign Up &gt;&gt;
               </Button>

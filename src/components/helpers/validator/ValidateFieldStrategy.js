@@ -45,7 +45,7 @@ class ValidatePassword extends ValidateFieldStrategy {
     if (reg.test(text) === false) {
       passwordError =
         "Password must contain minimum eight characters, at least one uppercase letter, " +
-        "one lowercase letter and one number";
+        "one lowercase letter and one number.";
       isValid = false;
     }
     return { passwordError, isValid };
