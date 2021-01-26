@@ -26,8 +26,8 @@ export default class SignUpForm extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      // agreedLicense: false,
-      // licenseDialogVisible: false,
+      agreedLicense: false,
+      licenseDialogVisible: false,
     };
   }
 
@@ -43,10 +43,6 @@ export default class SignUpForm extends React.Component {
     }));
   };
 
-  onEndEditingAfter = (validation_obj) => {
-    this.setState(validation_obj);
-  };
-
   onEndEditing = (field_name, event) => {
     const text = event.nativeEvent.text;
     let validation_obj = CustomFieldValidator.validate(field_name, text);
@@ -58,17 +54,25 @@ export default class SignUpForm extends React.Component {
       CustomExistenceValidator.validate(field_name, text)
         .then((existence_obj) => {
           validation_obj = { ...validation_obj, ...existence_obj };
-          this.onEndEditingAfter(validation_obj);
+          this.setState(validation_obj);
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      this.onEndEditingAfter(validation_obj);
+      this.setState(validation_obj);
     }
   };
 
   submitForm = () => {
+    // check the license agreement
+    if (!this.state.agreedLicense) {
+      this.setState({
+        licenseError: true,
+      });
+      return;
+    }
+
     axiosInstance
       .post("/user/create", {
         firstName: this.state.firstname,
@@ -113,13 +117,12 @@ export default class SignUpForm extends React.Component {
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.EMAIL, e)
               }
-              errorMessage={this.state.emailError}
               style={styles.inputStyle}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={!this.state.isValid}
+              visible={this.state.emailError != ""}
             >
               {this.state.emailError}
             </HelperText>
@@ -135,13 +138,12 @@ export default class SignUpForm extends React.Component {
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.FIRSTNAME, e)
               }
-              errorMessage={this.state.firstnameError}
               style={styles.inputStyle}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={!this.state.isValid}
+              visible={this.state.firstnameError != ""}
             >
               {this.state.firstnameError}
             </HelperText>
@@ -157,13 +159,12 @@ export default class SignUpForm extends React.Component {
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.LASTNAME, e)
               }
-              errorMessage={this.state.firstnameError}
               style={styles.inputStyle}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={!this.state.isValid}
+              visible={this.state.lastnameError != ""}
             >
               {this.state.lastnameError}
             </HelperText>
@@ -181,13 +182,12 @@ export default class SignUpForm extends React.Component {
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.USERNAME, e)
               }
-              errorMessage={this.state.usernameError}
               style={styles.inputStyle}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={!this.state.isValid}
+              visible={this.state.usernameError != ""}
             >
               {this.state.usernameError}
             </HelperText>
@@ -205,13 +205,12 @@ export default class SignUpForm extends React.Component {
               onEndEditing={(e) =>
                 this.onEndEditing(GLOBAL_VAR.FIELD_NAME.PASSWORD, e)
               }
-              errorMessage={this.state.passwordError}
               style={styles.inputStyle}
             />
             <HelperText
               style={styles.errorMessage}
               type="error"
-              visible={!this.state.isValid}
+              visible={this.state.passwordError != ""}
             >
               {this.state.passwordError}
             </HelperText>
@@ -223,9 +222,15 @@ export default class SignUpForm extends React.Component {
                 color={colorScheme.secondary}
                 style={styles.licenseCheckbox}
               />
-              <Text>I accept the </Text>
+              <Text style={this.state.licenseError && styles.errorMessage}>
+                I accept the{" "}
+              </Text>
               <Text
-                style={styles.licenseAnchor}
+                style={
+                  this.state.licenseError
+                    ? styles.errorMessage
+                    : styles.licenseAnchor
+                }
                 onPress={() => this.toggleLicenseDialog()}
               >
                 Terms and Conditions
@@ -298,9 +303,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputStyle: {
-    // this is no longer needed 
-    // as there is more space from HelperText component
-    // marginBottom: "5%", 
+    // there is more space from HelperText component
+    marginTop: "-3%",
     backgroundColor: "transparent",
     width: "85%",
   },
