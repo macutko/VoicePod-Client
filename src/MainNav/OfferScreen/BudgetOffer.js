@@ -1,6 +1,6 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {colorScheme} from "../components/constants/Colors";
+import {colorScheme} from "../../components/constants/Colors";
 import Slider from '@react-native-community/slider';
 import Title from "react-native-paper/src/components/Typography/Title";
 import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
