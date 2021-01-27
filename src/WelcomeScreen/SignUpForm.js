@@ -53,12 +53,12 @@ export default class SignUpForm extends React.Component {
 
   isFormValid = () => {
     let valid = true;
+    // validate each field
     Object.values(GLOBAL_VAR.FIELD_NAME).forEach((field_name) => {
       const validation_obj = this.validateField(
         field_name,
         this.state.user[field_name]
       );
-      // this.setState(validation_obj);
       if (!validation_obj.isValid) {
         valid = false;
       }
@@ -112,6 +112,11 @@ export default class SignUpForm extends React.Component {
   };
 
   submitForm = () => {
+    // check if form is valid, return if not
+    if (!this.isFormValid()) {
+      return;
+    }
+    // send request if valid
     axiosInstance
       .post("/user/create", {
         firstName: this.state.user.firstname,
@@ -159,11 +164,7 @@ export default class SignUpForm extends React.Component {
               style={styles.inputStyle}
               error={this.state.emailError}
             />
-            <HelperText
-              style={styles.errorMessage}
-              type="error"
-              visible={this.state.emailError}
-            >
+            <HelperText type="error" visible={this.state.emailError}>
               {this.state.emailError}
             </HelperText>
 
@@ -181,11 +182,7 @@ export default class SignUpForm extends React.Component {
               style={styles.inputStyle}
               error={this.state.firstnameError}
             />
-            <HelperText
-              style={styles.errorMessage}
-              type="error"
-              visible={this.state.firstnameError}
-            >
+            <HelperText type="error" visible={this.state.firstnameError}>
               {this.state.firstnameError}
             </HelperText>
 
@@ -203,11 +200,7 @@ export default class SignUpForm extends React.Component {
               style={styles.inputStyle}
               error={this.state.lastnameError}
             />
-            <HelperText
-              style={styles.errorMessage}
-              type="error"
-              visible={this.state.lastnameError}
-            >
+            <HelperText type="error" visible={this.state.lastnameError}>
               {this.state.lastnameError}
             </HelperText>
 
@@ -225,11 +218,7 @@ export default class SignUpForm extends React.Component {
               style={styles.inputStyle}
               error={this.state.usernameError}
             />
-            <HelperText
-              style={styles.errorMessage}
-              type="error"
-              visible={this.state.usernameError}
-            >
+            <HelperText type="error" visible={this.state.usernameError}>
               {this.state.usernameError}
             </HelperText>
 
@@ -249,11 +238,7 @@ export default class SignUpForm extends React.Component {
               style={styles.inputStyle}
               error={this.state.passwordError}
             />
-            <HelperText
-              style={styles.errorMessage}
-              type="error"
-              visible={this.state.passwordError}
-            >
+            <HelperText type="error" visible={this.state.passwordError}>
               {this.state.passwordError}
             </HelperText>
 
@@ -265,7 +250,7 @@ export default class SignUpForm extends React.Component {
                 style={styles.licenseCheckbox}
               />
               <Text style={this.state.licenseError && styles.errorMessage}>
-                I accept the{" "}
+                I accept the
               </Text>
               <Text
                 style={
@@ -306,7 +291,7 @@ export default class SignUpForm extends React.Component {
                 mode="text"
                 uppercase={false}
                 onPress={() => {
-                  this.isFormValid && this.submitForm();
+                  this.submitForm();
                 }}
               >
                 Sign Up &gt;&gt;
@@ -360,7 +345,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   errorMessage: {
-    // color: colorScheme.error,
+    color: colorScheme.error,
   },
   licenseContainer: {
     flexDirection: "row",
