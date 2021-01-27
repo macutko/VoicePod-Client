@@ -5,15 +5,16 @@ import Switch from "react-native-paper/src/components/Switch";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {axiosInstance} from "../../components/helpers/connectionInstances";
-import TextInput from "react-native-paper/src/components/TextInput/TextInput";
 import {colorScheme} from "../../components/constants/Colors";
+import ChangePrice from "./Payments/ChangePrice";
+import ChangeCountry from "./Payments/ChangeCountry";
+
 
 export default class Payments extends React.Component {
 
     constructor(props) {
         super(props);
-        this.textInput = React.createRef();
-
+        console.log(this.props.globalState.user)
     }
 
     submitUpdate = async (data) => {
@@ -32,22 +33,6 @@ export default class Payments extends React.Component {
             });
     }
 
-    onChangePrice = (text) => {
-        let newUser = this.props.globalState.user
-        newUser.price = text
-        this.props.updateGlobalState(newUser, this.props.globalState.token, true)
-
-    }
-    onSubmitPrice = () => {
-        this.submitUpdate({
-            price: this.props.globalState.user.price
-        }).then((r) => {
-                this.props.refreshState(this.props.globalState.token, () => console.log(` Current Pirce: ${this.props.globalState.user.price}`))
-
-            }
-        ).catch(e => console.log(`Error in Payments ${e}`))
-    }
-
 
     toggleBusinessAccount = () => {
         let newUser = this.props.globalState.user
@@ -59,7 +44,6 @@ export default class Payments extends React.Component {
                     businessActivated: newUser.businessActivated,
                 }).then((r) => {
                         this.props.refreshState(this.props.globalState.token)
-                        console.log(` Current BA : ${this.props.globalState.user.businessActivated}`)
                     }
                 ).catch(e => console.log(`Error in Payments ${e}`))
             })
@@ -87,27 +71,11 @@ export default class Payments extends React.Component {
                                                   icon={props => <Ionicons {...props} name={'cash-outline'}/>}/>}
                         expanded={this.props.globalState.user.businessActivated}>
                         <View style={styles.containerStyle}>
-                            <TextInput
-                                ref={this.textInput}
-                                style={styles.textInput}
-                                label="Price per minute"
-                                type={'outlined'}
-                                keyboardType={'number-pad'}
-                                value={`${this.props.globalState.user.price.toString()}`}
-                                onSubmitEditing={this.onSubmitPrice}
-                                onChangeText={this.onChangePrice}
-                                right={<TextInput.Affix text={'$'}/>}
-                            />
-                            <TextInput
-                                ref={this.textInput}
-                                style={styles.textInput}
-                                label="Default Country"
-                                type={'outlined'}
-                                value={`${this.props.globalState.user.price.toString()}`}
-                                onSubmitEditing={this.onSubmitPrice}
-                                onChangeText={this.onChangePrice}
-                                right={<TextInput.Affix text={'$'}/>}
-                            />
+                            <ChangePrice {...this.props} />
+
+                            <ChangeCountry {...this.props} />
+
+
                         </View>
                     </List.Accordion> : null}
 

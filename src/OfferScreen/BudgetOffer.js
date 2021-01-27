@@ -15,8 +15,34 @@ export default class BudgetOffer extends React.Component {
             budget: 5 * this.props.route.params.price,
             minutes: 5,
             hours: 0,
+            isFetching: false,
+            businessProfile: {}
         }
-        console.log(this.props.route.params.price)
+        this._isMounted = false
+        console.log(Object.keys(this.props.route.params))
+        console.log(this.props.route.params.businessProfile)
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    componentDidMount() {
+        this._isMounted = true
+        this.props.socket.emit('getBusinessProfile', {
+            username: this.props.route.params.username,
+            email: this.props.route.params.email
+        }, (err, res) => {
+            if (err) console.log(`Error in budget offer ${err}`)
+            else {
+                console.log(`Res ${res}`)
+                if (this._isMounted) {
+                    this.setState({
+                        businessProfile: res
+                    })
+                }
+            }
+        })
     }
 
 
