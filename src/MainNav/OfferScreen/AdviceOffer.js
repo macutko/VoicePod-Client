@@ -3,7 +3,7 @@ import React from "react";
 import Text from "react-native-paper/src/components/Typography/Text";
 import OfferTemplate from "./OfferTemplate";
 import {StyleSheet} from "react-native";
-import {colorScheme} from "../components/constants/Colors";
+import {colorScheme} from "../../components/constants/Colors";
 
 
 export default class AdviceOffer extends React.Component {

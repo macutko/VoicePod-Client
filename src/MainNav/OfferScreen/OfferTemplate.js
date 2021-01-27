@@ -4,10 +4,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {PermissionsAndroid, StyleSheet, View} from "react-native";
 import Text from "react-native-paper/src/components/Typography/Text";
 import AudioRecord from 'react-native-audio-record';
-import AudioPlayer from "../components/AudioPlayer";
+import AudioPlayer from "../../components/AudioPlayer";
 import IconButton from "react-native-paper/src/components/IconButton";
 import * as RNFS from "react-native-fs";
-import {colorScheme} from "../components/constants/Colors";
+import {colorScheme} from "../../components/constants/Colors";
 
 const options = {
     sampleRate: 16000,  // default 44100
