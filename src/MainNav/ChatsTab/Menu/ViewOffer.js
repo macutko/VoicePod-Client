@@ -10,7 +10,6 @@ export default class ViewOffer extends React.Component {
 
   render() {
     const props = this.props.route.params;
-    console.log(props);
     return (
       <>
         <Appbar.Header>
@@ -18,13 +17,9 @@ export default class ViewOffer extends React.Component {
             onPress={() => this.props.navigation.goBack(null)}
           />
           <Appbar.Content
-            title={
-              props.route.params.firstName + " " + props.route.params.lastName
+            title={"View Offer"
             }
-            subtitle={
-              `This is your ` +
-              (this.props.route.params.consultant ? "consultant" : "client")
-            }
+            // subtitle={}
           />
           <Appbar.Action
             icon="dots-vertical"

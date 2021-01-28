@@ -12,10 +12,10 @@ import {createStackNavigator} from "@react-navigation/stack";
 import ChatScreen from "./ChatsTab/Chat/ChatScreen";
 import {TabNavWrapper} from "./TabNavWrapper";
 import ViewOffer from "./ChatsTab/Menu/ViewOffer";
+import { horizontalAnimation } from "../components/helpers/animations";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
-
 
 export const MainNavWrapper = () => {
     return (
@@ -30,6 +30,7 @@ export const MainNavWrapper = () => {
                                     <MainStack.Screen name="TabNavWrapper">
                                         {props => <TabNavWrapper {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
+                                    {/* OfferScreen */}
                                     <MainStack.Screen name="IntroOffer">
                                         {props => <IntroOffer {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
@@ -45,12 +46,15 @@ export const MainNavWrapper = () => {
                                     <MainStack.Screen name="BudgetOffer">
                                         {props => <BudgetOffer  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
+                                    {/* Chat */}
                                     <MainStack.Screen name="ChatScreen">
                                         {props => <ChatScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
-                                    <MainStack.Screen name="ViewOffer">
+                                    {/* Chat Menu */}
+                                    <MainStack.Screen name="ViewOffer" options={horizontalAnimation}>
                                         {props => <ViewOffer  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
+                                    {/* here will go other chat menu screens (Settings, Search, Block...) */}
                                 </MainStack.Navigator>
                             </NavigationContainer>
                         )}
