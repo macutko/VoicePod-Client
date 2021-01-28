@@ -170,7 +170,15 @@ export default class ChatScreen extends React.Component {
           <Menu.Item onPress={() => {}} title="Mute notifications" />
           <Divider />
           <Menu.Item
-            onPress={() => this.props.navigation.navigate("ViewOffer", {})}
+            onPress={() => {
+              this.props.navigation.navigate("ViewOffer", {
+                ...this.state,
+                ...this.props,
+              })
+              this.toggleMenu();
+            }
+  
+            }
             title="View offer"
           />
         </Menu>
