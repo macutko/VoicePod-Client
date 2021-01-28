@@ -68,7 +68,7 @@ export default class InChatMenu extends React.Component {
                         >
 
                             <List.Item
-                                title="View Offer"
+                                title="View Offerer"
                                 onPress={() => this.toggleOffer()}/>
                         </Animated.View>
                         :
