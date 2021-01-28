@@ -1,9 +1,10 @@
 import React from 'react';
 import GlobalContext from "./GlobalState";
 import {WelcomeScreen} from "./WelcomeScreen/WelcomeScreen";
-import {LandingPage} from "./LandingPage/LandingPage";
+
 import {axiosInstance} from "./components/helpers/connectionInstances";
 import {getFromMemory} from "./components/helpers/utils";
+import {MainNavWrapper} from "./MainNav/MainNavWrapper";
 
 
 export default class Main extends React.Component {
@@ -77,7 +78,7 @@ export default class Main extends React.Component {
                 }}
             >
 
-                {this.state.globalState.loggedIn ? <LandingPage/> : <WelcomeScreen/>}
+                {this.state.globalState.loggedIn ? <MainNavWrapper/> : <WelcomeScreen/>}
 
             </GlobalContext.Provider>
         );

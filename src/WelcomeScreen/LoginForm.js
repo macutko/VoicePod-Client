@@ -1,7 +1,14 @@
 import * as React from "react";
 import * as layout from "../components/constants/Layout";
 
-import { Button, Modal, Portal, Text, TextInput } from "react-native-paper";
+import {
+  Button,
+  Modal,
+  Portal,
+  Text,
+  TextInput,
+  HelperText,
+} from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 
 import GlobalContext from "../GlobalState";
@@ -50,23 +57,19 @@ export default class LoginForm extends React.Component {
         }
         switch (error.response.status) {
           case 401:
-            this.setState(
-              {
-                passwordError: error.response.data.message,
-                isUsernameWrong: false,
-                isPasswordWrong: true,
-              }
-            );
+            this.setState({
+              passwordError: error.response.data.message,
+              isUsernameWrong: false,
+              isPasswordWrong: true,
+            });
             break;
-            case 404:
-              this.setState(
-                {
-                  passwordError: error.response.data.message,
-                  isUsernameWrong: true,
-                  isPasswordWrong: false,
-                }
-              );
-              break;
+          case 404:
+            this.setState({
+              passwordError: error.response.data.message,
+              isUsernameWrong: true,
+              isPasswordWrong: false,
+            });
+            break;
           default:
             console.log("Havent accounted for this error code");
             break;
@@ -85,9 +88,6 @@ export default class LoginForm extends React.Component {
         >
           <View style={styles.oval}></View>
           <View style={styles.formContainer}>
-            <Text style={[{color: colorScheme.error}]}>{this.state.isPasswordWrong || this.state.isUsernameWrong 
-                    ? this.state.passwordError 
-                    : ''}</Text>
             <TextInput
               label="Username"
               mode="flat"
@@ -95,7 +95,16 @@ export default class LoginForm extends React.Component {
               textContentType={"username"}
               onChangeText={(text) => this.onChangeText(text, "username")}
               style={styles.inputStyle}
+              error={this.state.isUsernameWrong}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={this.state.isUsernameWrong}
+            >
+              {this.state.passwordError}
+            </HelperText>
+
             <TextInput
               label="Password"
               mode="flat"
@@ -103,11 +112,18 @@ export default class LoginForm extends React.Component {
               textContentType={"password"}
               autoCompleteType={"password"}
               password={true}
-              errorMessage={this.state.passwordError}
               error={this.state.isPasswordWrong}
               onChangeText={(text) => this.onChangeText(text, "password")}
               style={styles.inputStyle}
             />
+            <HelperText
+              style={styles.errorMessage}
+              type="error"
+              visible={this.state.isPasswordWrong}
+            >
+              {this.state.passwordError}
+            </HelperText>
+
             <View style={styles.submitContainer}>
               <Button
                 mode="text"
@@ -135,16 +151,16 @@ const styles = StyleSheet.create({
     height: layout.default.window.width,
     padding: 0,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   oval: {
     position: "absolute",
     left: layout.default.window.width / 2,
     width: layout.default.window.width,
     height: "100%",
-    borderRadius: layout.default.window.width*2,
+    borderRadius: layout.default.window.width * 2,
     transform: [{ scaleX: 2 }],
-    backgroundColor: colorScheme.grey
+    backgroundColor: colorScheme.grey,
   },
   formContainer: {
     width: "50%",
@@ -158,13 +174,12 @@ const styles = StyleSheet.create({
   },
   submitContainer: {
     width: "85%",
-    flexDirection: "row-reverse"
+    flexDirection: "row-reverse",
   },
   buttonLabelStyle: {
     fontSize: 20,
   },
-  
   errorMessage: {
-    color: colorScheme.error,
+    // color: colorScheme.error,
   },
 });
