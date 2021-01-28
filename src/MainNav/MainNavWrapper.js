@@ -26,7 +26,7 @@ export const MainNavWrapper = () => {
                             <NavigationContainer ref={navigationRef}>
                                 <StatusBar hidden={true} translucent backgroundColor='transparent'/>
                                 <MainStack.Navigator screenOptions={{headerShown: false}}>
-                                    <MainStack.Screen name="LandingPage">
+                                    <MainStack.Screen name="TabNavWrapper">
                                         {props => <TabNavWrapper {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
                                     <MainStack.Screen name="IntroOffer">
@@ -44,7 +44,7 @@ export const MainNavWrapper = () => {
                                     <MainStack.Screen name="BudgetOffer">
                                         {props => <BudgetOffer  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
-                                    <MainStack.Screen name="Chat">
+                                    <MainStack.Screen name="ChatScreen">
                                         {props => <ChatScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                 </MainStack.Navigator>

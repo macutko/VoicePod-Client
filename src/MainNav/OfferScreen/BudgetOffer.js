@@ -32,7 +32,7 @@ export default class BudgetOffer extends React.Component {
             if (err) console.log(`Error in Budget Offer ${err}`)
             if (res) {
                 console.log(`Res from Budget Offer ${JSON.stringify(res)}`)
-                this.props.navigation.navigate('LandingPage', {
+                this.props.navigation.navigate('TabNavPage', {
                     screen: 'Chats'
                 });
             }
