@@ -25,7 +25,6 @@ export default class OfferMessage extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.offer_container}>
         <Title style={styles.container_theirs}>Who?</Title>

@@ -10,7 +10,7 @@ export default class ViewOffer extends React.Component {
 
   render() {
     const props = this.props.route.params;
-    console.log("FromVIew: ", props);
+    // console.log("FromVIew: ", props);
     return (
       <>
         <Appbar.Header>
@@ -18,10 +18,10 @@ export default class ViewOffer extends React.Component {
             onPress={() => this.props.navigation.goBack(null)}
           />
           <Appbar.Content
-            title={"View Offer"}
+            title={"Offer"}
             // subtitle={}
           />
-          <Appbar.Action icon="dots-vertical" onPress={() => {}} />
+          {/*<Appbar.Action icon="dots-vertical" onPress={() => {}} />*/}
         </Appbar.Header>
 
         <View style={styles.offerMessageContainer}>

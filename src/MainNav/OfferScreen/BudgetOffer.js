@@ -16,7 +16,6 @@ export default class BudgetOffer extends React.Component {
             minutes: 5,
             hours: 0,
         }
-        console.log(this.props.route.params.price)
     }
 
 
