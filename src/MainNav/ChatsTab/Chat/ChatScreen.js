@@ -89,6 +89,12 @@ export default class ChatScreen extends React.Component {
     );
   };
 
+  acceptOffer = () => {
+    this.setState({
+      offer: { ...this.state.offer, accepted: true },
+    });
+  };
+
   toggleOfferDialog = () => {
     this.setState((prevState) => ({
       offerEndLifeCycleDialog: !prevState.offerEndLifeCycleDialog,
@@ -174,11 +180,10 @@ export default class ChatScreen extends React.Component {
               this.props.navigation.navigate("ViewOffer", {
                 ...this.state,
                 ...this.props,
-              })
+                accept: this.acceptOffer,
+              });
               this.toggleMenu();
-            }
-  
-            }
+            }}
             title="View offer"
           />
         </Menu>
@@ -207,11 +212,7 @@ export default class ChatScreen extends React.Component {
             <OfferMessage
               {...this.props}
               data={this.state.offer}
-              accept={() =>
-                this.setState({
-                  offer: { ...this.state.offer, accepted: true },
-                })
-              }
+              accept={() => this.acceptOffer()}
               reject={() => this.props.navigation.goBack(null)}
               thisIsMyClient={this.state.thisIsMyClient}
             />

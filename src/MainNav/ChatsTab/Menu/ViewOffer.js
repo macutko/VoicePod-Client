@@ -10,6 +10,7 @@ export default class ViewOffer extends React.Component {
 
   render() {
     const props = this.props.route.params;
+    console.log("FromVIew: ", props);
     return (
       <>
         <Appbar.Header>
@@ -17,30 +18,21 @@ export default class ViewOffer extends React.Component {
             onPress={() => this.props.navigation.goBack(null)}
           />
           <Appbar.Content
-            title={"View Offer"
-            }
+            title={"View Offer"}
             // subtitle={}
           />
-          <Appbar.Action
-            icon="dots-vertical"
-            onPress={() => {}}
-          />
+          <Appbar.Action icon="dots-vertical" onPress={() => {}} />
         </Appbar.Header>
 
-      <View style={styles.offerMessageContainer}>
-        <OfferMessage
+        <View style={styles.offerMessageContainer}>
+          <OfferMessage
             {...this.props}
             data={props.offer}
-            accept={() =>
-              this.setprops({
-                offer: { ...props.offer, accepted: true },
-              })
-            }
+            accept={() => props.accept()}
             reject={() => props.navigation.goBack(null)}
             thisIsMyClient={props.thisIsMyClient}
           />
-      </View>
-
+        </View>
       </>
     );
   }
@@ -49,5 +41,5 @@ export default class ViewOffer extends React.Component {
 const styles = StyleSheet.create({
   offerMessageContainer: {
     marginTop: 50,
-  }
+  },
 });
