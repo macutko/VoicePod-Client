@@ -35,18 +35,14 @@ export default class Payments extends React.Component {
 
 
     toggleBusinessAccount = () => {
-        let newUser = this.props.globalState.user
-        newUser.businessActivated = !this.props.globalState.user.businessActivated
+        //TODO: make this isMounted and isFetching compliable
+        this.submitUpdate({
+            businessActivated: !this.props.globalState.user.businessActivated
+        }).then((r) => {
+                this.props.refreshState(this.props.globalState.token)
+            }
+        ).catch(e => console.log(`Error in Payments ${e}`))
 
-        this.props.updateGlobalState(newUser, this.props.globalState.token, true,
-            () => {
-                this.submitUpdate({
-                    businessActivated: newUser.businessActivated,
-                }).then((r) => {
-                        this.props.refreshState(this.props.globalState.token)
-                    }
-                ).catch(e => console.log(`Error in Payments ${e}`))
-            })
     }
 
 
