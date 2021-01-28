@@ -11,7 +11,7 @@ import BudgetOffer from "./OfferScreen/BudgetOffer";
 import {createStackNavigator} from "@react-navigation/stack";
 import ChatScreen from "./ChatsTab/Chat/ChatScreen";
 import {TabNavWrapper} from "./TabNavWrapper";
-import ViewOffer from "./OfferScreen/ViewOffer";
+import ViewOffer from "./ChatsTab/Menu/ViewOffer";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();

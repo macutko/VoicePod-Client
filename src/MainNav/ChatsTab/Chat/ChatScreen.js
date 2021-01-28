@@ -1,9 +1,18 @@
 import React from "react";
 import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
-import { Appbar, Button, Dialog, Paragraph, Portal } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  Dialog,
+  Paragraph,
+  Portal,
+  Menu,
+  Divider,
+} from "react-native-paper";
 import OfferMessage from "./OfferMessage";
 import Message from "./Message";
 import RecordButton from "./RecordButton";
+import { Dimensions } from "react-native";
 
 export default class ChatScreen extends React.Component {
   constructor(props) {
@@ -11,7 +20,7 @@ export default class ChatScreen extends React.Component {
     this.state = {
       messages: [],
       offer: null,
-      openMenu: false,
+      menuVisible: false,
       isFetching: false,
       thisIsMyClient: !props.route.params.consultant,
       offerEndLifeCycleDialog: false,
@@ -64,6 +73,34 @@ export default class ChatScreen extends React.Component {
     });
   }
 
+  closeChat = () => {
+    this.props.socket.emit(
+      "closeChat",
+      { chatId: this.props.route.params.id },
+      (err, res) => {
+        if (err) console.log(`Error in cHat screen on close chat ${err}`);
+        else {
+          if (res) {
+            this.toggleOfferDialog();
+          }
+          console.log(`Res ${res}`);
+        }
+      }
+    );
+  };
+
+  toggleOfferDialog = () => {
+    this.setState((prevState) => ({
+      offerEndLifeCycleDialog: !prevState.offerEndLifeCycleDialog,
+    }));
+  };
+
+  toggleMenu = () => {
+    this.setState((prevState) => ({
+      menuVisible: !prevState.menuVisible,
+    }));
+  };
+
   componentDidMount() {
     this._isMounted = true;
     this.getMessages();
@@ -89,28 +126,6 @@ export default class ChatScreen extends React.Component {
     });
   }
 
-  closeChat = () => {
-    this.props.socket.emit(
-      "closeChat",
-      { chatId: this.props.route.params.id },
-      (err, res) => {
-        if (err) console.log(`Error in cHat screen on close chat ${err}`);
-        else {
-          if (res) {
-            this.toggleOfferDialog();
-          }
-          console.log(`Res ${res}`);
-        }
-      }
-    );
-  };
-
-  toggleOfferDialog = () => {
-    this.setState((prevState) => ({
-      offerEndLifeCycleDialog: !prevState.offerEndLifeCycleDialog,
-    }));
-  };
-
   componentWillUnmount() {
     this._isMounted = false; //TODO: antipattern BUT do not have a better solution yet for sockets
   }
@@ -135,13 +150,30 @@ export default class ChatScreen extends React.Component {
           />
           <Appbar.Action
             icon="dots-vertical"
-            onPress={() =>
-              this.props.navigation.navigate("ViewOffer", {
-                ...this.state.offer,
-              })
-            }
+            onPress={() => this.toggleMenu()}
           />
         </Appbar.Header>
+
+        <Menu
+          visible={this.state.menuVisible}
+          onDismiss={() => this.toggleMenu()}
+          // anchor could be also Appbar.Action button
+          // to avoid nesting it into menu, absolute positioning is used
+          anchor={{ x: Dimensions.get("window").width, y: 0 }}
+        >
+          <Menu.Item onPress={() => {}} title="Settings" />
+          <Menu.Item onPress={() => {}} title="Search" />
+          <Menu.Item onPress={() => {}} title="Block" />
+          <Menu.Item onPress={() => {}} title="Report" />
+          <Menu.Item onPress={() => {}} title="Media Links Docs" />
+          <Menu.Item onPress={() => {}} title="Add to homescreen" />
+          <Menu.Item onPress={() => {}} title="Mute notifications" />
+          <Divider />
+          <Menu.Item
+            onPress={() => this.props.navigation.navigate("ViewOffer", {})}
+            title="View offer"
+          />
+        </Menu>
 
         <View style={{ flexDirection: "column" }}>
           {this.state.offer === null || this.state.offer.accepted ? (
