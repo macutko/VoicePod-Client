@@ -307,12 +307,12 @@ export default class SignUpForm extends React.Component {
 const styles = StyleSheet.create({
   containerStyle: {
     top: layout.default.window.height / 7,
-    top: layout.default.window.height / 35, // suggestion
+    // top: layout.default.window.height / 35, // suggestion
     position: "relative",
     left: "-50%",
     width: "200%",
     height: layout.default.window.width * 1.3,
-    height: layout.default.window.width * 1.5, // suggestion
+    // height: layout.default.window.width * 1.5, // suggestion
     padding: 0,
     justifyContent: "center",
     alignItems: "center",

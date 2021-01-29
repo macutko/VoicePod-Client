@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 import {List} from "react-native-paper";
 import Switch from "react-native-paper/src/components/Switch";
 
@@ -8,6 +8,7 @@ import {axiosInstance} from "../../components/helpers/connectionInstances";
 import {colorScheme} from "../../components/constants/Colors";
 import ChangePrice from "./Payments/ChangePrice";
 import ChangeCountry from "./Payments/ChangeCountry";
+import AddCard from "./Payments/AddCard";
 
 
 export default class Payments extends React.Component {
@@ -48,36 +49,38 @@ export default class Payments extends React.Component {
 
     render() {
         return (
-
-            <List.Section>
-                {/*
+            <ScrollView>
+                <List.Section>
+                    {/*
                     Link Stripe account??
                     disable BA
                     Configure BA pricing
             */}
-                <List.Subheader>Payments</List.Subheader>
-                <List.Item title="Business account"
-                           right={() => <Switch value={this.props.globalState.user.businessActivated}
-                                                onValueChange={this.toggleBusinessAccount}/>}/>
-                {this.props.globalState.user.businessActivated ?
-                    <List.Accordion
-                        title="Business options"
+                    <List.Subheader>Payments</List.Subheader>
+                    <List.Item title="Business account"
+                               right={() => <Switch value={this.props.globalState.user.businessActivated}
+                                                    onValueChange={this.toggleBusinessAccount}/>}/>
+                    {this.props.globalState.user.businessActivated ?
+                        <List.Accordion
+                            title="Business options"
 
-                        left={props => <List.Icon {...props}
-                                                  icon={props => <Ionicons {...props} name={'cash-outline'}/>}/>}
-                        expanded={this.props.globalState.user.businessActivated}>
-                        <View style={styles.containerStyle}>
-                            <ChangePrice {...this.props} />
+                            left={props => <List.Icon {...props}
+                                                      icon={props => <Ionicons {...props} name={'cash-outline'}/>}/>}
+                            expanded={this.props.globalState.user.businessActivated}>
+                            <View style={styles.containerStyle}>
+                                <ChangePrice {...this.props} />
 
-                            <ChangeCountry {...this.props} />
-
-
-                        </View>
-                    </List.Accordion> : null}
-
-            </List.Section>
+                                <ChangeCountry {...this.props} />
 
 
+                            </View>
+                        </List.Accordion> : null}
+
+                    <AddCard {...this.props} />
+
+                </List.Section>
+
+            </ScrollView>
         );
     }
 

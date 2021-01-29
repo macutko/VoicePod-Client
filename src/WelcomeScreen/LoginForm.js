@@ -86,7 +86,7 @@ export default class LoginForm extends React.Component {
           animationType="fade"
           contentContainerStyle={styles.containerStyle}
         >
-          <View style={styles.oval}></View>
+          <View style={styles.oval}/>
           <View style={styles.formContainer}>
             <TextInput
               label="Username"
