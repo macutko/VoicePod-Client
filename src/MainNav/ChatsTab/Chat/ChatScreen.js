@@ -162,6 +162,7 @@ export default class ChatScreen extends React.Component {
           />
         </Appbar.Header>
 
+        {/* Menu takes so long to open. Needs to be fixed.  */}
         <Menu
           visible={this.state.menuVisible}
           onDismiss={() => this.toggleMenu()}
@@ -181,8 +182,13 @@ export default class ChatScreen extends React.Component {
             onPress={() => {
               this.props.navigation.navigate("ViewOffer", {
                 offer: this.state.offer,
-                accept: this.acceptOffer,
                 thisIsMyClient: this.state.thisIsMyClient,
+
+                // antipattern - triggers warning
+                // I don't have better solution for now
+                // maybe we should refactor OfferView,
+                // so that offer can be accepted only from Chat screen
+                accept: this.acceptOffer,
               });
               this.toggleMenu();
             }}

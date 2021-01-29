@@ -9,8 +9,6 @@ export default class ViewOffer extends React.Component {
   }
 
   render() {
-    const props = this.props.route.params;
-    
     return (
       <>
         <Appbar.Header>
