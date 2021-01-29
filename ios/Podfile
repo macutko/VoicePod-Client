@@ -15,24 +15,6 @@ target 'conzlt' do
     # Pods for testing
   end
 
-  # Specify Workspace
-  workspace 'conzlt_stripe'
-
-  target 'conzlt_stripe' do
-    # Stripe
-    pod 'Stripe', '~> 19.4.0'
-
-    # Install additional dependencies
-    pod 'Firebase/Core'
-    pod 'Firebase/Auth'
-    pod 'Firebase/Crash'
-    pod 'Firebase/Database'
-    pod 'Firebase/Firestore'
-    pod 'Firebase/Messaging'
-    pod 'Firebase/Performance'
-    pod 'Firebase/Storage'
-  end
-
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
@@ -51,4 +33,3 @@ target 'conzlt-tvOS' do
     # Pods for testing
   end
 end
-
