@@ -10,7 +10,7 @@ export default class ViewOffer extends React.Component {
 
   render() {
     const props = this.props.route.params;
-    // console.log("FromVIew: ", props);
+    
     return (
       <>
         <Appbar.Header>
@@ -27,10 +27,10 @@ export default class ViewOffer extends React.Component {
         <View style={styles.offerMessageContainer}>
           <OfferMessage
             {...this.props}
-            data={props.offer}
-            accept={() => props.accept()}
+            data={this.props.route.params.offer}
+            accept={() => this.props.route.params.accept()}
             reject={() => props.navigation.goBack(null)}
-            thisIsMyClient={props.thisIsMyClient}
+            thisIsMyClient={this.props.route.params.thisIsMyClient}
           />
         </View>
       </>

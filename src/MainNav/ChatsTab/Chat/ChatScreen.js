@@ -156,7 +156,9 @@ export default class ChatScreen extends React.Component {
           />
           <Appbar.Action
             icon="dots-vertical"
-            onPress={() => this.toggleMenu()}
+            onPress={() => {
+              this.toggleMenu();
+            }}
           />
         </Appbar.Header>
 
@@ -178,9 +180,9 @@ export default class ChatScreen extends React.Component {
           <Menu.Item
             onPress={() => {
               this.props.navigation.navigate("ViewOffer", {
-                ...this.state,
-                ...this.props,
+                offer: this.state.offer,
                 accept: this.acceptOffer,
+                thisIsMyClient: this.state.thisIsMyClient,
               });
               this.toggleMenu();
             }}
