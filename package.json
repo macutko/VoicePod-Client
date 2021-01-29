@@ -46,7 +46,8 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.4.3",
     "shortid": "^2.2.15",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "tipsi-stripe": "^8.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
