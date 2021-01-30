@@ -1,19 +1,17 @@
-import React from "react"
-import SocketContextWrapper, {SocketContext} from "./SocketContextWrapper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { StatusBar } from "react-native-web";
+import { horizontalAnimation } from "../components/helpers/animations";
 import GlobalContext from "../GlobalState";
-import {NavigationContainer} from "@react-navigation/native";
-import {StatusBar} from "react-native-web";
+import ChatScreen from "./ChatsTab/Chat/ChatScreen";
+import ViewOffer from "./ChatsTab/Menu/ViewOffer";
+import BudgetOffer from "./CreateOfferScreen/BudgetOffer";
 import IntroOffer from "./CreateOfferScreen/IntroOffer";
 import ProblemOffer from "./CreateOfferScreen/ProblemOffer";
-import AdviceOffer from "./CreateOfferScreen/AdviceOffer";
-import OutcomeOffer from "./CreateOfferScreen/OutcomeOffer";
-import BudgetOffer from "./CreateOfferScreen/BudgetOffer";
-import {createStackNavigator} from "@react-navigation/stack";
-import ChatScreen from "./ChatsTab/Chat/ChatScreen";
-import {TabNavWrapper} from "./TabNavWrapper";
-import ViewOffer from "./ChatsTab/Menu/ViewOffer";
-import { horizontalAnimation } from "../components/helpers/animations";
 import OfferScreen from "./OffersTab/Offer/OfferScreen";
+import SocketContextWrapper, { SocketContext } from "./SocketContextWrapper";
+import { TabNavWrapper } from "./TabNavWrapper";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
@@ -38,12 +36,6 @@ export const MainNavWrapper = () => {
                                     </MainStack.Screen>
                                     <MainStack.Screen name="ProblemOffer">
                                         {props => <ProblemOffer  {...globalState} {...socket} {...props} />}
-                                    </MainStack.Screen>
-                                    <MainStack.Screen name="AdviceOffer">
-                                        {props => <AdviceOffer {...globalState} {...socket} {...props} />}
-                                    </MainStack.Screen>
-                                    <MainStack.Screen name="OutcomeOffer">
-                                        {props => <OutcomeOffer {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     <MainStack.Screen name="BudgetOffer">
                                         {props => <BudgetOffer  {...globalState} {...socket} {...props}/>}
