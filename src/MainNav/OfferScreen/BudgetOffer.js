@@ -67,8 +67,8 @@ export default class BudgetOffer extends React.Component {
 
                 stripe.confirmPaymentIntent({clientSecret: res.clientSecret,}).then(r => {
                     console.log(r)
-                    this.props.navigation.navigate('LandingPage', {
-                        screen: 'Chats'
+                    this.props.navigation.navigate('TabNavWrapper', {
+                        screen: 'ChatsTab'
                     });
                 }).catch(e => {
                     console.log(e)

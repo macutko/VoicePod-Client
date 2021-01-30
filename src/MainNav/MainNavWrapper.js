@@ -11,6 +11,8 @@ import BudgetOffer from "./OfferScreen/BudgetOffer";
 import {createStackNavigator} from "@react-navigation/stack";
 import ChatScreen from "./ChatsTab/Chat/ChatScreen";
 import {TabNavWrapper} from "./TabNavWrapper";
+import ViewOffer from "./ChatsTab/Menu/ViewOffer";
+import { horizontalAnimation } from "../components/helpers/animations";
 import OfferScreen from "./OffersTab/Offer/OfferScreen";
 
 export const navigationRef = React.createRef();
@@ -27,9 +29,10 @@ export const MainNavWrapper = () => {
                             <NavigationContainer ref={navigationRef}>
                                 <StatusBar hidden={true} translucent backgroundColor='transparent'/>
                                 <MainStack.Navigator screenOptions={{headerShown: false}}>
-                                    <MainStack.Screen name="LandingPage">
+                                    <MainStack.Screen name="TabNavWrapper">
                                         {props => <TabNavWrapper {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
+                                    {/* OfferScreen */}
                                     <MainStack.Screen name="IntroOffer">
                                         {props => <IntroOffer {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
@@ -45,12 +48,18 @@ export const MainNavWrapper = () => {
                                     <MainStack.Screen name="BudgetOffer">
                                         {props => <BudgetOffer  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
-                                    <MainStack.Screen name="Chat">
+                                    {/* Chat */}
+                                    <MainStack.Screen name="ChatScreen">
                                         {props => <ChatScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     <MainStack.Screen name="OfferScreen">
                                         {props => <OfferScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
+                                    {/* Chat Menu */}
+                                    <MainStack.Screen name="ViewOffer" options={horizontalAnimation}>
+                                        {props => <ViewOffer  {...globalState} {...socket} {...props}/>}
+                                    </MainStack.Screen>
+                                    {/* here will go other chat menu screens (Settings, Search, Block...) */}
                                 </MainStack.Navigator>
                             </NavigationContainer>
                         )}
