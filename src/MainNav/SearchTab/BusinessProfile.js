@@ -1,17 +1,52 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import {Avatar, Button, Title} from "react-native-paper";
+import {Avatar, Button, Paragraph, Title} from "react-native-paper";
 import Text from "react-native-paper/src/components/Typography/Text";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Portal from "react-native-paper/src/components/Portal/Portal";
+import Dialog from "react-native-paper/src/components/Dialog/Dialog";
 
 export default class BusinessProfile extends React.Component {
 
     constructor(props) {
+
         super(props);
+        this.state = {
+            showDialog: false
+        }
+        this._isMounted = false
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    componentDidMount() {
+        this._isMounted = true
     }
 
     navigateToOfferCreation = () => {
-        this.props.mainNav.navigate('IntroOffer',{...this.props.route.params})
+        this.props.socket.emit('checkDefaultPaymentMethod', {}, (err, res) => {
+            if (!err) console.log(`Error in BusinessProfile ${err}`)
+            else {
+                console.log(`REs ${res}`)
+                if (res) {
+                    this.props.mainNav.navigate('IntroOffer', {...this.props.route.params})
+                } else {
+                    this.toggleDialog()
+                }
+            }
+        })
+
+
+    }
+
+    toggleDialog = () => {
+        if (this._isMounted) {
+            this.setState(prevState => ({
+                showDialog: !prevState.showDialog
+            }))
+        }
     }
 
     render() {
@@ -30,6 +65,27 @@ export default class BusinessProfile extends React.Component {
                         onPress={() => this.navigateToOfferCreation()} style={styles.buttonStyle}>
                     Send Offer
                 </Button>
+
+                <Portal>
+                    <Dialog visible={this.state.showDialog} onDismiss={() => this.toggleDialog()}>
+                        <Dialog.Title>No payment method</Dialog.Title>
+
+                        <Dialog.Content>
+                            <Paragraph>We are sorry, but first setup a default payment method in settings</Paragraph>
+                        </Dialog.Content>
+
+                        <Dialog.Actions>
+                            <Button onPress={() => {
+                                this.toggleDialog()
+                                this.props.navigation.navigate('SettingsTab', {
+                                    screen: 'Payments'
+                                })
+                            }}>Ok</Button>
+                        </Dialog.Actions>
+                    </Dialog>
+                </Portal>
+
+
             </View>);
     }
 }
