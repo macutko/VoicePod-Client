@@ -1,8 +1,10 @@
 import React from "react";
 import {
-  Image, PermissionsAndroid,
+  Image,
+  PermissionsAndroid,
   StyleSheet,
-  TouchableOpacity, View
+  TouchableOpacity,
+  View,
 } from "react-native";
 import AudioRecord from "react-native-audio-record";
 import * as RNFS from "react-native-fs";
@@ -89,10 +91,15 @@ export default class OfferTemplate extends React.Component {
             onPress={() => this.props.navigation.goBack(null)}
           />
           <Appbar.Content
-            title={"Intro"}
+            title={this.props.title}
             //   subtitle={""}
           />
-          <Appbar.Action icon="arrow-right" onPress={() => this.submit()} />
+          {this.state.voiceClip && (
+            <Appbar.Action
+              icon="arrow-right"
+              onPress={() => this.props.submit()}
+            />
+          )}
         </Appbar.Header>
 
         <View style={styles.background}>
@@ -113,20 +120,22 @@ export default class OfferTemplate extends React.Component {
 
           <Text style={styles.counter}>{this.state.counter}</Text>
 
-          {this.props.bottomPart ? (
-            this.props.bottomPart
+          {!this.state.voiceClip ? (
+            <Text style={styles.description}>{this.props.description}</Text>
           ) : (
-            <Text style={styles.description}>
-              Press the microphone and speak for 1 minute.
-            </Text>
+            <AudioPlayer
+              style={styles.player}
+              pathToSound={this.state.pathToFile}
+              width={"60%"}
+            />
           )}
 
-          {this.state.voiceClip == null || this.state.recording ? null : (
+          {/* {this.state.voiceClip == null || this.state.recording ? null : (
             <AudioPlayer
               style={styles.player}
               pathToSound={this.state.pathToFile}
             />
-          )}
+          )} */}
 
           {/* <Button
             mode="contained"
@@ -150,17 +159,18 @@ export default class OfferTemplate extends React.Component {
 
 const styles = StyleSheet.create({
   mic: {
-    width: 50,
-    height: 100,
+    width: 60,
+    height: 140,
     // flex: 1,
     // aspectRatio: 0.1,
     resizeMode: "contain",
   },
   counter: {
     color: colorScheme.secondary,
+    fontWeight: "bold",
   },
   player: {
-    // marginTop: 20,
+    marginTop: 20,
   },
   background: {
     backgroundColor: colorScheme.white,
@@ -185,7 +195,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   description: {
-    paddingTop: 10,
+    paddingTop: 40,
     fontSize: 13,
     color: colorScheme.neutral_subtle,
     width: "80%",

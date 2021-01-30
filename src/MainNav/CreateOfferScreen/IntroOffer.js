@@ -24,6 +24,8 @@ export default class IntroOffer extends React.Component {
         {...this.props}
         submit={(voiceClip) => this.submit(voiceClip)}
         current={"IntroOffer"}
+        description={"Press the microphone and speak for 1 minute."}
+        title={"Intro"}
       >
         <>
           <Image
@@ -52,11 +54,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   description: {
-    paddingTop: 10,
-    fontSize: 15,
-    fontStyle: "italic",
+    paddingTop: 40,
+    fontSize: 13,
     color: colorScheme.neutral_subtle,
     width: "80%",
-    textAlign: "justify",
+    textAlign: "center",
   },
 });

@@ -31,13 +31,13 @@ export const MainNavWrapper = () => {
                                         {props => <TabNavWrapper {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
                                     {/* OfferScreen */}
-                                    <MainStack.Screen name="IntroOffer">
+                                    <MainStack.Screen name="IntroOffer" options={horizontalAnimation}>
                                         {props => <IntroOffer {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
-                                    <MainStack.Screen name="ProblemOffer">
+                                    <MainStack.Screen name="ProblemOffer" options={horizontalAnimation}>
                                         {props => <ProblemOffer  {...globalState} {...socket} {...props} />}
                                     </MainStack.Screen>
-                                    <MainStack.Screen name="BudgetOffer">
+                                    <MainStack.Screen name="BudgetOffer" options={horizontalAnimation}>
                                         {props => <BudgetOffer  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     {/* Chat */}

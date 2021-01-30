@@ -125,18 +125,20 @@ export default class AudioPlayer extends React.Component {
 
                         <IconButton
                             style={styles.button}
-                            icon={props => <Ionicons {...props} name={'play'} color={colorScheme.accent}/>}
+                            icon={props => <Ionicons {...props} name={'play'} color={colorScheme.secondary}/>}
                             onPress={() => this.playSound()}
                         />
 
                         <Slider
-                            style={styles.slider}
+                            style={[styles.slider, {width: this.props.width}]}
                             minimumValue={0}
                             maximumValue={this.state.duration}
                             value={this.state.currentTime}
                             onValueChange={this.seek}
                             minimumTrackTintColor={colorScheme.background}
                             maximumTrackTintColor={colorScheme.accent}
+                            thumbTintColor={colorScheme.secondary}
+                            maximumTrackTintColor={colorScheme.white}
                         />
                     </View>
                 </View>
@@ -146,18 +148,19 @@ export default class AudioPlayer extends React.Component {
 }
 const styles = StyleSheet.create({
     slider: {
-        height: 65,
-        // width: "90%",
-        flexGrow: 1
+        height: 50,
+        width: "50%",
+        flexGrow: 1,
     },
     button: {
         alignSelf: "center",
+        color: colorScheme.secondary,
     },
     mainContainer: {
         alignContent: 'center',
         justifyContent: 'center',
         marginHorizontal: 10,
-        backgroundColor: colorScheme.neutral_subtle,
+        backgroundColor: colorScheme.black,
         borderRadius: 15,
     },
     container: {
