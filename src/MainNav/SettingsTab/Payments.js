@@ -37,6 +37,7 @@ export default class Payments extends React.Component {
 
     toggleBusinessAccount = () => {
         //TODO: make this isMounted and isFetching compliable
+        //TODO: first add a payment method
         this.submitUpdate({
             businessActivated: !this.props.globalState.user.businessActivated
         }).then((r) => {

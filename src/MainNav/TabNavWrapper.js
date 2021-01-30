@@ -5,6 +5,7 @@ import ChatsTab from "./ChatsTab/ChatsTab";
 import SearchTab from "./SearchTab/SearchTab";
 import SettingsTab from "./SettingsTab/SettingsTab";
 import React from "react";
+import OffersTab from "./OffersTab/OffersTab";
 
 const TabNav = createMaterialBottomTabNavigator();
 
@@ -25,6 +26,15 @@ export const TabNavWrapper = (inheritance) => {
                 ),
             }}>
                 {props => <ChatsTab  {...inheritance} {...props} mainNav={inheritance.navigation}/>}
+            </TabNav.Screen>
+
+            <TabNav.Screen name="Offers" options={{
+                tabBarLabel: 'Offers',
+                tabBarIcon: ({color}) => (
+                    <Ionicons name={'list-circle'} size={26} color={color}/>
+                ),
+            }}>
+                {props => <OffersTab  {...inheritance} {...props} mainNav={inheritance.navigation}/>}
             </TabNav.Screen>
 
             <TabNav.Screen name="Search" options={{

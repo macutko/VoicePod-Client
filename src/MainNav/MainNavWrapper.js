@@ -11,6 +11,7 @@ import BudgetOffer from "./OfferScreen/BudgetOffer";
 import {createStackNavigator} from "@react-navigation/stack";
 import ChatScreen from "./ChatsTab/Chat/ChatScreen";
 import {TabNavWrapper} from "./TabNavWrapper";
+import OfferScreen from "./OffersTab/Offer/OfferScreen";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
@@ -46,6 +47,9 @@ export const MainNavWrapper = () => {
                                     </MainStack.Screen>
                                     <MainStack.Screen name="Chat">
                                         {props => <ChatScreen  {...globalState} {...socket} {...props}/>}
+                                    </MainStack.Screen>
+                                    <MainStack.Screen name="OfferScreen">
+                                        {props => <OfferScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                 </MainStack.Navigator>
                             </NavigationContainer>
