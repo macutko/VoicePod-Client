@@ -3,19 +3,21 @@ import SocketContextWrapper, {SocketContext} from "./SocketContextWrapper";
 import GlobalContext from "../GlobalState";
 import {NavigationContainer} from "@react-navigation/native";
 import {StatusBar} from "react-native-web";
-import IntroOffer from "./OfferScreen/IntroOffer";
-import ProblemOffer from "./OfferScreen/ProblemOffer";
-import AdviceOffer from "./OfferScreen/AdviceOffer";
-import OutcomeOffer from "./OfferScreen/OutcomeOffer";
-import BudgetOffer from "./OfferScreen/BudgetOffer";
+import IntroOffer from "./CreateOfferScreen/IntroOffer";
+import ProblemOffer from "./CreateOfferScreen/ProblemOffer";
+import AdviceOffer from "./CreateOfferScreen/AdviceOffer";
+import OutcomeOffer from "./CreateOfferScreen/OutcomeOffer";
+import BudgetOffer from "./CreateOfferScreen/BudgetOffer";
 import {createStackNavigator} from "@react-navigation/stack";
 import ChatScreen from "./ChatsTab/Chat/ChatScreen";
 import {TabNavWrapper} from "./TabNavWrapper";
 import ViewOffer from "./ChatsTab/Menu/ViewOffer";
 import { horizontalAnimation } from "../components/helpers/animations";
+import OfferScreen from "./OffersTab/Offer/OfferScreen";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
+
 
 export const MainNavWrapper = () => {
     return (
@@ -49,6 +51,9 @@ export const MainNavWrapper = () => {
                                     {/* Chat */}
                                     <MainStack.Screen name="ChatScreen">
                                         {props => <ChatScreen  {...globalState} {...socket} {...props}/>}
+                                    </MainStack.Screen>
+                                    <MainStack.Screen name="OfferScreen">
+                                        {props => <OfferScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     {/* Chat Menu */}
                                     <MainStack.Screen name="ViewOffer" options={horizontalAnimation}>

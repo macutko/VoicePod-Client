@@ -39,7 +39,6 @@ export default class Message extends React.Component {
             <View style={{paddingTop: 10}}>
                 <View style={this.state.ownMessage ? styles.ownMessage : styles.otherMessage}>
                     <AudioPlayer soundBits={this.props.data.soundBits}
-                                 menuPress={this.getTranscript}
                                  pathToSound={`${this.props.data.id}_${this.props.data.chatId}.wav`}/>
 
 

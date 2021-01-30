@@ -163,7 +163,6 @@ export default class RecordButton extends React.Component {
     async componentDidMount() {
         this._isMounted = true //TODO: this is an antipattern, however I have not found a working & elegant solution to socket yet
         this.getMinuteBalance()
-
         await PermissionsAndroid.requestMultiple([
             PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
         ]);

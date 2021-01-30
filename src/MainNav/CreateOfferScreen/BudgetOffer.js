@@ -7,20 +7,53 @@ import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
 import TextInput from "react-native-paper/src/components/TextInput/TextInput";
 import {Button} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import stripe from 'tipsi-stripe'
+
+
+stripe.setOptions({
+    publishableKey: 'pk_test_51IDSTZECU7HrwjM1mvfNnY2spqwoSGu9rAKZYia8Egd4QRruVp9S6HIUaPi1WEWWDM8sEcNMN5r4fioXDibqBvi4008TNJG6Xe',
+    androidPayMode: 'test', // Android only
+})
 
 export default class BudgetOffer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            budget: 5 * this.props.route.params.price,
+            budget: 0,
             minutes: 5,
             hours: 0,
+            isFetching: false,
+            businessProfile: {}
         }
+        this._isMounted = false
+        console.log(Object.keys(this.props.route.params))
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    componentDidMount() {
+        this._isMounted = true
+        this.props.socket.emit('getBusinessProfile', {
+            username: this.props.route.params.username,
+            email: this.props.route.params.email
+        }, (err, res) => {
+            if (err) console.log(`Error in budget offer ${err}`)
+            else {
+                if (this._isMounted) {
+                    this.setState({
+                        businessProfile: res,
+                        budget: res.price * this.state.minutes
+                    })
+                }
+            }
+        })
     }
 
 
     submit = () => {
-        this.props.socket.emit('offerProposition', {
+        this.props.socket.emit('createOffer', {
             username: this.props.route.params.username,
             intro: this.props.route.params.intro,
             problem: this.props.route.params.problem,
@@ -31,9 +64,17 @@ export default class BudgetOffer extends React.Component {
             if (err) console.log(`Error in Budget Offer ${err}`)
             if (res) {
                 console.log(`Res from Budget Offer ${JSON.stringify(res)}`)
-                this.props.navigation.navigate('TabNavWrapper', {
-                    screen: 'ChatsTab'
-                });
+
+                stripe.confirmPaymentIntent({clientSecret: res.clientSecret,}).then(r => {
+                    console.log(r)
+                    this.props.navigation.navigate('TabNavWrapper', {
+                        screen: 'ChatsTab'
+                    });
+                }).catch(e => {
+                    console.log(e)
+                })
+
+
             }
         })
 
@@ -46,7 +87,7 @@ export default class BudgetOffer extends React.Component {
             e = 5
         }
         let m = Math.round(e)
-        let budget = ((this.state.hours * 60) + m) * this.props.route.params.price
+        let budget = ((this.state.hours * 60) + m) * (this.state.businessProfile.price ? this.state.businessProfile.price : 0)
         this.setState({
             minutes: m,
             budget: budget
@@ -60,7 +101,7 @@ export default class BudgetOffer extends React.Component {
             e = 0
         }
         let h = Math.round(e)
-        let budget = ((h * 60) + this.state.minutes) * this.props.route.params.price
+        let budget = ((h * 60) + this.state.minutes) * (this.state.businessProfile.price ? this.state.businessProfile.price : 0)
         this.setState({
             hours: h,
             budget: budget
