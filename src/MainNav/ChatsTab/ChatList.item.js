@@ -28,7 +28,7 @@ export default class ChatListItem extends React.Component {
                     style={this.state.user.consultant ? styles.container_consultant : styles.container_noob}
                     description={this.state.user.consultant ? 'Advisor' : 'Client'}
                     descriptionStyle={this.state.user.consultant ? styles.profileDesc_consultant : styles.profileDesc_noob}
-                    onPress={() => this.props.mainNav.push('Chat', {
+                    onPress={() => this.props.mainNav.push('ChatScreen', {
                         id: this.props.data.id, ...this.state.user,
                         lastMessage: this.props.data.lastMessage,
                         offerId: this.props.data.offer

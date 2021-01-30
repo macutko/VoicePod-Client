@@ -16,7 +16,6 @@ export default class BudgetOffer extends React.Component {
             minutes: 5,
             hours: 0,
         }
-        console.log(this.props.route.params.price)
     }
 
 
@@ -32,8 +31,8 @@ export default class BudgetOffer extends React.Component {
             if (err) console.log(`Error in Budget Offer ${err}`)
             if (res) {
                 console.log(`Res from Budget Offer ${JSON.stringify(res)}`)
-                this.props.navigation.navigate('LandingPage', {
-                    screen: 'Chats'
+                this.props.navigation.navigate('TabNavWrapper', {
+                    screen: 'ChatsTab'
                 });
             }
         })
