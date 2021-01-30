@@ -124,7 +124,9 @@ export class Settings extends React.Component {
                         <Dialog.Title>Delete User</Dialog.Title>
                         <Dialog.Content>
                             <Paragraph>Are you sure you want to delete your account? Your data will be permanently and
-                                inadvertently erased</Paragraph>
+                                inadvertently erased. We will still collect any outstanding payments or open chats.
+                                However, you might not get paid if you have open chats. Please close these chats
+                                first.</Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
                             <Button onPress={this.confirmDelete}>Yes!</Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import {ScrollView, StyleSheet, View} from "react-native";
+import {Linking, ScrollView, StyleSheet, View} from "react-native";
 import {List} from "react-native-paper";
 import Switch from "react-native-paper/src/components/Switch";
 
@@ -27,6 +27,8 @@ export default class Payments extends React.Component {
                 },
             })
             .then((response) => {
+                console.log(response.data.url)
+                Linking.openURL(response.data.url)
                 console.log(`Response form Payments ${response.status}`)
             })
             .catch((error) => {
@@ -61,6 +63,8 @@ export default class Payments extends React.Component {
                     <List.Item title="Business account"
                                right={() => <Switch value={this.props.globalState.user.businessActivated}
                                                     onValueChange={this.toggleBusinessAccount}/>}/>
+                    <AddCard {...this.props} />
+
                     {this.props.globalState.user.businessActivated ?
                         <List.Accordion
                             title="Business options"
@@ -77,7 +81,6 @@ export default class Payments extends React.Component {
                             </View>
                         </List.Accordion> : null}
 
-                    <AddCard {...this.props} />
 
                 </List.Section>
 
