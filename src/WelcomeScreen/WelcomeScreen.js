@@ -46,7 +46,7 @@ export class WelcomeScreen extends React.Component {
             sign up
           </WelcomeScreenButton>
 
-          <View style={styles.socialButtons}>
+          {/* <View style={styles.socialButtons}>
             <WelcomeScreenButton
               type="social"
               onPress={() => {
@@ -64,7 +64,7 @@ export class WelcomeScreen extends React.Component {
             >
               <Ionicons name={"logo-google"} style={styles.icon} />
             </WelcomeScreenButton>
-          </View>
+          </View> */}
         </View>
 
         <LoginForm
