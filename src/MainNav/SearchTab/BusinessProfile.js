@@ -27,7 +27,7 @@ export default class BusinessProfile extends React.Component {
 
     navigateToOfferCreation = () => {
         this.props.socket.emit('checkDefaultPaymentMethod', {}, (err, res) => {
-            if (!err) console.log(`Error in BusinessProfile ${err}`)
+            if (err != null) console.log(`Error in BusinessProfile ${err}`)
             else {
                 console.log(`REs ${res}`)
                 if (res) {
