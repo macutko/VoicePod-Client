@@ -1,8 +1,6 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
-import Text from "react-native-paper/src/components/Typography/Text";
+import { Image, StyleSheet } from "react-native";
 import Title from "react-native-paper/src/components/Typography/Title";
-import { colorScheme } from "../../components/constants/Colors";
 import OfferTemplate from "./OfferTemplate";
 
 export default class ProblemOffer extends React.Component {
@@ -19,6 +17,7 @@ export default class ProblemOffer extends React.Component {
     return (
       <OfferTemplate
         {...this.props}
+        style={styles.container}
         current={"ProblemOffer"}
         submit={(voiceClip) => this.submit(voiceClip)}
         description={"Try to be as factual and as specific as possible."}
@@ -38,19 +37,13 @@ export default class ProblemOffer extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    aspectRatio: 0.8, 
-    resizeMode: 'contain',
-    height: 380
+    resizeMode: "contain",
+    flex: 0.7,
   },
   title: {
-    marginTop: -10, // I am not sure how to position image 
     fontSize: 30,
   },
   description: {
-    paddingTop: 40,
     fontSize: 13,
-    color: colorScheme.neutral_subtle,
-    width: "80%",
-    textAlign: "center",
   },
 });

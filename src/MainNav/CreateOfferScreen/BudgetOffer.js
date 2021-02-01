@@ -1,13 +1,12 @@
-import React from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { colorScheme } from "../../components/constants/Colors";
 import Slider from "@react-native-community/slider";
-import Title from "react-native-paper/src/components/Typography/Title";
-import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
-import TextInput from "react-native-paper/src/components/TextInput/TextInput";
+import React from "react";
+import { Image, StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import TextInput from "react-native-paper/src/components/TextInput/TextInput";
+import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
+import Title from "react-native-paper/src/components/Typography/Title";
 import stripe from "tipsi-stripe";
+import { colorScheme } from "../../components/constants/Colors";
 
 stripe.setOptions({
   publishableKey:
@@ -56,7 +55,7 @@ export default class BudgetOffer extends React.Component {
   }
 
   submit = () => {
-      console.log();
+    console.log();
     this.props.socket.emit(
       "createOffer",
       {
@@ -126,7 +125,7 @@ export default class BudgetOffer extends React.Component {
 
   render() {
     return (
-      <View style={styles.background}>
+      <View style={styles.container}>
         <Title style={styles.title}>Budget</Title>
         <Paragraph style={styles.description}>
           Set your maximum spending. Your mate might suggest a smaller amount if
@@ -139,65 +138,67 @@ export default class BudgetOffer extends React.Component {
           source={require("../../assets/images/budget.png")}
         />
 
-        <View style={styles.row}>
-          <TextInput
-            style={styles.textInput}
-            underlineColor={"transparent"}
-            label="Minutes"
-            type={"flat"}
-            keyboardType={"number-pad"}
-            value={this.state.minutes.toString()}
-            onChangeText={(text) =>
-              isNaN(text) ? null : this.changeMinutes(parseInt(text))
-            }
-          />
-          <Slider
-            style={styles.slider}
-            minimumValue={5}
-            maximumValue={60}
-            value={this.state.minutes}
-            onValueChange={this.changeMinutes}
-            minimumTrackTintColor={colorScheme.background}
-            maximumTrackTintColor={colorScheme.accent}
-            minimumTrackTintColor={colorScheme.secondary}
-            maximumTrackTintColor={colorScheme.primary}
-            thumbTintColor={colorScheme.secondary}
-          />
-        </View>
-        <View style={styles.row}>
-          <TextInput
-            style={styles.textInput}
-            underlineColor={"transparent"}
-            label="Hours"
-            type={"flat"}
-            keyboardType={"number-pad"}
-            value={this.state.hours.toString()}
-            onChangeText={(text) =>
-              isNaN(text) ? null : this.changeHours(parseInt(text))
-            }
-          />
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={10}
-            value={this.state.hours}
-            onValueChange={this.changeHours}
-            minimumTrackTintColor={colorScheme.secondary}
-            maximumTrackTintColor={colorScheme.primary}
-            thumbTintColor={colorScheme.secondary}
-          />
+        <View>
+          {/* TODO : outsource */}
+          <View style={styles.row}>
+            <TextInput
+              style={styles.textInput}
+              underlineColor={"transparent"}
+              label="Minutes"
+              type={"flat"}
+              keyboardType={"number-pad"}
+              value={this.state.minutes.toString()}
+              onChangeText={(text) =>
+                isNaN(text) ? null : this.changeMinutes(parseInt(text))
+              }
+            />
+            <Slider
+              style={styles.slider}
+              minimumValue={5}
+              maximumValue={60}
+              value={this.state.minutes}
+              onValueChange={this.changeMinutes}
+              minimumTrackTintColor={colorScheme.background}
+              maximumTrackTintColor={colorScheme.accent}
+              minimumTrackTintColor={colorScheme.secondary}
+              maximumTrackTintColor={colorScheme.primary}
+              thumbTintColor={colorScheme.secondary}
+            />
+          </View>
+          <View style={styles.row}>
+            <TextInput
+              style={styles.textInput}
+              underlineColor={"transparent"}
+              label="Hours"
+              type={"flat"}
+              keyboardType={"number-pad"}
+              value={this.state.hours.toString()}
+              onChangeText={(text) =>
+                isNaN(text) ? null : this.changeHours(parseInt(text))
+              }
+            />
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={10}
+              value={this.state.hours}
+              onValueChange={this.changeHours}
+              minimumTrackTintColor={colorScheme.secondary}
+              maximumTrackTintColor={colorScheme.primary}
+              thumbTintColor={colorScheme.secondary}
+            />
+          </View>
         </View>
 
-        <Title>{`${this.state.budget} $`}</Title>
+        <Title style={styles.budget}>{`${this.state.budget} $`}</Title>
 
         <Button
           mode="contained"
-          labelStyle={styles.buttonStyle_label}
+          labelStyle={styles.buttonStyleLabel}
           onPress={() => this.submit()}
           style={styles.buttonStyle}
           color={colorScheme.secondary}
           contentStyle={styles.buttonContentStyle}
-          labelStyle={{color: colorScheme.white}}
         >
           Submit Offer
         </Button>
@@ -207,51 +208,50 @@ export default class BudgetOffer extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  image: {
-    aspectRatio: 1.1,
-    resizeMode: "contain",
-    height: 180,
-    marginBottom: 20,
-  },
-  slider: { width: "70%", height: 40, marginTop: 20 },
-  textInput: {
-    width: "30%",
-    textAlign: "center",
-    backgroundColor: "transparent",
-  },
-  row: {
-    justifyContent: "center",
-    flexDirection: "row",
-    width: "100%",
-    marginTop: 10,
+  container: {
+    flex: 1,
     alignItems: "center",
-    marginBottom: -20,
-  },
-  buttonStyle_label: { color: colorScheme.neutral },
-  buttonStyle: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "auto",
-    marginBottom: 40,
-    borderRadius: 10
-  },
-  buttonContentStyle: {
-    width: 200,
-    height: 50
-  },
-  background: {
+    justifyContent: "space-evenly",
+    padding: "8%",
     backgroundColor: colorScheme.white,
-    height: "100%",
-    alignItems: "center",
-    paddingTop: "10%",
-    paddingHorizontal: "10%",
-    // justifyContent: "center",
-  },
-  description: {
-      marginTop: 20,
-    textAlign: "justify",
   },
   title: {
     fontSize: 30,
+  },
+  description: {
+    textAlign: "justify",
+  },
+  image: {
+    flex: 0.6,
+    resizeMode: "contain",
+  },
+  row: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    marginBottom: -15,
+  },
+  slider: {
+    width: "72%",
+    height: 30,
+    marginTop: 18,
+  },
+  textInput: {
+    width: "28%",
+    textAlign: "center",
+    backgroundColor: "transparent",
+  },
+  budget: {
+    fontSize: 28,
+    paddingVertical: "3%",
+  },
+  buttonStyle: {
+    width: 200,
+    height: 50,
+    borderRadius: 10,
+  },
+  buttonStyleLabel: {
+    fontSize: 18,
   },
 });

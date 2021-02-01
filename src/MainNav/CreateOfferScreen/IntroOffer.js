@@ -1,10 +1,7 @@
-import Title from "react-native-paper/src/components/Typography/Title";
 import React from "react";
-import Text from "react-native-paper/src/components/Typography/Text";
+import { Image, StyleSheet } from "react-native";
+import Title from "react-native-paper/src/components/Typography/Title";
 import OfferTemplate from "./OfferTemplate";
-import { StyleSheet, Image } from "react-native";
-import { colorScheme } from "../../components/constants/Colors";
-import { Appbar } from "react-native-paper";
 
 export default class IntroOffer extends React.Component {
   constructor(props) {
@@ -30,13 +27,9 @@ export default class IntroOffer extends React.Component {
         <>
           <Image
             style={styles.image}
-            source={require('../../assets/images/intro.png')}
+            source={require("../../assets/images/intro.png")}
           />
           <Title style={styles.title}>Who are you?</Title>
-          {/* <Text style={styles.description}>
-            Let the other side know how to connect with you! It will make the
-            process easier.
-          </Text> */}
         </>
       </OfferTemplate>
     );
@@ -45,19 +38,13 @@ export default class IntroOffer extends React.Component {
 
 const styles = StyleSheet.create({
   image: {
-    aspectRatio: 0.9, 
-    resizeMode: 'contain',
-    height: 400
+    resizeMode: "contain",
+    flex: 0.7,
   },
   title: {
-    marginTop: -40, // I am not sure how to position image 
     fontSize: 30,
   },
   description: {
-    paddingTop: 40,
     fontSize: 13,
-    color: colorScheme.neutral_subtle,
-    width: "80%",
-    textAlign: "center",
   },
 });
