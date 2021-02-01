@@ -38,7 +38,7 @@ export default class OfferScreen extends React.Component {
         this.props.socket.emit('rejectOrCancelOffer', {offerId: this.props.route.params.id}, (err, res) => {
             if (err) console.log(`Err in offer screen ${err}`)
             else {
-                this.props.navigate('Offers')
+                this.props.navigation.navigate('Offers')
             }
         })
 
