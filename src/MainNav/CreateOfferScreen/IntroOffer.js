@@ -1,49 +1,50 @@
-import Title from "react-native-paper/src/components/Typography/Title";
 import React from "react";
-import Text from "react-native-paper/src/components/Typography/Text";
+import { Image, StyleSheet } from "react-native";
+import Title from "react-native-paper/src/components/Typography/Title";
 import OfferTemplate from "./OfferTemplate";
-import {StyleSheet} from "react-native";
-import {colorScheme} from "../../components/constants/Colors";
-
 
 export default class IntroOffer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
+  submit = (voiceClip) => {
+    this.props.navigation.navigate("ProblemOffer", {
+      ...this.props.route.params,
+      intro: voiceClip,
+    });
+  };
 
-    submit = (voiceClip) => {
-        this.props.navigation.navigate('ProblemOffer', {...this.props.route.params,intro: voiceClip})
-    }
-
-    render() {
-        return (
-            <OfferTemplate {...this.props} submit={(voiceClip) => this.submit(voiceClip)} current={'IntroOffer'}
-                           navTo={'ProblemOffer'}
-                           topPart={
-                               <>
-                                   <Title style={styles.title}>Who are you</Title>
-                                   <Text style={styles.description}>Let the other side know how to connect with you! It
-                                       will make the
-                                       process easier</Text>
-                               </>
-                           }
-            />
-
-        );
-    }
+  render() {
+    return (
+      <OfferTemplate
+        {...this.props}
+        submit={(voiceClip) => this.submit(voiceClip)}
+        current={"IntroOffer"}
+        description={"Press the microphone and speak for 1 minute."}
+        title={"Intro"}
+      >
+        <>
+          <Image
+            style={styles.image}
+            source={require("../../assets/images/intro.png")}
+          />
+          <Title style={styles.title}>Who are you?</Title>
+        </>
+      </OfferTemplate>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    title: {
-        fontSize: 25
-    },
-    description: {
-        paddingTop: 10,
-        fontSize: 15,
-        fontStyle: 'italic',
-        color: colorScheme.neutral_subtle,
-        width: "80%",
-        textAlign: 'justify'
-    },
+  image: {
+    resizeMode: "contain",
+    flex: 0.7,
+  },
+  title: {
+    fontSize: 30,
+  },
+  description: {
+    fontSize: 13,
+  },
 });

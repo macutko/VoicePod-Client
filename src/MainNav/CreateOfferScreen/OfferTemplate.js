@@ -1,163 +1,145 @@
 import React from "react";
-import {Button} from "react-native-paper";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import {PermissionsAndroid, StyleSheet, View} from "react-native";
-import Text from "react-native-paper/src/components/Typography/Text";
-import AudioRecord from 'react-native-audio-record';
-import AudioPlayer from "../../components/AudioPlayer";
-import IconButton from "react-native-paper/src/components/IconButton";
+import {
+  Image,
+  PermissionsAndroid,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native";
+import AudioRecord from "react-native-audio-record";
 import * as RNFS from "react-native-fs";
-import {colorScheme} from "../../components/constants/Colors";
-
-const options = {
-    sampleRate: 16000,  // default 44100
-    channels: 1,        // 1 or 2, default 1
-    bitsPerSample: 16,  // 8 or 16, default 16
-    audioSource: 6,     // android only
-    // wavFile: 'test.wav' // default 'audio.wav'
-};
+import { Appbar, Text } from "react-native-paper";
+import AudioPlayer from "../../components/AudioPlayer";
+import { colorScheme } from "../../components/constants/Colors";
+import { recordingSettings } from "../../components/constants/Recording";
 
 export default class OfferTemplate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      voiceClip: null,
+      recording: false,
+      pathToFile: null,
+      counter: 0,
+      timer: null,
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            voiceClip: null,
-            recording: false,
-            pathToFile: null,
-            counter: 0,
-            timer: null
-        }
+  async componentDidMount() {
+    await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+    ]);
+    AudioRecord.init({
+      ...recordingSettings,
+      wavFile: `${this.props.current}.wav`,
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  tick = () => {
+    if (this.state.counter >= 60) {
+      this.record();
+    } else {
+      this.setState({
+        counter: this.state.counter + 1,
+      });
     }
+  };
 
-    async componentDidMount() {
-        await PermissionsAndroid.requestMultiple([
-            PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-        ]);
-        AudioRecord.init({...options, wavFile: `${this.props.current}.wav`})
-    }
-
-    componentWillUnmount() {
+  record = () => {
+    if (!this.state.recording) {
+      // start recording
+      let timer = setInterval(this.tick, 1000);
+      this.setState(
+        {
+          recording: true,
+          timer: timer,
+        },
+        () => AudioRecord.start()
+      );
+    } else {
+      // stop recording
+      AudioRecord.stop().then((r) => {
         clearInterval(this.state.timer);
+        RNFS.readFile(r, "base64").then((data) => {
+          this.setState({
+            voiceClip: data,
+            recording: false,
+            pathToFile: r,
+            counter: 0,
+          });
+        });
+      });
     }
+  };
 
-    tick = () => {
-        if (this.state.counter >= 60) {
-            this.record()
-        } else {
-            this.setState({
-                counter: this.state.counter + 1
-            });
-        }
-    }
+  render() {
+    return (
+      <>
+        <Appbar.Header statusBarHeight={0}>
+          <Appbar.BackAction
+            onPress={() => this.props.navigation.goBack(null)}
+          />
+          <Appbar.Content
+            title={this.props.title}
+            //   subtitle={""}
+          />
+          {this.state.voiceClip && (
+            <Appbar.Action
+              icon="arrow-right"
+              onPress={() => this.props.submit(this.state.voiceClip)}
+            />
+          )}
+        </Appbar.Header>
 
-    record = () => {
-        if (!this.state.recording) {
-            // start recording
-            let timer = setInterval(this.tick, 1000);
-            this.setState({
-                recording: true,
-                timer: timer
-            }, () => AudioRecord.start())
-        } else {
-            // stop recording
-            AudioRecord.stop().then(r => {
-                console.log(r)
-                clearInterval(this.state.timer)
-                RNFS.readFile(r, 'base64')
-                    .then((data) => {
-                        this.setState({
-                            voiceClip: data,
-                            recording: false,
-                            pathToFile: r,
-                            counter: 0
-                        })
-                    })
-            })
-        }
-    }
+        <View style={styles.container}>
+          {this.props.children}
 
+          <TouchableOpacity onPress={() => this.record()}>
+            <Image
+              style={styles.mic}
+              source={require("../../assets/images/mic.png")}
+            />
+          </TouchableOpacity>
 
-    submit = () => {
-        this.props.navigation.navigate('ProblemOffer', {who: this.state.voiceClip})
-    }
-
-    render() {
-        return (
-            <View style={styles.background}>
-                {this.props.topPart}
-
-
-                <IconButton
-                    icon={props => <Ionicons {...props} name={'mic'}/>}
-                    color={colorScheme.accent}
-                    size={40}
-                    onPress={() => this.record()}
-                />
-
-
-                <Text style={styles.counter}>{this.state.counter}</Text>
-
-                {this.props.bottomPart ? this.props.bottomPart :
-                    <Text style={styles.description}>When you are ready, press the microphone and
-                        start talking. You will
-                        have 1 minute.</Text>}
-
-                {this.state.voiceClip == null || this.state.recording ? null :
-                    <AudioPlayer style={styles.player} pathToSound={this.state.pathToFile}/>}
-
-                <Button mode="contained"
-                        labelStyle={styles.buttonStyle_label}
-                        icon={props => <Ionicons {...props} name={'send'}/>}
-                        disabled={this.state.voiceClip == null || this.state.recording}
-                        onPress={() => this.props.submit(this.state.voiceClip)}
-                        style={this.state.voiceClip == null || this.state.recording ? styles.buttonStyle_disabled : styles.buttonStyle}>
-                    Next
-                </Button>
-            </View>
-
-        );
-    }
+          <Text style={styles.counter}>{this.state.counter}</Text>
+          {!this.state.voiceClip ? (
+            <Text style={styles.description}>{this.props.description}</Text>
+          ) : (
+            <AudioPlayer
+              style={styles.player}
+              pathToSound={this.state.pathToFile}
+              width={"60%"}
+            />
+          )}
+        </View>
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    counter: {
-        color: colorScheme.error
-    },
-    player: {
-        marginTop: 20
-    },
-    background: {
-        backgroundColor: colorScheme.primary,
-        height: "100%",
-        alignItems: "center",
-        paddingTop: "10%",
-        // justifyContent: "center",
-    },
-    buttonStyle_label: {color: colorScheme.neutral,},
-    buttonStyle_disabled: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: "auto",
-        marginBottom: 10,
-        backgroundColor: colorScheme.neutral_subtle,
-        width: "80%"
-    },
-    buttonStyle: {
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: "auto",
-        marginBottom: 10,
-        backgroundColor: colorScheme.secondary,
-        width: "80%"
-    },
-    description: {
-        paddingTop: 10,
-        fontSize: 15,
-        fontStyle: 'italic',
-        color: colorScheme.neutral_subtle,
-        width: "80%",
-        textAlign: 'justify'
-    },
-
+  container: {
+    backgroundColor: colorScheme.white,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  mic: {
+    width: 60,
+    height: 140,
+    resizeMode: "contain",
+  },
+  counter: {
+    color: colorScheme.secondary,
+    fontWeight: "bold",
+    fontSize: 25,
+  },
+  description: {
+    fontSize: 13,
+    lineHeight: 50,
+  },
 });
