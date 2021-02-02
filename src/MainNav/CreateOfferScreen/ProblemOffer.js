@@ -5,7 +5,6 @@ import OfferTemplate from "./OfferTemplate";
 
 export default class ProblemOffer extends React.Component {
   submit = (voiceClip) => {
-    console.log("here");
     this.props.navigation.navigate("BudgetOffer", {
       ...this.props.route.params,
       intro: this.props.route.params.intro,

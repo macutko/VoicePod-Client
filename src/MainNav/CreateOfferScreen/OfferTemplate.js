@@ -63,7 +63,6 @@ export default class OfferTemplate extends React.Component {
     } else {
       // stop recording
       AudioRecord.stop().then((r) => {
-        console.log(r);
         clearInterval(this.state.timer);
         RNFS.readFile(r, "base64").then((data) => {
           this.setState({
@@ -75,12 +74,6 @@ export default class OfferTemplate extends React.Component {
         });
       });
     }
-  };
-
-  submit = () => {
-    this.props.navigation.navigate("ProblemOffer", {
-      who: this.state.voiceClip,
-    });
   };
 
   render() {
@@ -97,7 +90,7 @@ export default class OfferTemplate extends React.Component {
           {this.state.voiceClip && (
             <Appbar.Action
               icon="arrow-right"
-              onPress={() => this.props.submit()}
+              onPress={() => this.props.submit(this.state.voiceClip)}
             />
           )}
         </Appbar.Header>

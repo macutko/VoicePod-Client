@@ -1,6 +1,6 @@
 import Slider from "@react-native-community/slider";
 import React from "react";
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Button } from "react-native-paper";
 import TextInput from "react-native-paper/src/components/TextInput/TextInput";
 import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
@@ -27,7 +27,6 @@ export default class BudgetOffer extends React.Component {
       businessProfile: {},
     };
     this._isMounted = false;
-    console.log(Object.keys(this.props.route.params));
   }
 
   componentWillUnmount() {
@@ -57,7 +56,6 @@ export default class BudgetOffer extends React.Component {
   }
 
   submit = () => {
-    console.log();
     this.props.socket.emit(
       "createOffer",
       {
@@ -98,14 +96,11 @@ export default class BudgetOffer extends React.Component {
     let budget =
       (this.state.hours * 60 + m) *
       (this.state.businessProfile.price ? this.state.businessProfile.price : 0);
-    this.setState(
-      {
-        minutesInput: m.toString(),
-        minutes: m,
-        budget: budget,
-      },
-      () => console.log(this.state.minutes)
-    );
+    this.setState({
+      minutesInput: m.toString(),
+      minutes: m,
+      budget: budget,
+    });
   };
   changeHours = (e) => {
     if (e > 10) {
@@ -118,14 +113,11 @@ export default class BudgetOffer extends React.Component {
     let budget =
       (h * 60 + this.state.minutes) *
       (this.state.businessProfile.price ? this.state.businessProfile.price : 0);
-    this.setState(
-      {
-        hoursInput: h.toString(),
-        hours: h,
-        budget: budget,
-      },
-      () => console.log(this.state.hours)
-    );
+    this.setState({
+      hoursInput: h.toString(),
+      hours: h,
+      budget: budget,
+    });
   };
 
   render() {
@@ -203,7 +195,7 @@ export default class BudgetOffer extends React.Component {
           </View>
         </View>
 
-        <Text style={styles.budget}>{`${this.state.budget} $`}</Text>
+        <Title style={styles.budget}>{`${this.state.budget} $`}</Title>
 
         <Button
           mode="contained"
@@ -260,9 +252,11 @@ const styles = StyleSheet.create({
     paddingVertical: "3%",
   },
   buttonStyle: {
+    borderRadius: 10,
+  },
+  buttonContentStyle: {
     width: 200,
     height: 50,
-    borderRadius: 10,
   },
   buttonStyleLabel: {
     fontSize: 18,
