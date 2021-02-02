@@ -1,6 +1,6 @@
 import Slider from "@react-native-community/slider";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import TextInput from "react-native-paper/src/components/TextInput/TextInput";
 import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
@@ -19,6 +19,8 @@ export default class BudgetOffer extends React.Component {
     super(props);
     this.state = {
       budget: 0,
+      minutesInput: "5",
+      hoursInput: "0",
       minutes: 5,
       hours: 0,
       isFetching: false,
@@ -84,6 +86,7 @@ export default class BudgetOffer extends React.Component {
       }
     );
   };
+
   changeMinutes = (e) => {
     if (e > 60) {
       e = 60;
@@ -97,6 +100,7 @@ export default class BudgetOffer extends React.Component {
       (this.state.businessProfile.price ? this.state.businessProfile.price : 0);
     this.setState(
       {
+        minutesInput: m.toString(),
         minutes: m,
         budget: budget,
       },
@@ -116,6 +120,7 @@ export default class BudgetOffer extends React.Component {
       (this.state.businessProfile.price ? this.state.businessProfile.price : 0);
     this.setState(
       {
+        hoursInput: h.toString(),
         hours: h,
         budget: budget,
       },
@@ -147,10 +152,13 @@ export default class BudgetOffer extends React.Component {
               label="Minutes"
               type={"flat"}
               keyboardType={"number-pad"}
-              value={this.state.minutes.toString()}
+              value={this.state.minutesInput}
               onChangeText={(text) =>
-                isNaN(text) ? null : this.changeMinutes(parseInt(text))
+                this.setState({
+                  minutesInput: text,
+                })
               }
+              onEndEditing={() => this.changeMinutes(this.state.minutesInput)}
             />
             <Slider
               style={styles.slider}
@@ -172,10 +180,15 @@ export default class BudgetOffer extends React.Component {
               label="Hours"
               type={"flat"}
               keyboardType={"number-pad"}
-              value={this.state.hours.toString()}
+              value={this.state.hoursInput}
               onChangeText={(text) =>
-                isNaN(text) ? null : this.changeHours(parseInt(text))
+                this.setState({
+                  hoursInput: text,
+                })
               }
+              onEndEditing={() => {
+                this.changeHours(this.state.hoursInput);
+              }}
             />
             <Slider
               style={styles.slider}
@@ -190,7 +203,7 @@ export default class BudgetOffer extends React.Component {
           </View>
         </View>
 
-        <Title style={styles.budget}>{`${this.state.budget} $`}</Title>
+        <Text style={styles.budget}>{`${this.state.budget} $`}</Text>
 
         <Button
           mode="contained"
