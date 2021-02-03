@@ -2,7 +2,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { colorScheme } from "../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ChatsTab from "../screens/ChatsTab";
-import SearchTab from "../screens/SearchTab";
+import SearchTab from "../screens/SearchTab/SearchTab";
 import SettingsTab from "../screens/SettingsTab";
 import React from "react";
 import OffersTab from "../screens/OffersTab";
