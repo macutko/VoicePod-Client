@@ -1,7 +1,7 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import UserProfileSettings from "../components/organisms/SettingsTab/UserProfileSettings";
-import PrivacySettings from "../components/molecules/PrivacySettings";
-import Payments from "../components/molecules/Payments";
+import PrivacySettings from "../components/organisms/SettingsTab/PrivacySettings";
+import PaymentsSettings from "../components/organisms/SettingsTab/PaymentsSettings";
 import ContactSupport from "../components/molecules/ContactSupport";
 import React from "react";
 import {Settings} from "../screens/tabs/SettingsTab";
@@ -21,7 +21,7 @@ const SettingsTab = (inheritance) => {
                 {props => <PrivacySettings {...props} {...inheritance}/>}
             </SettingsStack.Screen>
             <SettingsStack.Screen name="Payments">
-                {props => <Payments {...props} {...inheritance}/>}
+                {props => <PaymentsSettings {...props} {...inheritance}/>}
             </SettingsStack.Screen>
             <SettingsStack.Screen name="ContactSupport">
                 {props => <ContactSupport {...props} {...inheritance}/>}

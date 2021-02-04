@@ -4,36 +4,30 @@ import {List} from "react-native-paper";
 import Switch from "react-native-paper/src/components/Switch";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {axiosInstance} from "../../utilities/ConnectionUtils";
-import {colorScheme} from "../../constants/Colors";
-import ChangePrice from "./ChangePrice";
-import ChangeCountry from "./ChangeCountry";
-import AddCard from "./AddCard";
+import {colorScheme} from "../../../constants/Colors";
+import ChangePrice from "../../molecules/ChangePrice";
+import ChangeCountry from "../../molecules/ChangeCountry";
+import AddCard from "../../molecules/AddCard";
+import updateAccountAPI from "../../../api/user/updateAccount";
 
 
-export default class Payments extends React.Component {
+export default class PaymentsSettings extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.globalState.user)
     }
 
     submitUpdate = async (data) => {
+        updateAccountAPI(data, this.props.globalState.token)
+            .then(r => {
+                if (r && r.url) {
+                    console.log(r.url)
+                    Linking.openURL(r.url)
+                }
+                this.props.refreshState(this.props.globalState.token)
 
-        await axiosInstance
-            .post("/user/updateAccount", data, {
-                headers: {
-                    Authorization: `Bearer ${this.props.globalState.token}`
-                },
             })
-            .then((response) => {
-                console.log(response.data.url)
-                Linking.openURL(response.data.url)
-                console.log(`Response form Payments ${response.status}`)
-            })
-            .catch((error) => {
-                console.log(`Error in Payments ${error}`)
-            });
+            .catch(e => console.log(`Error in Payments ${e}`))
     }
 
 

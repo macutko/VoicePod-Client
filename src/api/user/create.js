@@ -3,7 +3,7 @@ import {storeData} from "../../utilities/StorageUtils";
 
 
 const createAPI = async (firstName, lastName, email, username, password) => {
-
+    console.log(email)
     return new Promise((fulfill, reject) => {
         axiosInstance
             .post("/user/create", {

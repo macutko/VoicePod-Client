@@ -12,7 +12,7 @@ const updateAccountAPI = async (data,token) => {
             })
             .then((response) => {
                 console.log(`Response from updateAccount ${response.status}`)
-                fulfill()
+                fulfill(response.data)
             })
             .catch((error) => {
                 console.log(`Error in updateAccount ${error}`)
