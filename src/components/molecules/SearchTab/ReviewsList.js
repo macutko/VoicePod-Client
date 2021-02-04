@@ -3,7 +3,7 @@ import {Review} from "../../atoms/Review";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {SocketContext} from "../../atoms/SocketContext";
 import {getReviewsOfUser} from "../../../api/getReviewsOfUser";
-import {ActivityIndicator} from "react-native-paper";
+import {ActivityIndicator, Title} from "react-native-paper";
 import {colorScheme} from "../../../constants/Colors";
 
 export const ReviewsList = ({username}) => {
@@ -17,6 +17,7 @@ export const ReviewsList = ({username}) => {
             _isMounted.current = false;
         }
     }, []);
+
     useEffect(() => {
         let unmounted = false;
         if (isFetching) {
@@ -30,25 +31,29 @@ export const ReviewsList = ({username}) => {
     }, [isFetching]);
 
     return (
-        !isFetching ?
-            <>
-                <FlatList
-                    data={reviews}
-                    style={styles.reviewContainer}
+        <>
+            <Title> Reviews</Title>
 
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={isFetching}
-                            onRefresh={() => setIsFetching(true)}
-                        />
-                    }
-                    renderItem={({item}) => (
-                        <Review data={item}/>
-                    )}
-                    keyExtractor={(item) => item.id}
-                />
-            </>
-            : <ActivityIndicator animating={true} color={colorScheme.accent}/>
+            {!isFetching ?
+                <>
+                    <FlatList
+                        data={reviews}
+                        style={styles.reviewContainer}
+
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={isFetching}
+                                onRefresh={() => setIsFetching(true)}
+                            />
+                        }
+                        renderItem={({item}) => (
+                            <Review data={item}/>
+                        )}
+                        keyExtractor={(item) => item.id}
+                    />
+                </>
+                : <ActivityIndicator animating={true} color={colorScheme.accent}/>}
+        </>
 
     )
 }

@@ -1,85 +1,61 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {StyleSheet, View} from "react-native";
 import {Avatar, Button, Title} from "react-native-paper";
 import Text from "react-native-paper/src/components/Typography/Text";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {AddPaymentWarning} from "../../molecules/SearchTab/AddPaymentWarning";
 import {ReviewsList} from "../../molecules/SearchTab/ReviewsList";
+import {checkDefaultPaymentMethod} from "../../../api/checkDefaultPaymentMethod";
 
-export default class UserProfile extends React.Component {
+const UserProfile = (props) => {
+    const _isMounted = useRef(true);
+    const [showDialog, setShowDialog] = useState(false);
 
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            showDialog: false,
+    useEffect(() => {
+        return () => { // ComponentWillUnmount in Class Component
+            _isMounted.current = false;
         }
-        this._isMounted = false
+    }, []);
 
-    }
 
-    componentWillUnmount() {
-        this._isMounted = false
-    }
-
-    componentDidMount() {
-        this._isMounted = true
-    }
-
-    navigateToOfferCreation = () => {
-        this.props.socket.emit('checkDefaultPaymentMethod', {}, (err, res) => {
-            if (err != null) console.log(`Error in BusinessProfile ${err}`)
-            else {
-                console.log(`REs ${res}`)
-                if (res) {
-                    this.props.mainNav.navigate('IntroOffer', {...this.props.route.params})
-                } else {
-                    this.toggleDialog()
-                }
+    const navigateToOfferCreation = () => {
+        checkDefaultPaymentMethod(props.socket).then(r => {
+            if (r) {
+                props.mainNav.navigate('IntroCreateOfferScreen', {...props.route.params})
+            } else {
+                if (_isMounted) setShowDialog(!showDialog)
             }
-        })
-
-
-    }
-
-    toggleDialog = () => {
-        if (this._isMounted) {
-            this.setState(prevState => ({
-                showDialog: !prevState.showDialog
-            }))
-        }
+        }).catch(e => console.log(e))
     }
 
 
-    render() {
-        return (
-            <View style={styles.containerStyle}>
+    return (
+        <View style={styles.containerStyle}>
 
-                <Avatar.Image size={200}
-                              source={{uri: `data:image/${this.props.route.params.pictureType};base64,${this.props.route.params.profilePicture}`}}/>
+            <Avatar.Image size={200}
+                          source={{uri: `data:image/${props.route.params.pictureType};base64,${props.route.params.profilePicture}`}}/>
 
-                <Text style={styles.handle}>@{this.props.route.params.username}</Text>
+            <Text style={styles.handle}>@{props.route.params.username}</Text>
 
-                <Title
-                    style={styles.nameTag}>{this.props.route.params.firstName} {this.props.route.params.lastName}</Title>
+            <Title
+                style={styles.nameTag}>{props.route.params.firstName} {props.route.params.lastName}</Title>
 
-                <Text style={styles.description}>{this.props.route.params.description}</Text>
-                <Button mode="contained" icon={props => <Ionicons {...props} name={'send'}/>}
-                        onPress={() => this.navigateToOfferCreation()} style={styles.buttonStyle}>
-                    Send Offer
-                </Button>
+            <Text style={styles.description}>{props.route.params.description}</Text>
+            <Button mode="contained" icon={props => <Ionicons {...props} name={'send'}/>}
+                    onPress={() => navigateToOfferCreation()} style={styles.buttonStyle}>
+                Send Offer
+            </Button>
 
-                <Title> Reviews</Title>
+            <ReviewsList username={props.route.params.username}/>
 
-                <ReviewsList username={this.props.route.params.username}/>
+            <AddPaymentWarning toggleDialog={_isMounted ? () => setShowDialog(!showDialog) : null}
+                               navigation={props.navigation}
+                               showDialog={showDialog}/>
 
-                <AddPaymentWarning toggleDialog={this.toggleDialog} navigation={this.props.navigation}
-                                   showDialog={this.state.showDialog}/>
+        </View>);
 
-
-            </View>);
-    }
 }
+export default UserProfile;
 
 const styles = StyleSheet.create({
     buttonStyle: {
@@ -108,8 +84,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
-    reviewContainer: {
-        width: "100%",
 
-    }
 });
