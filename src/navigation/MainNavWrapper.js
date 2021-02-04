@@ -10,12 +10,15 @@ import BudgetOffer from "../___________MainNav/CreateOfferScreen/BudgetOffer";
 import IntroOffer from "../___________MainNav/CreateOfferScreen/IntroOffer";
 import ProblemOffer from "../___________MainNav/CreateOfferScreen/ProblemOffer";
 import OfferScreen from "../___________MainNav/OffersTab/Offer/OfferScreen";
-import SocketContextWrapper, {SocketContext} from "../components/molecules/SocketContextWrapper";
+import SocketContextWrapper from "../components/molecules/SocketContextWrapper";
+
 import {TabNavWrapper} from "./TabNavWrapper";
 import LeaveReview from "../___________MainNav/LeaveReview/LeaveReview";
+import { SocketContext } from "../components/atoms/SocketContext";
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
+
 
 
 export const MainNavWrapper = () => {
