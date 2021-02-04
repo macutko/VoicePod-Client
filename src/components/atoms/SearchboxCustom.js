@@ -47,5 +47,5 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "transparent",
         fontSize: 20,
-    }
+    },
 });
