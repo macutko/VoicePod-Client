@@ -35,7 +35,7 @@ export default class UserProfile extends React.Component {
             else {
                 console.log(`REs ${res}`)
                 if (res) {
-                    this.props.mainNav.navigate('IntroOffer', {...this.props.route.params})
+                    this.props.mainNav.navigate('IntroCreateOfferScreen', {...this.props.route.params})
                 } else {
                     this.toggleDialog()
                 }

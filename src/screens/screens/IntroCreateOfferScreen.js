@@ -9,7 +9,7 @@ export default class IntroCreateOfferScreen extends React.Component {
     }
 
     submit = (voiceClip) => {
-        this.props.navigation.navigate("ProblemOffer", {
+        this.props.navigation.navigate("ProblemCreateOfferScreen", {
             ...this.props.route.params,
             intro: voiceClip,
         });
