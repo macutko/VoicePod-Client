@@ -1,7 +1,7 @@
 import React from "react";
 import {FlatList, RefreshControl} from "react-native";
 import OfferListItem from "../../components/molecules/OfferList.item";
-import {getOffersByUserId} from "../../api/getOffers";
+import {getOffersByUserId} from "../../api/offer/getOffers";
 
 
 export default class OffersTab extends React.Component {

@@ -2,7 +2,7 @@ import {FlatList, RefreshControl, StyleSheet} from "react-native";
 import {Review} from "../../atoms/Review";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {SocketContext} from "../../atoms/SocketContext";
-import {getReviewsOfUser} from "../../../api/getReviewsOfUser";
+import {getReviewsOfUser} from "../../../api/review/getReviewsOfUser";
 import {ActivityIndicator, Title} from "react-native-paper";
 import {colorScheme} from "../../../constants/Colors";
 

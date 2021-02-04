@@ -106,7 +106,7 @@ export default class SignUpForm extends React.Component {
             return;
         }
         // send request if valid
-        createAPI(this.state.firstname, this.state.lastname, this.state.email, this.state.username.this.state.password)
+        createAPI(this.state.user.firstname, this.state.user.lastname, this.state.user.email, this.state.user.username, this.state.user.password)
             .then(([user, token]) => {
                 this.context.updateGlobalState(
                     user,
