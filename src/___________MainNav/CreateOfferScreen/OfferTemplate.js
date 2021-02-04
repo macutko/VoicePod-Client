@@ -4,7 +4,7 @@ import {
   PermissionsAndroid,
   StyleSheet,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import AudioRecord from "react-native-audio-record";
 import * as RNFS from "react-native-fs";
@@ -64,7 +64,6 @@ export default class OfferTemplate extends React.Component {
     } else {
       // stop recording
       AudioRecord.stop().then((r) => {
-        console.log(r);
         clearInterval(this.state.timer);
         RNFS.readFile(r, "base64").then((data) => {
           this.setState({
@@ -78,16 +77,10 @@ export default class OfferTemplate extends React.Component {
     }
   };
 
-  submit = () => {
-    this.props.navigation.navigate("ProblemOffer", {
-      who: this.state.voiceClip,
-    });
-  };
-
   render() {
     return (
       <>
-        <Appbar.Header>
+        <Appbar.Header statusBarHeight={0}>
           <Appbar.BackAction
             onPress={() => this.props.navigation.goBack(null)}
           />
@@ -98,20 +91,14 @@ export default class OfferTemplate extends React.Component {
           {this.state.voiceClip && (
             <Appbar.Action
               icon="arrow-right"
-              onPress={() => this.props.submit()}
+              onPress={() => this.props.submit(this.state.voiceClip)}
             />
           )}
         </Appbar.Header>
 
-        <View style={styles.background}>
+        <View style={styles.container}>
           {this.props.children}
 
-          {/* <IconButton
-            icon={(props) => <Ionicons {...props} name={"mic"} />}
-            color={colorScheme.accent}
-            size={40}
-            onPress={() => this.record()}
-          /> */}
           <TouchableOpacity onPress={() => this.record()}>
             <Image
               style={styles.mic}
@@ -120,7 +107,6 @@ export default class OfferTemplate extends React.Component {
           </TouchableOpacity>
 
           <Text style={styles.counter}>{this.state.counter}</Text>
-
           {!this.state.voiceClip ? (
             <Text style={styles.description}>{this.props.description}</Text>
           ) : (
@@ -130,28 +116,6 @@ export default class OfferTemplate extends React.Component {
               width={"60%"}
             />
           )}
-
-          {/* {this.state.voiceClip == null || this.state.recording ? null : (
-            <AudioPlayer
-              style={styles.player}
-              pathToSound={this.state.pathToFile}
-            />
-          )} */}
-
-          {/* <Button
-            mode="contained"
-            labelStyle={styles.buttonStyle_label}
-            icon={(props) => <Ionicons {...props} name={"send"} />}
-            disabled={this.state.voiceClip == null || this.state.recording}
-            onPress={() => this.props.submit(this.state.voiceClip)}
-            style={
-              this.state.voiceClip == null || this.state.recording
-                ? styles.buttonStyle_disabled
-                : styles.buttonStyle
-            }
-          >
-            Next
-          </Button> */}
         </View>
       </>
     );
@@ -159,47 +123,24 @@ export default class OfferTemplate extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colorScheme.white,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
   mic: {
     width: 60,
     height: 140,
-    // flex: 1,
-    // aspectRatio: 0.1,
     resizeMode: "contain",
   },
   counter: {
     color: colorScheme.secondary,
     fontWeight: "bold",
-  },
-  player: {
-    marginTop: 20,
-  },
-  background: {
-    backgroundColor: colorScheme.white,
-    height: "100%",
-    alignItems: "center",
-  },
-  buttonStyle_label: { color: colorScheme.neutral },
-  buttonStyle_disabled: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "auto",
-    marginBottom: 10,
-    backgroundColor: colorScheme.neutral_subtle,
-    width: "80%",
-  },
-  buttonStyle: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "auto",
-    marginBottom: 10,
-    backgroundColor: colorScheme.secondary,
-    width: "80%",
+    fontSize: 25,
   },
   description: {
-    paddingTop: 40,
     fontSize: 13,
-    color: colorScheme.neutral_subtle,
-    width: "80%",
-    textAlign: "center",
+    lineHeight: 50,
   },
 });
