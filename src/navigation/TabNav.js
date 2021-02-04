@@ -2,18 +2,19 @@ import {createMaterialBottomTabNavigator} from "@react-navigation/material-botto
 import {colorScheme} from "../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ChatsTab from "../screens/tabs/ChatsTab";
-import SearchTab from "../screens/tabs/SearchTab";
+
 
 import React from "react";
 import OffersTab from "../screens/tabs/OffersTab";
 import SettingsTab from "./SettingsNav";
+import {SearchNavigator} from "./SearchNav";
 
 const Nav = createMaterialBottomTabNavigator();
 
 export const TabNav = (inheritance) => {
     return (
         <Nav.Navigator
-            initialRouteName="SearchTab"
+            initialRouteName="SearchNavigator"
             activeColor={colorScheme.primary}
             inactiveColor={colorScheme.accent}
             barStyle={{backgroundColor: colorScheme.background}}
@@ -23,7 +24,11 @@ export const TabNav = (inheritance) => {
                 options={{
                     tabBarLabel: "Chats",
                     tabBarIcon: ({color}) => (
-                        <Ionicons name={"chatbubble-ellipses"} size={26} color={color}/>
+                        <Ionicons
+                            name={"chatbubble-ellipses"}
+                            size={26}
+                            color={color}
+                        />
                     ),
                 }}
             >
@@ -35,16 +40,29 @@ export const TabNav = (inheritance) => {
                     />
                 )}
             </Nav.Screen>
-            <Nav.Screen name="OffersTab" options={{
-                tabBarLabel: 'Offers',
-                tabBarIcon: ({color}) => (
-                    <Ionicons name={'list-circle'} size={26} color={color}/>
-                ),
-            }}>
-                {props => <OffersTab  {...inheritance} {...props} mainNav={inheritance.navigation}/>}
+            <Nav.Screen
+                name="Offers"
+                options={{
+                    tabBarLabel: "Offers",
+                    tabBarIcon: ({color}) => (
+                        <Ionicons
+                            name={"list-circle"}
+                            size={26}
+                            color={color}
+                        />
+                    ),
+                }}
+            >
+                {(props) => (
+                    <OffersTab
+                        {...inheritance}
+                        {...props}
+                        mainNav={inheritance.navigation}
+                    />
+                )}
             </Nav.Screen>
             <Nav.Screen
-                name="SearchTab"
+                name="SearchNavigator"
                 options={{
                     tabBarLabel: "Search",
                     tabBarIcon: ({color}) => (
@@ -53,7 +71,7 @@ export const TabNav = (inheritance) => {
                 }}
             >
                 {(props) => (
-                    <SearchTab
+                    <SearchNavigator
                         {...inheritance}
                         {...props}
                         mainNav={inheritance.navigation}

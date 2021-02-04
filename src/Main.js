@@ -1,10 +1,11 @@
 import React from 'react';
 import GlobalContext from "./components/atoms/GlobalState";
-import {WelcomeScreen} from "./screens/screens/WelcomeScreen";
+
 
 import {axiosInstance} from "./utilities/ConnectionUtils";
 import {getFromMemory} from "./utilities/StorageUtils";
 import {MainNav} from "./navigation/MainNav";
+import WelcomeScreen from "./screens/screens/WelcomeScreen";
 
 
 export default class Main extends React.Component {

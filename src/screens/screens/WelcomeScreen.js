@@ -6,7 +6,7 @@ import SignUpForm from "../../components/organisms/WelcomeScreen/SignUpForm";
 import {colorScheme} from "../../constants/Colors";
 import WelcomeScreenHeader from "../../components/organisms/WelcomeScreen/WelcomeScreenHeader";
 
-export class WelcomeScreen extends React.Component {
+export default class WelcomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
