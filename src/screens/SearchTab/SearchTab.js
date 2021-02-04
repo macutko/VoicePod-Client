@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Divider, List, Searchbar } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import TextInputCustom from "../../components/atoms/TextInputCustom";
+import SearchboxCustom from "../../components/atoms/SearchboxCustom";
 import OutlineTopScreen from "../../components/molecules/OutlineTopScreen";
 
 class SearchTab extends React.Component {
@@ -37,10 +37,10 @@ class SearchTab extends React.Component {
   render() {
     return (
       <OutlineTopScreen title={"Search"}>
-        <TextInputCustom
-          onChangeText={this.onChangeSearch}
-          value={this.state.searchQuery}
-          placeholder={"Search"}
+        <SearchboxCustom
+            onChangeText={this.onChangeSearch}
+            value={this.state.searchQuery}
+            placeholder={"Search by name"}
         />
         <List.Section>
           {/*TODO: change to flatlist*/}
