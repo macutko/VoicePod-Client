@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { StyleSheet, View } from "react-native";
 import * as RNFS from "react-native-fs";
 import Slider from "@react-native-community/slider";
-import { colorScheme } from "./constants/Colors";
+import {colorScheme} from "../constants/Colors";
 
 export default class AudioPlayer extends React.Component {
   constructor(props) {
