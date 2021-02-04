@@ -1,7 +1,7 @@
 import React from "react";
 import {createStackNavigator} from "@react-navigation/stack";
 import SearchTab from "../screens/tabs/SearchTab";
-import UserProfile from "../components/molecules/UserProfile";
+import UserProfile from "../components/organisms/SearchTab/UserProfile";
 
 const SearchStack = createStackNavigator();
 
