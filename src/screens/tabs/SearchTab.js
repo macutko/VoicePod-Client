@@ -1,8 +1,8 @@
 import React from "react";
-import { Avatar, Divider, List, Searchbar } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
-import SearchboxCustom from "../../components/atoms/SearchboxCustom";
+import { StyleSheet } from "react-native";
 import OutlineTopScreen from "../../components/molecules/OutlineTopScreen";
+import SearchboxCustom from "../../components/molecules/SearchboxCustom";
+import UserCard from "../../components/organisms/UserCard";
 
 class SearchTab extends React.Component {
     constructor(props) {
@@ -44,45 +44,17 @@ class SearchTab extends React.Component {
                     value={this.state.searchQuery}
                     placeholder={"Search by name"}
                 />
-                <List.Section>
-                    {/*TODO: change to flatlist*/}
-                    {this.state.results.map((object, i) => (
-                        <View key={`wrapper_${i}`}>
-                            <List.Item
-                                titleStyle={styles.profileTitle}
-                                style={styles.container}
-                                descriptionStyle={styles.profileDesc}
-                                onPress={() => {
-                                    console.log(object);
-                                    this.props.navigation.push("UserProfile", {
-                                        ...object,
-                                    });
-                                }}
-                                title={object.firstName + " " + object.lastName}
-                                description={object.description}
-                                descriptionNumberOfLines={2}
-                                key={i}
-                                left={(props) => (
-                                    <List.Icon
-                                        {...props}
-                                        style={styles.profilePic}
-                                        key={`icon_${i}`}
-                                        icon={(props) => (
-                                            <Avatar.Image
-                                                key={`avatar_${i}`}
-                                                source={{
-                                                    uri: `data:image/${object.pictureType};base64,
-                                                                                                  ${object.profilePicture}`,
-                                                }}
-                                            />
-                                        )}
-                                    />
-                                )}
-                            />
-                            <Divider key={`divider_${i}`} />
-                        </View>
-                    ))}
-                </List.Section>
+                {this.state.results.map((result, i) => (
+                    <UserCard
+                        user={result}
+                        number={i}
+                        onPress={() => {
+                            this.props.navigation.push("UserProfile", {
+                                ...result,
+                            });
+                        }}
+                    />
+                ))}
             </OutlineTopScreen>
         );
     }
@@ -91,7 +63,6 @@ class SearchTab extends React.Component {
 export default SearchTab;
 
 const styles = StyleSheet.create({
-    container: {},
     profileTitle: {
         paddingLeft: 10,
         fontWeight: "bold",

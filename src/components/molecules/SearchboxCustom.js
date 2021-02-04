@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: 50,
+        marginVertical: 10,
         backgroundColor: "transparent",
         borderBottomColor: "black",
         borderStyle: "solid",
