@@ -1,4 +1,4 @@
-export const getReviewsOfUser = ({socket, data}) => {
+export const getReviewsOfUserAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
 
         socket.emit('getReviewsOfUser', data, (error, response) => {

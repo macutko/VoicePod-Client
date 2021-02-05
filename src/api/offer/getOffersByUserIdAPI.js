@@ -1,4 +1,4 @@
-export const getOffersByUserId = ({socket,data}) => {
+export const getOffersByUserIdAPI = ({socket,data}) => {
     return new Promise((fulfill, reject) => {
         socket.emit('getOffersByUserId', {}, (error, response) => {
             if (!error) {

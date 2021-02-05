@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native";
 import {Avatar, Divider, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../constants/Colors";
-
+//TODO: REFACTOR
 export default class OfferListItem extends React.Component {
     constructor(props) {
         super(props);

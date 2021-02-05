@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import AudioPlayer from "./AudioPlayer";
-
+//TODO: REFACTOR
 export default class Message extends React.Component {
     constructor(props) {
         super(props);

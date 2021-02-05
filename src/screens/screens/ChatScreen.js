@@ -1,3 +1,5 @@
+//TODO: REFACTOR
+
 import React from "react";
 import {Dimensions, FlatList, RefreshControl, StyleSheet, View} from "react-native";
 import {Appbar, Button, Dialog, Divider, Menu, Paragraph, Portal,} from "react-native-paper";

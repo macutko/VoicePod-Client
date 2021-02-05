@@ -2,11 +2,8 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Appbar} from "react-native-paper";
 import OfferMessage from "../../components/molecules/OfferMessage";
-
+//TODO: REFACTOR
 export default class ViewOfferScreen extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

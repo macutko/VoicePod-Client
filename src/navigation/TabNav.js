@@ -14,7 +14,7 @@ const Nav = createMaterialBottomTabNavigator();
 export const TabNav = (inheritance) => {
     return (
         <Nav.Navigator
-            initialRouteName="SearchNavigator"
+            initialRouteName="SearchTab"
             activeColor={colorScheme.primary}
             inactiveColor={colorScheme.accent}
             barStyle={{backgroundColor: colorScheme.background}}
@@ -41,7 +41,7 @@ export const TabNav = (inheritance) => {
                 )}
             </Nav.Screen>
             <Nav.Screen
-                name="Offers"
+                name="OffersTab"
                 options={{
                     tabBarLabel: "Offers",
                     tabBarIcon: ({color}) => (
@@ -62,7 +62,7 @@ export const TabNav = (inheritance) => {
                 )}
             </Nav.Screen>
             <Nav.Screen
-                name="SearchNavigator"
+                name="SearchTab"
                 options={{
                     tabBarLabel: "Search",
                     tabBarIcon: ({color}) => (

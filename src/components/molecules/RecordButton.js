@@ -8,7 +8,7 @@ import {PermissionsAndroid, StyleSheet, View} from "react-native";
 import {Paragraph} from "react-native-paper";
 import AudioPlayer from "./AudioPlayer";
 
-
+//TODO: REFACTOR
 const options = {
     sampleRate: 16000,  // default 44100
     channels: 1,        // 1 or 2, default 1

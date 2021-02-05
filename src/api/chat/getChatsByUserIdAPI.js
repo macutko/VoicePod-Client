@@ -1,4 +1,4 @@
-export const getChatsByUserId = ({socket, data}) => {
+export const getChatsByUserIdAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
 
         socket.emit('getChatsByUserId', data, (error, response) => {

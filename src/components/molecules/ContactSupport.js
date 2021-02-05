@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Button, Dialog, Paragraph, Portal, TextInput, Title} from "react-native-paper";
 import {colorScheme} from "../../constants/Colors";
-
+//TODO: REFACTOR
 export default class ContactSupport extends React.Component {
     constructor(props) {
         super(props);

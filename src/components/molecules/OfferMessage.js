@@ -5,7 +5,7 @@ import { colorScheme } from "../../constants/Colors";
 import AudioPlayer from "./AudioPlayer";
 import Button from "react-native-paper/src/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+//TODO: REFACTOR
 export default class OfferMessage extends React.Component {
   acceptOffer = () => {
     this.props.socket.emit(

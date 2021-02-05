@@ -1,3 +1,4 @@
+//TODO: REFACTOR
 import React from "react"
 import {StyleSheet, View} from "react-native";
 import {Appbar, Button, Dialog, Paragraph, Portal, Title} from "react-native-paper";
@@ -29,7 +30,7 @@ export default class OfferScreen extends React.Component {
             if (err) console.log(`Err in offer screen ${err}`)
             else {
                 console.log(`Res ${Object.keys(res)}`)
-                this.props.navigation.navigate('Offers')
+                this.props.navigation.navigate('OffersTab')
             }
         })
     }
@@ -38,7 +39,7 @@ export default class OfferScreen extends React.Component {
         this.props.socket.emit('rejectOrCancelOffer', {offerId: this.props.route.params.id}, (err, res) => {
             if (err) console.log(`Err in offer screen ${err}`)
             else {
-                this.props.navigation.navigate('Offers')
+                this.props.navigation.navigate('OffersTab')
             }
         })
 

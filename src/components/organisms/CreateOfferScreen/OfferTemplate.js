@@ -7,7 +7,7 @@ import {colorScheme} from "../../../constants/Colors";
 import {recordingSettings} from "../../../constants/Config";
 import getRecordPermissions from "../../../utilities/PermissionUtils";
 import OfferCreationStatusBar from "../../molecules/OfferScreen/OfferCreationStatusBar";
-import RecordButton from "../../molecules/OfferScreen/RecordButton";
+import RecordButton from "../../atoms/RecordButton";
 
 
 export default class OfferTemplate extends React.Component {
@@ -48,7 +48,7 @@ export default class OfferTemplate extends React.Component {
                 <View style={styles.container}>
                     {this.props.children}
 
-                    <RecordButton returnData={this.returnData} returnSeconds={this.returnSeconds} limit={10}>
+                    <RecordButton returnData={this.returnData} returnSeconds={this.returnSeconds} limit={60}>
                         <Image
                             style={styles.mic}
                             source={require("../../../assets/images/mic.png")}

@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native";
 import React from "react";
 import {colorScheme} from "../../constants/Colors";
 
-
+//TODO: REFACTOR
 export default class ChangePrice extends React.Component {
     constructor(props) {
         super(props);

@@ -1,7 +1,7 @@
 import {List, Modal, Portal} from "react-native-paper";
 import * as React from "react";
 import {Animated, StyleSheet} from "react-native";
-
+//TODO: REFACTOR
 export default class OfferMenu extends React.Component {
     constructor(props) {
         super(props);

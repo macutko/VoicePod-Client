@@ -6,7 +6,7 @@ import {Modal, Portal} from "react-native-paper";
 import {StyleSheet} from "react-native";
 import stripe from 'tipsi-stripe'
 
-
+//TODO: REFACTOR
 stripe.setOptions({
     publishableKey: 'pk_test_51IDSTZECU7HrwjM1mvfNnY2spqwoSGu9rAKZYia8Egd4QRruVp9S6HIUaPi1WEWWDM8sEcNMN5r4fioXDibqBvi4008TNJG6Xe',
     androidPayMode: 'test', // Android only

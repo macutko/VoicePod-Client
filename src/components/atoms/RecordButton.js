@@ -10,7 +10,7 @@ export const RecordButton = ({children, returnData, returnSeconds, limit}) => {
 
     useEffect(() => {
         returnSeconds(seconds)
-        if (!!limit && seconds >= limit) {
+        if (!!limit && seconds > limit) {
             setIsRecording(false)
         }
     }, [seconds])

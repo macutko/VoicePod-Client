@@ -4,7 +4,7 @@ import Portal from "react-native-paper/src/components/Portal/Portal";
 import Dialog from "react-native-paper/src/components/Dialog/Dialog";
 import Button from "react-native-paper/src/components/Button";
 import {ScrollView} from "react-native";
-
+//TODO: REFACTOR
 export default class ChangeCountry extends React.Component {
 
     constructor(props) {

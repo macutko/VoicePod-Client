@@ -5,14 +5,8 @@ import {colorScheme} from "../../constants/Colors";
 import Title from "react-native-paper/src/components/Typography/Title";
 import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
 import TextInput from "react-native-paper/src/components/TextInput/TextInput";
-import {Button} from "react-native-paper";
-import stripe from "tipsi-stripe";
-
-stripe.setOptions({
-    publishableKey:
-        "pk_test_51IDSTZECU7HrwjM1mvfNnY2spqwoSGu9rAKZYia8Egd4QRruVp9S6HIUaPi1WEWWDM8sEcNMN5r4fioXDibqBvi4008TNJG6Xe",
-    androidPayMode: "test", // Android only
-});
+import CreateOfferButton from "../../components/molecules/OfferScreen/CreateOfferButton";
+//TODO: REFACTOR
 
 export default class SetBudgetCreateOfferScreen extends React.Component {
     constructor(props) {
@@ -55,35 +49,6 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
         );
     }
 
-    submit = () => {
-        this.props.socket.emit(
-            "createOffer",
-            {
-                username: this.props.route.params.username,
-                intro: this.props.route.params.intro,
-                problem: this.props.route.params.problem,
-                budget: this.state.hours * 60 + this.state.minutes,
-            },
-            (err, res) => {
-                if (err) console.log(`Error in Budget Offer ${err}`);
-                if (res) {
-                    console.log(`Res from Budget Offer ${JSON.stringify(res)}`);
-
-                    stripe
-                        .confirmPaymentIntent({clientSecret: res.clientSecret})
-                        .then((r) => {
-                            console.log(r);
-                            this.props.navigation.navigate("TabNavWrapper", {
-                                screen: "ChatsTab",
-                            });
-                        })
-                        .catch((e) => {
-                            console.log(e);
-                        });
-                }
-            }
-        );
-    };
 
     changeMinutes = (e) => {
         if (e > 60) {
@@ -195,16 +160,9 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
 
                 <Title style={styles.budget}>{`${this.state.budget} $`}</Title>
 
-                <Button
-                    mode="contained"
-                    labelStyle={styles.buttonStyleLabel}
-                    onPress={() => this.submit()}
-                    style={styles.buttonStyle}
-                    color={colorScheme.secondary}
-                    contentStyle={styles.buttonContentStyle}
-                >
-                    Submit Offer
-                </Button>
+                <CreateOfferButton navigation={this.props.navigation} username={this.props.route.params.username}
+                                   budget={this.state.hours * 60 + this.state.minutes}
+                                   intro={this.props.route.params.intro} problem={this.props.route.params.problem}/>
             </View>
         );
     }
@@ -248,15 +206,5 @@ const styles = StyleSheet.create({
     budget: {
         fontSize: 28,
         paddingVertical: "3%",
-    },
-    buttonStyle: {
-        borderRadius: 10,
-    },
-    buttonContentStyle: {
-        width: 200,
-        height: 50,
-    },
-    buttonStyleLabel: {
-        fontSize: 18,
     },
 });
