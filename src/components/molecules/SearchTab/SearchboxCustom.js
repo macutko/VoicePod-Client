@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native";
-import { colorScheme } from "../../constants/Colors";
+import { colorScheme } from "../../../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const SearchboxCustom = (props) => {

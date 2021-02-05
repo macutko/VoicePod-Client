@@ -1,5 +1,6 @@
-export const getReviewsOfUser = (socket, data) => {
+export const getReviewsOfUser = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
+
         socket.emit('getReviewsOfUser', data, (error, response) => {
             if (error) {
                 console.log(`Error in getReviewsOfUser ${error}`)

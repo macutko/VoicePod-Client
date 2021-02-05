@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 import OutlineTopScreen from "../../components/molecules/OutlineTopScreen";
-import SearchboxCustom from "../../components/molecules/SearchboxCustom";
-import UserCard from "../../components/organisms/UserCard";
+import SearchboxCustom from "../../components/molecules/SearchTab/SearchboxCustom";
+import UserCard from "../../components/molecules/SearchTab/UserCard";
 
 class SearchTab extends React.Component {
     constructor(props) {
@@ -21,11 +21,11 @@ class SearchTab extends React.Component {
             () => {
                 this.props.socket.emit(
                     "search",
-                    { searchQuery: this.state.searchQuery },
+                    {searchQuery: this.state.searchQuery},
                     (error, response) => {
                         if (error) console.log(`Error in Search ${error}`);
                         if (response)
-                            this.setState({ results: response }, () =>
+                            this.setState({results: response}, () =>
                                 console.log(
                                     `Length of response object ${response.length}`
                                 )
@@ -48,6 +48,7 @@ class SearchTab extends React.Component {
                     <UserCard
                         user={result}
                         number={i}
+                        kry={`user_${i}`}
                         onPress={() => {
                             this.props.navigation.push("UserProfile", {
                                 ...result,

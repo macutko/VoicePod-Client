@@ -2,11 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Avatar, Text } from "react-native-paper";
-import { colorScheme } from "../../constants/Colors";
-import StarRating from "../molecules/StarRating";
+import { colorScheme } from "../../../constants/Colors";
+import StarRating from "../../atoms/StarRating";
 
 const UserCard = (props) => {
-    console.log(props);
     return (
         <TouchableOpacity onPress={() => props.onPress()}>
             <View style={styles.container}>
@@ -18,7 +17,7 @@ const UserCard = (props) => {
                             ? {
                                   uri: `data:image/${props.user.pictureType};base64,${props.user.profilePicture}`,
                               }
-                            : require("../../assets/images/avatar.png")
+                            : require("../../../assets/images/avatar.png")
                     }
                 />
                 <View style={styles.content}>

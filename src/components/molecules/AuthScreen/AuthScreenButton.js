@@ -4,7 +4,7 @@ import {Button} from "react-native-paper";
 import {StyleSheet} from "react-native";
 import {colorScheme} from "../../../constants/Colors";
 
-const WelcomeScreenButton = (props) => {
+const AuthScreenButton = (props) => {
     return (
         <Button
             mode={props.type === 'signup' ? 'contained' : 'outlined'}
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default WelcomeScreenButton;
+export default AuthScreenButton;

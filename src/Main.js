@@ -5,7 +5,7 @@ import GlobalContext from "./components/atoms/GlobalState";
 import {axiosInstance} from "./utilities/ConnectionUtils";
 import {getFromMemory} from "./utilities/StorageUtils";
 import {MainNav} from "./navigation/MainNav";
-import WelcomeScreen from "./screens/screens/WelcomeScreen";
+import AuthScreen from "./screens/screens/AuthScreen";
 
 
 export default class Main extends React.Component {
@@ -77,7 +77,7 @@ export default class Main extends React.Component {
                 }}
             >
 
-                {this.state.globalState.loggedIn ? <MainNav/> : <WelcomeScreen/>}
+                {this.state.globalState.loggedIn ? <MainNav/> : <AuthScreen/>}
 
             </GlobalContext.Provider>
         );
