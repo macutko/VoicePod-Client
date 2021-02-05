@@ -1,30 +1,30 @@
-import WelcomeScreenLogo from "../../molecules/WelcomeScreen/WelcomeScreenLogo";
+import AuthScreenLogo from "../../molecules/AuthScreen/AuthScreenLogo";
 import {StyleSheet, View} from "react-native";
-import WelcomeScreenButton from "../../molecules/WelcomeScreen/WelcomeScreenButton";
+import AuthScreenButton from "../../molecules/AuthScreen/AuthScreenButton";
 import * as React from "react";
 
-const WelcomeScreenHeader = ({toggleModal}) => {
+const AuthScreenHeader = ({toggleModal}) => {
 
     return (
         <>
-            <WelcomeScreenLogo style={styles.logo}/>
+            <AuthScreenLogo style={styles.logo}/>
 
             <View style={styles.buttonContainer}>
-                <WelcomeScreenButton
+                <AuthScreenButton
                     type="login"
                     onPress={() => {
                         toggleModal("login");
                     }}
                 >
                     log in
-                </WelcomeScreenButton>
+                </AuthScreenButton>
 
-                <WelcomeScreenButton
+                <AuthScreenButton
                     type="signup"
                     onPress={() => toggleModal("signUp")}
                 >
                     sign up
-                </WelcomeScreenButton>
+                </AuthScreenButton>
 
 
             </View>
@@ -32,7 +32,7 @@ const WelcomeScreenHeader = ({toggleModal}) => {
     )
 }
 
-export default WelcomeScreenHeader;
+export default AuthScreenHeader;
 
 const styles = StyleSheet.create({
     // TO DO: make it more responsive, change the font

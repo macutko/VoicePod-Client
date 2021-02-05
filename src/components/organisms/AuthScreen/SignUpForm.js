@@ -7,7 +7,7 @@ import * as layout from "../../../constants/Layout";
 import {CustomExistenceValidator} from "../../../utilities/validators/CustomExistenceValidator";
 import {CustomFieldValidator} from "../../../utilities/validators/CustomFieldValidator";
 import GlobalContext from "../../atoms/GlobalState";
-import {TermsAndConditions} from "../../molecules/WelcomeScreen/TermsAndConditions";
+import {TermsAndConditions} from "../../molecules/AuthScreen/TermsAndConditions";
 import createAPI from "../../../api/user/create";
 
 export default class SignUpForm extends React.Component {

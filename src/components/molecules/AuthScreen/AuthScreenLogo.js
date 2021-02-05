@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { colorScheme } from "../../../constants/Colors";
 
-const WelcomeScreenLogo = (props) => {
+const AuthScreenLogo = (props) => {
   return (
     <View style={styles.outline}>
       <Text style={styles.text}>Conzlt</Text>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default WelcomeScreenLogo;
+export default AuthScreenLogo;

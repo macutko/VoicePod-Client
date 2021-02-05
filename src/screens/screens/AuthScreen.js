@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import {StyleSheet, View} from "react-native";
-import LoginForm from "../../components/organisms/WelcomeScreen/LoginForm";
-import SignUpForm from "../../components/organisms/WelcomeScreen/SignUpForm";
+import LoginForm from "../../components/organisms/AuthScreen/LoginForm";
+import SignUpForm from "../../components/organisms/AuthScreen/SignUpForm";
 import {colorScheme} from "../../constants/Colors";
-import WelcomeScreenHeader from "../../components/organisms/WelcomeScreen/WelcomeScreenHeader";
+import AuthScreenHeader from "../../components/organisms/AuthScreen/AuthScreenHeader";
 
-export default class WelcomeScreen extends React.Component {
+export default class AuthScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +25,7 @@ export default class WelcomeScreen extends React.Component {
         return (
             <View style={styles.container}>
 
-                <WelcomeScreenHeader toggleModal={this.toggleModal}/>
+                <AuthScreenHeader toggleModal={this.toggleModal}/>
 
 
                 <LoginForm
