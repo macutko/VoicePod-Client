@@ -12,6 +12,7 @@ const StarRating = (props) => {
         stars.push(
             <Ionicons
                 style={styles.star}
+                key={`star_${i}`}
                 color={
                     i < props.rating
                         ? colorScheme.yellow

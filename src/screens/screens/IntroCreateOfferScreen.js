@@ -1,40 +1,38 @@
 import React from "react";
 import {Image, StyleSheet} from "react-native";
 import Title from "react-native-paper/src/components/Typography/Title";
-import OfferTemplate from "../../components/molecules/OfferTemplate";
+import OfferTemplate from "../../components/organisms/CreateOfferScreen/OfferTemplate";
 
-export default class IntroCreateOfferScreen extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+export const IntroCreateOfferScreen = (props) => {
 
-    submit = (voiceClip) => {
-        this.props.navigation.navigate("ProblemCreateOfferScreen", {
-            ...this.props.route.params,
+    const submit = (voiceClip) => {
+        props.navigation.navigate("ProblemCreateOfferScreen", {
+            ...props.route.params,
             intro: voiceClip,
         });
     };
 
-    render() {
-        return (
-            <OfferTemplate
-                {...this.props}
-                submit={(voiceClip) => this.submit(voiceClip)}
-                current={"IntroCreateOfferScreen"}
-                description={"Press the microphone and speak for 1 minute."}
-                title={"Intro"}
-            >
-                <>
-                    <Image
-                        style={styles.image}
-                        source={require("../../assets/images/intro.png")}
-                    />
-                    <Title style={styles.title}>Who are you?</Title>
-                </>
-            </OfferTemplate>
-        );
-    }
+
+    return (
+        <OfferTemplate
+            {...props}
+            submit={(voiceClip) => submit(voiceClip)}
+            current={"IntroCreateOfferScreen"}
+            description={"Press the microphone and speak for 1 minute."}
+            title={"Intro"}
+        >
+            <>
+                <Image
+                    style={styles.image}
+                    source={require("../../assets/images/intro.png")}
+                />
+                <Title style={styles.title}>Who are you?</Title>
+            </>
+        </OfferTemplate>
+    );
+
 }
+export default IntroCreateOfferScreen;
 
 const styles = StyleSheet.create({
     image: {
