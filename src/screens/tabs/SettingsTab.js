@@ -4,7 +4,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {StyleSheet} from "react-native";
 import UserProfileSettings from "../../components/organisms/SettingsTab/UserProfileSettings";
 import PrivacySettings from "../../components/organisms/SettingsTab/PrivacySettings";
-import ContactSupport from "../../components/molecules/ContactSupport";
+import ContactSupport from "../../components/molecules/SettingsTab/ContactSupport";
 import ConfirmDelete from "../../components/molecules/SettingsTab/ConfirmDelete";
 import {logOut} from "../../utilities/UserUtils";
 

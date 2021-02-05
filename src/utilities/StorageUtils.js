@@ -10,6 +10,7 @@ const storeData = async (key, value) => {
 };
 
 const getFromMemory = async (keys) => {
+    //TODO: this is not safe!
     try {
         let values;
         if (Array.isArray(keys)) {

@@ -1,7 +1,7 @@
 import TextInput from "react-native-paper/src/components/TextInput/TextInput";
 import {StyleSheet} from "react-native";
 import React from "react";
-import {colorScheme} from "../../constants/Colors";
+import {colorScheme} from "../../../constants/Colors";
 
 //TODO: REFACTOR
 export default class ChangePrice extends React.Component {

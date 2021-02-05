@@ -53,7 +53,7 @@ export default class Main extends React.Component {
     componentDidMount() {
 
         getFromMemory("token").then((memToken) => {
-            //TODO: this is not safe!
+
             let token;
             if (memToken != null) token = memToken
             else if (this.state.globalState.token != null) token = this.state.globalState.token

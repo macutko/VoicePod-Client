@@ -1,7 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {FlatList, RefreshControl} from "react-native";
-import {ActivityIndicator} from "react-native-paper";
-import {colorScheme} from "../../constants/Colors";
 
 export const ItemListHOC = ({api, apiProps, listItem, listItemProps, style}) => {
 
@@ -32,17 +30,17 @@ export const ItemListHOC = ({api, apiProps, listItem, listItemProps, style}) => 
     return (
         <>
 
-            {!isFetching ?
-                <FlatList
-                    data={fetchedData}
-                    style={style}
-                    refreshControl={<RefreshControl
-                        // colors={["#9Bd35A", "#689F38"]}
-                        refreshing={isFetching}
-                        onRefresh={() => setIsFetching(true)}/>}
-                    renderItem={({item}) => <ListItem {...listItemProps} data={item}/>}
-                    keyExtractor={item => item.id}
-                /> : <ActivityIndicator animating={true} color={colorScheme.accent}/>}
+
+            <FlatList
+                data={fetchedData}
+                style={style}
+                refreshControl={<RefreshControl
+                    // colors={["#9Bd35A", "#689F38"]}
+                    refreshing={isFetching}
+                    onRefresh={() => setIsFetching(true)}/>}
+                renderItem={({item}) => <ListItem {...listItemProps} data={item}/>}
+                keyExtractor={item => item.id}
+            />
 
         </>
     );

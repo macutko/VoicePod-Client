@@ -8,7 +8,7 @@ import {ActivityIndicator} from "react-native-paper";
 import {colorScheme} from "../../constants/Colors";
 
 export const SearchTab = (props) => {
-    const [isFetching, setIsFetching] = useState(true);
+    const [isFetching, setIsFetching] = useState(false);
     // the search query is an empty string so it does a search on that
     // havent decided yet whether that is good or not
     //pros: no empty screen
@@ -16,6 +16,12 @@ export const SearchTab = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
     const _isMounted = useRef(true);
+
+    useEffect(() => {
+        return () => {
+            _isMounted.current = false;
+        }
+    }, []);
 
     const onChangeSearch = (e) => {
         if (_isMounted) {

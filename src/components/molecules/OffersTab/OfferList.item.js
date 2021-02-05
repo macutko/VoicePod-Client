@@ -2,35 +2,31 @@ import React from "react"
 import {StyleSheet} from "react-native";
 import {Avatar, Divider, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {colorScheme} from "../../constants/Colors";
+import {colorScheme} from "../../../constants/Colors";
 //TODO: REFACTOR
-
-export default class ChatListItem extends React.Component {
+export default class OfferListItem extends React.Component {
     constructor(props) {
         super(props);
-        if (props.data.customer == null) {
+        if (this.props.data.customer) {
             this.state = {
-                user: {...props.data.consultant, consultant: true}
+                user: {...this.props.data.customer, consultant: false}
             }
         } else {
             this.state = {
-                user: {...props.data.customer, consultant: false}
+                user: {...this.props.data.consultant, consultant: true}
             }
         }
     }
-
 
     render() {
         return (
             <>
                 <List.Item
-                    titleStyle={this.state.user.consultant ? styles.profileTitle_consultant : styles.profileTitle_noob}
-                    style={this.state.user.consultant ? styles.container_consultant : styles.container_noob}
-                    description={this.state.user.consultant ? 'Advisor' : 'Client'}
-                    descriptionStyle={this.state.user.consultant ? styles.profileDesc_consultant : styles.profileDesc_noob}
-                    onPress={() => this.props.mainNav.push('ChatScreen', {
-                        ...this.state.user, ...this.props.data
-
+                    titleStyle={styles.profileTitle_consultant}
+                    style={styles.container_consultant}
+                    descriptionStyle={styles.profileDesc_consultant}
+                    onPress={() => this.props.mainNav.push('OfferScreen', {
+                        ...this.props.data, ...this.state.user
                     })}
                     title={this.state.user.firstName + ' ' + this.state.user.lastName}
                     right={props => <List.Icon {...props}
@@ -45,8 +41,6 @@ export default class ChatListItem extends React.Component {
                 />
                 <Divider style={styles.divider}/>
             </>
-
-            // }
 
 
         )

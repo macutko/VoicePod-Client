@@ -1,5 +1,5 @@
 import React from "react";
-import OfferListItem from "../../components/molecules/OfferList.item";
+import OfferListItem from "../../components/molecules/OffersTab/OfferList.item";
 import {getOffersByUserIdAPI} from "../../api/offer/getOffersByUserIdAPI";
 import ItemListHOC from "../../components/atoms/ItemListHOC";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {Image, StyleSheet} from "react-native";
 import Title from "react-native-paper/src/components/Typography/Title";
-import OfferTemplate from "../../components/organisms/CreateOfferScreen/OfferTemplate";
+import CreateOfferTemplate from "../../components/organisms/CreateOfferScreen/CreateOfferTemplate";
 
 export const IntroCreateOfferScreen = (props) => {
 
@@ -14,7 +14,7 @@ export const IntroCreateOfferScreen = (props) => {
 
 
     return (
-        <OfferTemplate
+        <CreateOfferTemplate
             {...props}
             submit={(voiceClip) => submit(voiceClip)}
             current={"IntroCreateOfferScreen"}
@@ -28,7 +28,7 @@ export const IntroCreateOfferScreen = (props) => {
                 />
                 <Title style={styles.title}>Who are you?</Title>
             </>
-        </OfferTemplate>
+        </CreateOfferTemplate>
     );
 
 }

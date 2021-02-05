@@ -1,5 +1,5 @@
 import React from "react";
-import ChatListItem from "../../components/molecules/ChatList.item";
+import ChatListItem from "../../components/molecules/ChatsTab/ChatList.item";
 import ItemListHOC from "../../components/atoms/ItemListHOC";
 import {getChatsByUserIdAPI} from "../../api/chat/getChatsByUserIdAPI";
 

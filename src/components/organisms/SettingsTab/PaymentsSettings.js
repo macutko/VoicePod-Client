@@ -5,9 +5,9 @@ import Switch from "react-native-paper/src/components/Switch";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
-import ChangePrice from "../../molecules/ChangePrice";
-import ChangeCountry from "../../molecules/ChangeCountry";
-import AddCard from "../../molecules/AddCard";
+import ChangePrice from "../../molecules/SettingsTab/ChangePrice";
+import ChangeCountry from "../../molecules/SettingsTab/ChangeCountry";
+import AddCard from "../../molecules/SettingsTab/AddCard";
 import updateAccountAPI from "../../../api/user/updateAccount";
 
 

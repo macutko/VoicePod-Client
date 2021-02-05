@@ -3,9 +3,9 @@ import {Image, StyleSheet, View} from "react-native";
 import {colorScheme} from "../../constants/Colors";
 import Title from "react-native-paper/src/components/Typography/Title";
 import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
-import CreateOfferButton from "../../components/molecules/OfferScreen/CreateOfferButton";
-import MinutesSlider from "../../components/molecules/OfferScreen/MinutesSlider";
-import {HoursSlider} from "../../components/molecules/OfferScreen/HoursSlider";
+import CreateOfferButton from "../../components/molecules/CreateOfferScreen/CreateOfferButton";
+import MinutesSlider from "../../components/molecules/CreateOfferScreen/MinutesSlider";
+import {HoursSlider} from "../../components/molecules/CreateOfferScreen/HoursSlider";
 import {getBusinessProfileAPI} from "../../api/getBusinessProfileAPI";
 
 export default class SetBudgetCreateOfferScreen extends React.Component {

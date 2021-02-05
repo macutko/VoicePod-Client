@@ -5,7 +5,7 @@ import {StatusBar} from "react-native-web";
 import {horizontalAnimation} from "../utilities/AnimationUtils";
 import GlobalContext from "../components/atoms/GlobalState";
 import ChatScreen from "../screens/screens/ChatScreen";
-import ViewOfferScreen from "../screens/screens/ViewOfferScreen";
+import ViewChatOfferScreen from "../screens/screens/ViewChatOfferScreen";
 import SetBudgetCreateOfferScreen from "../screens/screens/SetBudgetCreateOfferScreen";
 import IntroCreateOfferScreen from "../screens/screens/IntroCreateOfferScreen";
 import ProblemCreateOfferScreen from "../screens/screens/ProblemCreateOfferScreen";
@@ -50,8 +50,8 @@ export const MainNav = () => {
                                         {props => <OfferScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     {/* Chat Menu */}
-                                    <MainStack.Screen name="ViewOfferScreen" options={horizontalAnimation}>
-                                        {props => <ViewOfferScreen  {...globalState} {...socket} {...props}/>}
+                                    <MainStack.Screen name="ViewChatOfferScreen" options={horizontalAnimation}>
+                                        {props => <ViewChatOfferScreen  {...globalState} {...socket} {...props}/>}
                                     </MainStack.Screen>
                                     <MainStack.Screen name="LeaveReviewScreen">
                                         {props => <LeaveReviewScreen  {...globalState} {...socket} {...props}/>}

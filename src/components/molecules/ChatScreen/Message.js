@@ -1,12 +1,16 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
-import AudioPlayer from "./AudioPlayer";
+import GlobalContext from "../../atoms/GlobalState";
+import AudioPlayer from "../../atoms/AudioPlayer";
 //TODO: REFACTOR
+//TODO : pull data on play
 export default class Message extends React.Component {
-    constructor(props) {
-        super(props);
+    static contextType = GlobalContext;
+
+    constructor(props, context) {
+        super(props, context);
         this.state = {
-            ownMessage: this.props.data.from.username === this.props.globalState.user.username
+            ownMessage: this.props.data.from.username === context.globalState.user.username
         }
         //    TODO: make "read" prop true when opened
     }
@@ -17,20 +21,6 @@ export default class Message extends React.Component {
 
     componentDidMount() {
         this._isMounted = true
-    }
-
-    getTranscript = () => {
-        console.log(Object.keys(this.props.data))
-        this.props.socket.emit('getTranscript', {messageId: this.props.data.id}, (err, res) => {
-            if (err) console.log(`Err in Message ${err}`)
-            else {
-                if (this._isMounted) {
-                    this.setState({
-                        text: res
-                    })
-                }
-            }
-        })
     }
 
     render() {

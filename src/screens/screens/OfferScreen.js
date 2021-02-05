@@ -2,8 +2,8 @@
 import React from "react"
 import {StyleSheet, View} from "react-native";
 import {Appbar, Button, Dialog, Paragraph, Portal, Title} from "react-native-paper";
-import OfferMenu from "../../components/molecules/OfferMenu";
-import AudioPlayer from "../../components/molecules/AudioPlayer";
+import OfferMenu from "../../components/molecules/OffersTab/OfferMenu";
+import AudioPlayer from "../../components/atoms/AudioPlayer";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../constants/Colors";
 

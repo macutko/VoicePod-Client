@@ -2,27 +2,24 @@ import React from "react";
 import {Image, StyleSheet, View} from "react-native";
 import AudioRecord from "react-native-audio-record";
 import {Text} from "react-native-paper";
-import AudioPlayer from "../../molecules/AudioPlayer";
+import AudioPlayer from "../../atoms/AudioPlayer";
 import {colorScheme} from "../../../constants/Colors";
 import {recordingSettings} from "../../../constants/Config";
-import getRecordPermissions from "../../../utilities/PermissionUtils";
-import OfferCreationStatusBar from "../../molecules/OfferScreen/OfferCreationStatusBar";
+import OfferCreationStatusBar from "../../molecules/CreateOfferScreen/OfferCreationStatusBar";
 import RecordButton from "../../atoms/RecordButton";
 
 
-export default class OfferTemplate extends React.Component {
+export default class CreateOfferTemplate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             voiceClip: null,
-            recording: false,
             pathToFile: null,
             counter: 0,
         };
     }
 
     async componentDidMount() {
-        await getRecordPermissions()
         AudioRecord.init({
             ...recordingSettings,
             wavFile: `${this.props.current}.wav`,

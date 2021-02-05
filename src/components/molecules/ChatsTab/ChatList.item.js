@@ -2,31 +2,34 @@ import React from "react"
 import {StyleSheet} from "react-native";
 import {Avatar, Divider, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {colorScheme} from "../../constants/Colors";
-//TODO: REFACTOR
-export default class OfferListItem extends React.Component {
+import {colorScheme} from "../../../constants/Colors";
+
+export default class ChatListItem extends React.Component {
     constructor(props) {
         super(props);
-        if (this.props.data.customer) {
+        //TODO: REfactor to use BusinessProfile field
+        if (props.data.customer == null) {
             this.state = {
-                user: {...this.props.data.customer, consultant: false}
+                user: {...props.data.consultant, consultant: true}
             }
         } else {
             this.state = {
-                user: {...this.props.data.consultant, consultant: true}
+                user: {...props.data.customer, consultant: false}
             }
         }
     }
+
 
     render() {
         return (
             <>
                 <List.Item
-                    titleStyle={styles.profileTitle_consultant}
-                    style={styles.container_consultant}
-                    descriptionStyle={styles.profileDesc_consultant}
-                    onPress={() => this.props.mainNav.push('OfferScreen', {
-                        ...this.props.data, ...this.state.user
+                    titleStyle={this.state.user.consultant ? styles.profileTitle_consultant : styles.profileTitle_noob}
+                    style={this.state.user.consultant ? styles.container_consultant : styles.container_noob}
+                    description={this.state.user.consultant ? 'Advisor' : 'Client'}
+                    descriptionStyle={this.state.user.consultant ? styles.profileDesc_consultant : styles.profileDesc_noob}
+                    onPress={() => this.props.mainNav.push('ChatScreen', {
+                        chatId: this.props.data.id
                     })}
                     title={this.state.user.firstName + ' ' + this.state.user.lastName}
                     right={props => <List.Icon {...props}
@@ -41,8 +44,6 @@ export default class OfferListItem extends React.Component {
                 />
                 <Divider style={styles.divider}/>
             </>
-
-
         )
     }
 }
@@ -70,7 +71,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-
 
     container_noob: {
         backgroundColor: colorScheme.background,
