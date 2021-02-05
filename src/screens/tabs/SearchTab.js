@@ -1,79 +1,70 @@
-import React from "react";
-import {StyleSheet} from "react-native";
-import OutlineTopScreen from "../../components/molecules/OutlineTopScreen";
+import React, {useEffect, useRef, useState} from "react";
+import {FlatList, StyleSheet} from "react-native";
+import OutlineTopScreen from "../../components/atoms/OutlineTopScreen";
 import SearchboxCustom from "../../components/molecules/SearchTab/SearchboxCustom";
 import UserCard from "../../components/molecules/SearchTab/UserCard";
+import {search} from "../../api/search";
+import {ActivityIndicator} from "react-native-paper";
+import {colorScheme} from "../../constants/Colors";
 
-class SearchTab extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            searchQuery: "",
-            results: [],
-        };
+export const SearchTab = (props) => {
+    const [isFetching, setIsFetching] = useState(true);
+    // the search query is an empty string so it does a search on that
+    // havent decided yet whether that is good or not
+    //pros: no empty screen
+    // cons: might be a security issue
+    const [searchQuery, setSearchQuery] = useState('');
+    const [results, setResults] = useState([]);
+    const _isMounted = useRef(true);
+
+    const onChangeSearch = (e) => {
+        if (_isMounted) {
+            setSearchQuery(e)
+            setIsFetching(true)
+        }
     }
 
-    onChangeSearch = (e) => {
-        this.setState(
-            {
-                searchQuery: e,
-            },
-            () => {
-                this.props.socket.emit(
-                    "search",
-                    {searchQuery: this.state.searchQuery},
-                    (error, response) => {
-                        if (error) console.log(`Error in Search ${error}`);
-                        if (response)
-                            this.setState({results: response}, () =>
-                                console.log(
-                                    `Length of response object ${response.length}`
-                                )
-                            );
+    useEffect(() => {
+        if (isFetching) {
+
+            search({socket: props.socket, data: {searchQuery: searchQuery}}).then(r => {
+                if (_isMounted) {
+                    setResults(r)
+                    setIsFetching(false)
+                }
+            }).catch(e => _isMounted ? setIsFetching(false) : null)
+
+        }
+    }, [isFetching]);
+
+    return (
+        <OutlineTopScreen title={"Search"}>
+            <SearchboxCustom
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                placeholder={"Search by name"}
+            />
+            {!isFetching ?
+
+                <FlatList
+                    data={results}
+                    renderItem={({item, index}) =>
+                        <UserCard
+                            user={item}
+                            number={index}
+                            onPress={() => {
+                                props.navigation.push("UserProfile", {
+                                    ...item,
+                                });
+                            }}
+                        />
                     }
-                );
-            }
-        );
-    };
-
-    render() {
-        return (
-            <OutlineTopScreen title={"Search"}>
-                <SearchboxCustom
-                    onChangeText={this.onChangeSearch}
-                    value={this.state.searchQuery}
-                    placeholder={"Search by name"}
+                    keyExtractor={item => item.username}
                 />
-                {this.state.results.map((result, i) => (
-                    <UserCard
-                        user={result}
-                        number={i}
-                        kry={`user_${i}`}
-                        onPress={() => {
-                            this.props.navigation.push("UserProfile", {
-                                ...result,
-                            });
-                        }}
-                    />
-                ))}
-            </OutlineTopScreen>
-        );
-    }
+
+                : <ActivityIndicator animating={true} color={colorScheme.accent}/>}
+        </OutlineTopScreen>
+    );
 }
 
 export default SearchTab;
-
-const styles = StyleSheet.create({
-    profileTitle: {
-        paddingLeft: 10,
-        fontWeight: "bold",
-    },
-    profileDesc: {
-        paddingLeft: 10,
-    },
-    profilePic: {
-        paddingLeft: 5,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});
