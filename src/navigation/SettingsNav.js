@@ -2,7 +2,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import UserProfileSettings from "../components/organisms/SettingsTab/UserProfileSettings";
 import PrivacySettings from "../components/organisms/SettingsTab/PrivacySettings";
 import PaymentsSettings from "../components/organisms/SettingsTab/PaymentsSettings";
-import ContactSupport from "../components/molecules/ContactSupport";
+import ContactSupport from "../components/molecules/SettingsTab/ContactSupport";
 import React from "react";
 import {Settings} from "../screens/tabs/SettingsTab";
 

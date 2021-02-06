@@ -12,7 +12,7 @@ const authenticateAPI = async (username, password) => {
             storeData("token", response.data.token).then();
             fulfill([response.data.user, response.data.token])
         }).catch((error) => {
-            if (error.response == null) {
+            if (error.response == null || error.response.status === undefined) {
                 console.log(`Error on Authentication ${error}`);
                 reject({})
             }

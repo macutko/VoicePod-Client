@@ -1,41 +1,41 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import {Image, StyleSheet} from "react-native";
 import Title from "react-native-paper/src/components/Typography/Title";
-import { colorScheme } from "../../constants/Colors";
-import OfferTemplate from "../../components/molecules/OfferTemplate";
+import CreateOfferTemplate from "../../components/organisms/CreateOfferScreen/CreateOfferTemplate";
 
-export default class ProblemCreateOfferScreen extends React.Component {
-    submit = (voiceClip) => {
-        this.props.navigation.navigate("SetBudgetCreateOfferScreen", {
-            ...this.props.route.params,
-            intro: this.props.route.params.intro,
+export const ProblemCreateOfferScreen = (props) => {
+    const submit = (voiceClip) => {
+        props.navigation.navigate("SetBudgetCreateOfferScreen", {
+            ...props.route.params,
+            intro: props.route.params.intro,
             problem: voiceClip,
         });
     };
 
-    render() {
-        return (
-            <OfferTemplate
-                {...this.props}
-                style={styles.container}
-                current={"ProblemCreateOfferScreen"}
-                submit={(voiceClip) => this.submit(voiceClip)}
-                description={
-                    "Try to be as factual and as specific as possible."
-                }
-                title={"Problem"}
-            >
-                <>
-                    <Image
-                        style={styles.image}
-                        source={require("../../assets/images/problem.png")}
-                    />
-                    <Title style={styles.title}>What is your problem?</Title>
-                </>
-            </OfferTemplate>
-        );
-    }
+
+    return (
+        <CreateOfferTemplate
+            {...props}
+            style={styles.container}
+            current={"ProblemCreateOfferScreen"}
+            submit={(voiceClip) => submit(voiceClip)}
+            description={
+                "Try to be as factual and as specific as possible."
+            }
+            title={"Problem"}
+        >
+            <>
+                <Image
+                    style={styles.image}
+                    source={require("../../assets/images/problem.png")}
+                />
+                <Title style={styles.title}>What is your problem?</Title>
+            </>
+        </CreateOfferTemplate>
+    );
+
 }
+export default ProblemCreateOfferScreen;
 
 const styles = StyleSheet.create({
     image: {

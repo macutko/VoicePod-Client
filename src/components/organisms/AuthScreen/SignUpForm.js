@@ -12,7 +12,7 @@ import createAPI from "../../../api/user/create";
 
 export default class SignUpForm extends React.Component {
     static contextType = GlobalContext;
-
+//TODO: REFACTOR
     constructor(props, context) {
         super(props, context);
         this.state = {

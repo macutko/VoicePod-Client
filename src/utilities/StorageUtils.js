@@ -1,5 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const storeData = async (key, value) => {
     try {
@@ -10,6 +9,7 @@ const storeData = async (key, value) => {
 };
 
 const getFromMemory = async (keys) => {
+    //TODO: this is not safe!
     try {
         let values;
         if (Array.isArray(keys)) {

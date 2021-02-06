@@ -1,3 +1,5 @@
+//TODO: REFACTOR
+
 import {Button, TextInput, Title} from "react-native-paper";
 import React from "react";
 import {StyleSheet} from "react-native";

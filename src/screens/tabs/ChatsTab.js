@@ -1,11 +1,11 @@
 import React from "react";
-import ChatListItem from "../../components/molecules/ChatList.item";
-import ItemListHOC from "../../components/molecules/ItemListHOC";
-import {getChatsByUserId} from "../../api/chat/getChatsByUserId";
+import ChatListItem from "../../components/molecules/ChatsTab/ChatList.item";
+import ItemListHOC from "../../components/atoms/ItemListHOC";
+import {getChatsByUserIdAPI} from "../../api/chat/getChatsByUserIdAPI";
 
 export const ChatsTab = (props) => {
     return (
-        <ItemListHOC api={getChatsByUserId} apiProps={{socket: props.socket, data: {}}}
+        <ItemListHOC api={getChatsByUserIdAPI} apiProps={{socket: props.socket, data: {}}}
                      listItem={ChatListItem} listItemProps={{mainNav: props.mainNav}}/>
     )
 }

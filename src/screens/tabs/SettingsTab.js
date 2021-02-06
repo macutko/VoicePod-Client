@@ -1,89 +1,70 @@
-import React from "react";
+import React, {useState} from "react";
 import {Avatar, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {StyleSheet} from "react-native";
 import UserProfileSettings from "../../components/organisms/SettingsTab/UserProfileSettings";
 import PrivacySettings from "../../components/organisms/SettingsTab/PrivacySettings";
-import PaymentsSettings from "../../components/organisms/SettingsTab/PaymentsSettings";
-import ContactSupport from "../../components/molecules/ContactSupport";
+import ContactSupport from "../../components/molecules/SettingsTab/ContactSupport";
 import ConfirmDelete from "../../components/molecules/SettingsTab/ConfirmDelete";
 import {logOut} from "../../utilities/UserUtils";
 
+export const Settings = (mainProps) => {
+    const [deleteUserDialog, setDeleteUserDialog] = useState(false);
 
-export class Settings extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            deleteUserDialog: false
-        }
-    }
+    return (
 
-    toggleDialog = () => {
-        this.setState(prevState => ({
-            deleteUserDialog: !prevState.deleteUserDialog
-        }))
-    }
+        <List.Section>
 
+            <List.Item titleStyle={styles.profile}
+                       onPress={() => mainProps.navigation.navigate('UserProfileSettings')}
+                       title={mainProps.globalState.user.firstName + " " + mainProps.globalState.user.lastName}
+                       left={props => <List.Icon {...props} style={styles.profilePic}
+                                                 icon={props => <Avatar.Image source={{
+                                                     uri: `data:image/${mainProps.globalState.user.pictureType};base64,
+                                                                                                  ${mainProps.globalState.user.profilePicture}`
+                                                 }}/>}/>}
+            />
+            <List.Item
+                title="Privacy"
+                onPress={() => mainProps.navigation.navigate('PrivacySettings')}
+                description={"Notifications"}
+                left={props => <List.Icon {...props}
+                                          icon={props => <Ionicons {...props} name={'notifications'}/>}/>}
+            />
+            <List.Item
+                title="Payments"
+                onPress={() => mainProps.navigation.navigate('Payments')}
+                description={"Accounts, billing address"}
+                left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'pricetag'}/>}/>}
+            />
+            <List.Item
+                title="Contact Support"
+                onPress={() => mainProps.navigation.navigate('ContactSupport')}
+                left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'call'}/>}/>}
+            />
+            <List.Item
+                title="Logout"
+                onPress={() => logOut(mainProps.updateGlobalState)}
+                left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'log-out'}/>}/>}
+            />
+            <List.Item
+                title="Delete Account"
+                onPress={() => setDeleteUserDialog(!deleteUserDialog)}
+                left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'trash-bin'}/>}/>}
+            />
 
-    render() {
-        return (
+            <ConfirmDelete deleteUserDialog={deleteUserDialog}
+                           toggleDialog={() => setDeleteUserDialog(!deleteUserDialog)}
+                           logOut={() => logOut(mainProps.updateGlobalState)}/>
 
-            <List.Section>
-                {/*
-             Image - Name => change name or image + view profile
-             Privacy => Notifications
-             Payments => card/account, billing address
-             Contact Support => Send us a message
-             Danger Zone => Delete account
-            */}
-
-                <List.Item titleStyle={styles.profile}
-                           onPress={() => this.props.navigation.navigate('UserProfileSettings')}
-                           title={this.props.globalState.user.firstName + " " + this.props.globalState.user.lastName}
-                           left={props => <List.Icon {...props} style={styles.profilePic}
-                                                     icon={props => <Avatar.Image source={{
-                                                         uri: `data:image/${this.props.globalState.user.pictureType};base64,
-                                                                                                  ${this.props.globalState.user.profilePicture}`
-                                                     }}/>}/>}
-                />
-                <List.Item
-                    title="Privacy"
-                    onPress={() => this.props.navigation.navigate('PrivacySettings')}
-                    description={"Notifications"}
-                    left={props => <List.Icon {...props}
-                                              icon={props => <Ionicons {...props} name={'notifications'}/>}/>}
-                />
-                <List.Item
-                    title="Payments"
-                    onPress={() => this.props.navigation.navigate('Payments')}
-                    description={"Accounts, billing address"}
-                    left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'pricetag'}/>}/>}
-                />
-                <List.Item
-                    title="Contact Support"
-                    onPress={() => this.props.navigation.navigate('ContactSupport')}
-                    left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'call'}/>}/>}
-                />
-                <List.Item
-                    title="Logout"
-                    onPress={() => logOut(this.props.updateGlobalState)}
-                    left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'log-out'}/>}/>}
-                />
-                <List.Item
-                    title="Delete Account"
-                    onPress={() => this.toggleDialog()}
-                    left={props => <List.Icon {...props} icon={props => <Ionicons {...props} name={'trash-bin'}/>}/>}
-                />
-
-                <ConfirmDelete deleteUserDialog={this.state.deleteUserDialog} toggleDialog={this.toggleDialog}
-                               logOut={() => logOut(this.props.updateGlobalState)}/>
-
-            </List.Section>
+        </List.Section>
 
 
-        );
-    }
+    );
+
 }
+
+export default Settings
 
 
 const styles = StyleSheet.create({

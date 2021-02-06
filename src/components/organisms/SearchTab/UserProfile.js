@@ -5,7 +5,7 @@ import Text from "react-native-paper/src/components/Typography/Text";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {AddPaymentWarning} from "../../molecules/SearchTab/AddPaymentWarning";
 import {ReviewsList} from "../../molecules/SearchTab/ReviewsList";
-import {checkDefaultPaymentMethod} from "../../../api/checkDefaultPaymentMethod";
+import {checkDefaultPaymentMethodAPI} from "../../../api/checkDefaultPaymentMethodAPI";
 
 const UserProfile = (props) => {
     const _isMounted = useRef(true);
@@ -19,7 +19,7 @@ const UserProfile = (props) => {
 
 
     const navigateToOfferCreation = () => {
-        checkDefaultPaymentMethod(props.socket).then(r => {
+        checkDefaultPaymentMethodAPI(props.socket).then(r => {
             if (r) {
                 props.mainNav.navigate('IntroCreateOfferScreen', {...props.route.params})
             } else {

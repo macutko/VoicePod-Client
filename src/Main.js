@@ -1,7 +1,5 @@
 import React from 'react';
 import GlobalContext from "./components/atoms/GlobalState";
-
-
 import {axiosInstance} from "./utilities/ConnectionUtils";
 import {getFromMemory} from "./utilities/StorageUtils";
 import {MainNav} from "./navigation/MainNav";
@@ -53,7 +51,7 @@ export default class Main extends React.Component {
     componentDidMount() {
 
         getFromMemory("token").then((memToken) => {
-            //TODO: this is not safe!
+
             let token;
             if (memToken != null) token = memToken
             else if (this.state.globalState.token != null) token = this.state.globalState.token
