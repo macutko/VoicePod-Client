@@ -1,7 +1,8 @@
 const config = {
-    baseURL: "http://192.168.56.1:12345/",
+    baseURL: "http://192.168.0.105:12345/",
 };
 //TODO: import Config from 'react-native-config';
+
 
 const recordingSettings = {
     sampleRate: 16000, // default 44100

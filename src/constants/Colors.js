@@ -1,6 +1,6 @@
 export const colorScheme = {
     blue: "#0B7ACA",
-    yellow: "#DDE33B",
+    yellow: "#f7c204",
     white: "#fff",
     black: "#000",
     red: "#da1b1b",
@@ -14,6 +14,7 @@ export const colorScheme = {
     // New design colors 
     secondary: "#753B8E", // dark violet
     primary: "#9B63B3", // light violet 
-    grey: "#f8f8f8",
+    grey: "#ebebeb",
+    dark_grey: "#848484",
     error: "#b1151f"
 };

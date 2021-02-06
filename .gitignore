@@ -1,10 +1,10 @@
 .idea/*
 
-
+package-lock.json
 # OSX
 #
 .DS_Store
-
+.vscode
 # Xcode
 #
 build/
