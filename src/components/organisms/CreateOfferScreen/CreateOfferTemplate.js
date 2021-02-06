@@ -1,12 +1,11 @@
 import React from "react";
 import {Image, StyleSheet, View} from "react-native";
-import AudioRecord from "react-native-audio-record";
 import {Text} from "react-native-paper";
-import AudioPlayer from "../../atoms/AudioPlayer";
+
 import {colorScheme} from "../../../constants/Colors";
-import {recordingSettings} from "../../../constants/Config";
 import OfferCreationStatusBar from "../../molecules/CreateOfferScreen/OfferCreationStatusBar";
 import RecordButton from "../../atoms/RecordButton";
+import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
 
 
 export default class CreateOfferTemplate extends React.Component {
@@ -20,10 +19,8 @@ export default class CreateOfferTemplate extends React.Component {
     }
 
     async componentDidMount() {
-        AudioRecord.init({
-            ...recordingSettings,
-            wavFile: `${this.props.current}.wav`,
-        });
+        console.log("Loading audiorecord")
+
     }
 
     returnData = (r) => {

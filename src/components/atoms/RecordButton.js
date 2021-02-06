@@ -1,79 +1,80 @@
 import {TouchableOpacity} from "react-native";
-import React, {useEffect, useState} from "react";
-import AudioRecord from "react-native-audio-record";
-import * as RNFS from "react-native-fs";
-import getRecordPermissions from "../../utilities/PermissionUtils";
-import {Button, Dialog, Paragraph, Portal} from "react-native-paper";
+import React, {useEffect, useRef, useState} from "react";
+import {Audio} from 'expo-av';
 
-export const RecordButton = ({disabled = false, children, returnData, returnSeconds, limit}) => {
+export const RecordButton = ({disabled = false, children, returnData, returnSeconds, limit, fileName = 'example.wav'}) => {
 
-    const [isRecording, setIsRecording] = useState(false);
     const [seconds, setSeconds] = useState(0);
-    const [warning, setWarning] = useState(false)
-
-    const getPerm = () => {
-        getRecordPermissions().then(res => {
-            if (!res) setWarning(true)
-            else setWarning(false)
-        }).catch(e => console.log(e))
-    }
-
-    getPerm()
-
-    useEffect(() => {
-        returnSeconds(seconds)
-        if (!!limit && seconds > limit) {
-            setIsRecording(false)
-        }
-    }, [seconds])
+    const _isMounted = useRef(true);
+    const [recording, setRecording] = useState();
 
     useEffect(() => {
         let interval = null;
-        if (isRecording) {
-            returnData({
-                voiceClip: null,
-                pathToFile: null
-            })
-            AudioRecord.start()
+        if (recording) {
             interval = setInterval(() => {
                 setSeconds(seconds => seconds + 1);
             }, 1000);
         } else {
-            AudioRecord.stop().then((r) => {
-                RNFS.readFile(r, "base64").then((data) => {
-                    returnData({
-                        voiceClip: data,
-                        pathToFile: r
-                    })
-                });
-            }).catch(e => console.log(`fail ${e}`));
             setSeconds(0);
             clearInterval(interval);
         }
-
         return () => {
             clearInterval(interval);
         };
+    }, [recording])
 
-    }, [isRecording]);
+    useEffect(() => {
+        returnSeconds(seconds)
+        if (!!limit && seconds > limit) {
+            stopRecording().then(r => console.log(r)).catch(e => console.log(e))
+        }
+    }, [seconds])
+
+    useEffect(() => {
+        return () => { // ComponentWillUnmount in Class Component
+            _isMounted.current = false;
+        }
+    }, []);
+
+    async function startRecording() {
+        try {
+            console.log('Requesting permissions..');
+            await Audio.requestPermissionsAsync();
+            await Audio.setAudioModeAsync({
+                allowsRecordingIOS: true,
+                playsInSilentModeIOS: true,
+            });
+            console.log('Starting recording..');
+            let recording = new Audio.Recording();
+            await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+            await recording.startAsync();
+            if (_isMounted) {
+                setRecording(recording);
+            }
+            console.log('Recording started');
+        } catch (err) {
+            console.error('Failed to start recording', err);
+        }
+    }
+
+    async function stopRecording() {
+        console.log('Stopping recording..');
+        if (_isMounted) {
+            setRecording(undefined);
+        }
+        if (recording) {
+            await recording.stopAndUnloadAsync();
+            const uri = recording.getURI();
+            console.log('Recording stopped and stored at', uri);
+        }
+    }
+
 
     return (
         <>
-            <TouchableOpacity disabled={disabled} onPress={() => setIsRecording(!isRecording)}>
+            <TouchableOpacity disabled={disabled} onPressIn={startRecording} onPressOut={stopRecording}>
                 {children}
             </TouchableOpacity>
-
-            <Portal>
-                <Dialog visible={warning} onDismiss={() => setWarning(false)}>
-                    <Dialog.Title>Recording permissions</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph>We need recording permissions to be able to use your microphone</Paragraph>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={() => getPerm()}>Ok</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
         </>
 
     )

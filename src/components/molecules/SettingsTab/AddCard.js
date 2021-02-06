@@ -4,13 +4,13 @@ import Title from "react-native-paper/src/components/Typography/Title";
 import Button from "react-native-paper/src/components/Button";
 import {Modal, Portal} from "react-native-paper";
 import {StyleSheet} from "react-native";
-import stripe from 'tipsi-stripe'
+// import stripe from 'tipsi-stripe'
 
 //TODO: REFACTOR
-stripe.setOptions({
-    publishableKey: 'pk_test_51IDSTZECU7HrwjM1mvfNnY2spqwoSGu9rAKZYia8Egd4QRruVp9S6HIUaPi1WEWWDM8sEcNMN5r4fioXDibqBvi4008TNJG6Xe',
-    androidPayMode: 'test', // Android only
-})
+// stripe.setOptions({
+//     publishableKey: 'pk_test_51IDSTZECU7HrwjM1mvfNnY2spqwoSGu9rAKZYia8Egd4QRruVp9S6HIUaPi1WEWWDM8sEcNMN5r4fioXDibqBvi4008TNJG6Xe',
+//     androidPayMode: 'test', // Android only
+// })
 
 export default class AddCard extends React.Component {
     constructor(props) {
@@ -43,42 +43,42 @@ export default class AddCard extends React.Component {
     }
 
     addPayment = async () => {
-        stripe.createPaymentMethod({
-            card: {
-                number: '4000002500003155',
-                cvc: '123',
-                expMonth: 11,
-                expYear: 2021
-            }
-        }).then(r => {
-            if (!r.error) {
-                console.log(r.id)
-                this.props.socket.emit('addPaymentMethod', {paymentMethod: r.id}, (err, res) => {
-                    if (err) console.log(`Error in AddCard ${err}`)
-                    else {
-                        console.log(`Res ${res}`)
-                        stripe.confirmSetupIntent({
-                            clientSecret: res,
-                            paymentMethodId: r.id
-                        }).then(response => {
-                            console.log(`Success ${Object.keys(response)}`)
-                            this.props.socket.emit('setDefaultPaymentMethod', {paymentMethod: r.id}, (e, re) => {
-                                //    TODO fix naming of resposne and error in this monolith
-                                if (e) console.log(`Error in addcard ${e}`)
-                                else {
-                                    console.log(`res ${re}`)
-                                }
-                            })
-                        }).catch(e => {
-                            console.log(`Error on confirm setup ${e}`)
-                        })
-                    }
-                })
-            }
-
-        }).catch(e => {
-            console.log(`ERror on creatingPayment Method ${e}`)
-        })
+        // stripe.createPaymentMethod({
+        //     card: {
+        //         number: '4000002500003155',
+        //         cvc: '123',
+        //         expMonth: 11,
+        //         expYear: 2021
+        //     }
+        // }).then(r => {
+        //     if (!r.error) {
+        //         console.log(r.id)
+        //         this.props.socket.emit('addPaymentMethod', {paymentMethod: r.id}, (err, res) => {
+        //             if (err) console.log(`Error in AddCard ${err}`)
+        //             else {
+        //                 console.log(`Res ${res}`)
+        //                 stripe.confirmSetupIntent({
+        //                     clientSecret: res,
+        //                     paymentMethodId: r.id
+        //                 }).then(response => {
+        //                     console.log(`Success ${Object.keys(response)}`)
+        //                     this.props.socket.emit('setDefaultPaymentMethod', {paymentMethod: r.id}, (e, re) => {
+        //                         //    TODO fix naming of resposne and error in this monolith
+        //                         if (e) console.log(`Error in addcard ${e}`)
+        //                         else {
+        //                             console.log(`res ${re}`)
+        //                         }
+        //                     })
+        //                 }).catch(e => {
+        //                     console.log(`Error on confirm setup ${e}`)
+        //                 })
+        //             }
+        //         })
+        //     }
+        //
+        // }).catch(e => {
+        //     console.log(`ERror on creatingPayment Method ${e}`)
+        // })
 
     }
 

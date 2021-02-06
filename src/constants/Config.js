@@ -3,6 +3,7 @@ const config = {
 };
 //TODO: import Config from 'react-native-config';
 
+
 const recordingSettings = {
     sampleRate: 16000, // default 44100
     channels: 1, // 1 or 2, default 1

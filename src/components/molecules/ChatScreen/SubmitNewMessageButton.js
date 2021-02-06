@@ -3,9 +3,9 @@ import {StyleSheet, View} from "react-native";
 import IconButton from "react-native-paper/src/components/IconButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
-import AudioPlayer from "../../atoms/AudioPlayer";
 import {sendNewMessageAPI} from "../../../api/chat/sendNewMessageAPI";
 import {SocketContext} from "../../atoms/SocketContext";
+import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
 
 const SubmitNewMessageButton = ({newMessageSound, setNewMessage, chatId}) => {
     const context = useContext(SocketContext)
@@ -14,6 +14,7 @@ const SubmitNewMessageButton = ({newMessageSound, setNewMessage, chatId}) => {
         setNewMessage(null)
     }
     const submit = () => {
+        console.log('here')
         sendNewMessageAPI(context.socket, {chatId: chatId, voiceClip: newMessageSound}).then(r => {
             setNewMessage(null)
         }).catch(e => console.log(e))
@@ -29,7 +30,7 @@ const SubmitNewMessageButton = ({newMessageSound, setNewMessage, chatId}) => {
                     style={styles.cancelButton}
                     onPress={() => cancel()}
                 />
-                <AudioPlayer style={styles.audioPlayer} soundBits={newMessageSound}/>
+                <AudioPlayer style={styles.audioPlayer} soundBits={newMessageSound} fileName={'newMessage'}/>
                 <IconButton
                     icon={props => <Ionicons {...props} name={'checkmark-circle'}/>}
                     color={colorScheme.background_subtle}

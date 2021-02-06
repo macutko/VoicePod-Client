@@ -1,7 +1,9 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import GlobalContext from "../../atoms/GlobalState";
-import AudioPlayer from "../../atoms/AudioPlayer";
+import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
+
+
 //TODO: REFACTOR
 //TODO : pull data on play
 export default class Message extends React.Component {
@@ -28,8 +30,8 @@ export default class Message extends React.Component {
 
             <View style={{paddingTop: 10}}>
                 <View style={this.state.ownMessage ? styles.ownMessage : styles.otherMessage}>
-                    <AudioPlayer soundBits={this.props.data.soundBits}
-                                 pathToSound={`${this.props.data.id}_${this.props.data.chatId}.wav`}/>
+                    <AudioPlayer fileName={`${this.props.data.id}_${this.props.data.chatId}.wav`}
+                                 soundBits={this.props.data.soundBits}/>
 
 
                 </View>

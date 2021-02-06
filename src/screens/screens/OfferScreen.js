@@ -3,9 +3,9 @@ import React from "react"
 import {StyleSheet, View} from "react-native";
 import {Appbar, Button, Dialog, Paragraph, Portal, Title} from "react-native-paper";
 import OfferMenu from "../../components/molecules/OffersTab/OfferMenu";
-import AudioPlayer from "../../components/atoms/AudioPlayer";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../constants/Colors";
+import AudioPlayer from "../../components/atoms/AudioPlayer/AudioPlayer";
 
 export default class OfferScreen extends React.Component {
     constructor(props) {
@@ -82,16 +82,16 @@ export default class OfferScreen extends React.Component {
                     <View style={styles.offer_container}>
                         <Title style={styles.container_theirs}>Who?</Title>
                         <AudioPlayer soundBits={this.props.route.params.introSoundBits}
-                                     pathToSound={`intro_offer_${this.props.route.params.id}`}/>
+                                     fileName={`intro_offer_${this.props.route.params.id}`}/>
                         <Title style={styles.container_theirs}>Advice?</Title>
                         <AudioPlayer soundBits={this.props.route.params.adviceSoundBits}
-                                     pathToSound={`advice_offer_${this.props.route.params.id}`}/>
+                                     fileName={`advice_offer_${this.props.route.params.id}`}/>
                         <Title style={styles.container_theirs}>Problem?</Title>
                         <AudioPlayer soundBits={this.props.route.params.problemSoundBits}
-                                     pathToSound={`problem_offer_${this.props.route.params.id}`}/>
+                                     fileName={`problem_offer_${this.props.route.params.id}`}/>
                         <Title style={styles.container_theirs}>Outcome?</Title>
                         <AudioPlayer soundBits={this.props.route.params.outcomeSoundBits}
-                                     pathToSound={`outcome_offer_${this.props.route.params.id}`}/>
+                                     fileName={`outcome_offer_${this.props.route.params.id}`}/>
 
                         {this.state.thisIsMyClient ?
                             <View style={styles.mainContainer}>

@@ -1,46 +1,53 @@
-import {PermissionsAndroid, TouchableOpacity} from "react-native";
+import {TouchableOpacity} from "react-native";
 import {Avatar} from "react-native-paper";
 import React, {useContext} from "react";
-import * as RNFS from "react-native-fs";
-import {launchImageLibrary} from "react-native-image-picker";
 import GlobalContext from "../../atoms/GlobalState";
+import * as ImagePicker from 'expo-image-picker';
+import {FileSystem} from "react-native-unimodules";
 
 const EditUserProfilePicture = ({submit}) => {
     const context = useContext(GlobalContext);
 
-    const requestPermissions = async () => {
-        PermissionsAndroid.requestMultiple([
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        ]).then().catch(e => console.log(`Error in UserProfile ${e}`));
+    const getPerm = async () => {
+        if (Platform.OS !== 'web') {
+            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+                alert('Sorry, we need camera roll permissions to make this work!');
+                return false
+            } else return true
+        }
     }
 
-    const newImage = async () => {
-        if (!await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA)) await requestPermissions()
-        if (!await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)) await requestPermissions()
-        if (!await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)) await requestPermissions()
 
-        launchImageLibrary({}, res => {
-            console.log('Response = ', res);
+    const pickImage = async () => {
+        if (await getPerm()) {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 0.2,
+            });
 
-            if (res.error) {
-                console.log('ImagePicker Error: ', res.error);
-            } else if (!res.didCancel) {
-                let picType = res.uri.split(".")
+            console.log(result);
+
+            if (!result.cancelled) {
+                let picType = result.uri.split(".")
                 picType = picType[picType.length - 1]
-                RNFS.readFile(res.uri, 'base64')
-                    .then((data) => {
-                        submit({profilePicture: data, pictureType: picType})
-                    }).catch(e => console.log(`Error in UserProfile ${e}`))
+                FileSystem.readAsStringAsync(result.uri, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
+                    submit({profilePicture: data, pictureType: picType})
+                }).catch(e => (console.log(e)))
 
 
             }
-        });
-    }
-    return (<TouchableOpacity onPress={newImage}>
-        <Avatar.Image size={200}
-                      source={{uri: `data:image/${context.globalState.user.pictureType};base64,${context.globalState.user.profilePicture}`}}/>
-    </TouchableOpacity>)
+        }
+    };
+
+    return (
+        <TouchableOpacity onPress={pickImage}>
+            <Avatar.Image size={200}
+                          source={{uri: `data:image/${context.globalState.user.pictureType};base64,${context.globalState.user.profilePicture}`}}/>
+        </TouchableOpacity>
+
+    )
 }
 export {EditUserProfilePicture}

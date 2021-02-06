@@ -1,9 +1,9 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
 
 import Main from "./src/Main";
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {colorScheme} from "./src/constants/Colors";
-
 
 const theme = {
     ...DefaultTheme,
@@ -16,13 +16,19 @@ const theme = {
     },
 };
 
-const App: () => React$Node = () => {
+export default function App() {
     return (
-        <>
-            <PaperProvider theme={theme}>
-                <Main/>
-            </PaperProvider>
-        </>
+        <PaperProvider theme={theme}>
+            <Main/>
+        </PaperProvider>
     );
-};
-export default App;
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});

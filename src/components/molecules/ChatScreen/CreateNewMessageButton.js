@@ -4,8 +4,6 @@ import RecordButton from "../../atoms/RecordButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {SocketContext} from "../../atoms/SocketContext";
 import {getMinutesBalanceAPI} from "../../../api/chat/getMinutesBalanceAPI";
-import AudioRecord from "react-native-audio-record";
-import {recordingSettings} from "../../../constants/Config";
 import {Title} from "react-native-paper";
 
 const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
@@ -19,10 +17,7 @@ const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
             let left = res.minutes * 60 + res.seconds
             setSecondsLeft(left - usedSeconds)
         }).catch(e => console.log(e))
-        AudioRecord.init({
-            ...recordingSettings,
-            wavFile: `${chatId}_new.wav`,
-        });
+
 
         return () => {
             _isMounted.current = false;
@@ -33,14 +28,14 @@ const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
         <>
 
             <RecordButton disabled={secondsLeft <= 1} returnData={(r) => returnNewMessage(r.voiceClip)}
-                          returnSeconds={setUsedSeconds}
+                          returnSeconds={setUsedSeconds} fileName={`${chatId}_new.wav`}
                           limit={secondsLeft}>
 
                 <Ionicons size={30} color={colorScheme.accent} name={'mic'}/>
 
 
             </RecordButton>
-            <Title>Seconds left {secondsLeft-usedSeconds}</Title>
+            <Title>Seconds left {secondsLeft - usedSeconds}</Title>
         </>
     )
 }

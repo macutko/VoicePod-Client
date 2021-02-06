@@ -1,7 +1,5 @@
 import React from 'react';
 import GlobalContext from "./components/atoms/GlobalState";
-
-
 import {axiosInstance} from "./utilities/ConnectionUtils";
 import {getFromMemory} from "./utilities/StorageUtils";
 import {MainNav} from "./navigation/MainNav";

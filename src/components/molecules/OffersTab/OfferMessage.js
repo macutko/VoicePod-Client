@@ -2,9 +2,10 @@ import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Title} from "react-native-paper";
 import {colorScheme} from "../../../constants/Colors";
-import AudioPlayer from "../../atoms/AudioPlayer";
+
 import Button from "react-native-paper/src/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
 //TODO: REFACTOR
 export default class OfferMessage extends React.Component {
     acceptOffer = () => {
@@ -30,22 +31,22 @@ export default class OfferMessage extends React.Component {
                 <Title style={styles.container_theirs}>Who?</Title>
                 <AudioPlayer
                     soundBits={this.props.data.introSoundBits}
-                    pathToSound={`intro_offer_${this.props.data.id}`}
+                    fileName={`intro_offer_${this.props.data.id}`}
                 />
                 <Title style={styles.container_theirs}>Advice?</Title>
                 <AudioPlayer
                     soundBits={this.props.data.adviceSoundBits}
-                    pathToSound={`advice_offer_${this.props.data.id}`}
+                    fileName={`advice_offer_${this.props.data.id}`}
                 />
                 <Title style={styles.container_theirs}>Problem?</Title>
                 <AudioPlayer
                     soundBits={this.props.data.problemSoundBits}
-                    pathToSound={`problem_offer_${this.props.data.id}`}
+                    fileName={`problem_offer_${this.props.data.id}`}
                 />
                 <Title style={styles.container_theirs}>Outcome?</Title>
                 <AudioPlayer
                     soundBits={this.props.data.outcomeSoundBits}
-                    pathToSound={`outcome_offer_${this.props.data.id}`}
+                    fileName={`outcome_offer_${this.props.data.id}`}
                 />
 
                 {this.props.thisIsMyClient && !this.props.data.accepted ? (
