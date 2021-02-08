@@ -3,7 +3,7 @@ import {Image, StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
 
 import {colorScheme} from "../../../constants/Colors";
-import OfferCreationStatusBar from "../../molecules/CreateOfferScreen/OfferCreationStatusBar";
+import CreateOfferStatusBar from "../../molecules/CreateOfferScreen/CreateOfferStatusBar";
 import RecordButton from "../../atoms/RecordButton";
 import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
 
@@ -20,7 +20,6 @@ export default class CreateOfferTemplate extends React.Component {
 
     async componentDidMount() {
         console.log("Loading audiorecord")
-
     }
 
     returnData = (r) => {
@@ -35,9 +34,9 @@ export default class CreateOfferTemplate extends React.Component {
     render() {
         return (
             <>
-                <OfferCreationStatusBar navigation={this.props.navigation}
-                                        submit={() => this.props.submit(this.state.voiceClip)}
-                                        allowSubmit={!!this.state.voiceClip} title={this.props.title}/>
+                <CreateOfferStatusBar navigation={this.props.navigation}
+                                      submit={() => this.props.submit(this.state.voiceClip)}
+                                      allowSubmit={!!this.state.voiceClip} title={this.props.title}/>
 
                 <View style={styles.container}>
                     {this.props.children}

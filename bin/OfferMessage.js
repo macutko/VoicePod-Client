@@ -1,11 +1,11 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Title} from "react-native-paper";
-import {colorScheme} from "../../../constants/Colors";
+import {colorScheme} from "../src/constants/Colors";
 
 import Button from "react-native-paper/src/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
+import AudioPlayer from "../src/components/atoms/AudioPlayer/AudioPlayer";
 //TODO: REFACTOR
 export default class OfferMessage extends React.Component {
     acceptOffer = () => {

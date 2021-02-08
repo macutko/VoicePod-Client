@@ -2,11 +2,11 @@ import {TouchableOpacity} from "react-native";
 import React, {useEffect, useRef, useState} from "react";
 import {Audio} from 'expo-av';
 
-export const RecordButton = ({disabled = false, children, returnData, returnSeconds, limit, fileName = 'example.wav'}) => {
-
+export const RecordButton = ({disabled = false, children, returnData, returnSeconds, limit}) => {
+    const [recording, setRecording] = useState();
     const [seconds, setSeconds] = useState(0);
     const _isMounted = useRef(true);
-    const [recording, setRecording] = useState();
+
 
     useEffect(() => {
         let interval = null;
@@ -33,6 +33,7 @@ export const RecordButton = ({disabled = false, children, returnData, returnSeco
     useEffect(() => {
         return () => { // ComponentWillUnmount in Class Component
             _isMounted.current = false;
+            if (recording) recording.stopAndUnloadAsync();
         }
     }, []);
 
@@ -46,7 +47,16 @@ export const RecordButton = ({disabled = false, children, returnData, returnSeco
             });
             console.log('Starting recording..');
             let recording = new Audio.Recording();
-            await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+            await recording.prepareToRecordAsync({
+                ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, android: {
+                    extension: '.m4a',
+                    outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+                },
+                ios: {
+                    extension: '.m4a',
+                    outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
+                },
+            });
             await recording.startAsync();
             if (_isMounted) {
                 setRecording(recording);

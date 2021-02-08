@@ -3,50 +3,38 @@ import {StyleSheet} from "react-native";
 import {Avatar, Divider, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
-//TODO: REFACTOR
-export default class OfferListItem extends React.Component {
-    constructor(props) {
-        super(props);
-        if (this.props.data.customer) {
-            this.state = {
-                user: {...this.props.data.customer, consultant: false}
-            }
-        } else {
-            this.state = {
-                user: {...this.props.data.consultant, consultant: true}
-            }
-        }
-    }
 
-    render() {
-        return (
-            <>
-                <List.Item
-                    titleStyle={styles.profileTitle_consultant}
-                    style={styles.container_consultant}
-                    descriptionStyle={styles.profileDesc_consultant}
-                    onPress={() => this.props.mainNav.push('OfferScreen', {
-                        ...this.props.data, ...this.state.user
-                    })}
-                    title={this.state.user.firstName + ' ' + this.state.user.lastName}
-                    right={props => <List.Icon {...props}
-                                               icon={props => <Ionicons {...props}
-                                                                        style={this.state.user.consultant ? {color: colorScheme.background} : {color: colorScheme.neutral}}
-                                                                        name={this.state.user.consultant ? 'book' : 'cash'}/>}/>}
-                    left={props => <List.Icon {...props}
-                                              style={styles.profilePic_noob}
-                                              icon={props => <Avatar.Image source={{
-                                                  uri: `data:image/${this.state.user.pictureType};base64,${this.state.user.profilePicture}`
-                                              }}/>}/>}
-                />
-                <Divider style={styles.divider}/>
-            </>
+const OfferListItem = ({mainNav, data}) => {
+
+    return (
+        <>
+            <List.Item
+                titleStyle={styles.profileTitle_consultant}
+                style={styles.container_consultant}
+                descriptionStyle={styles.profileDesc_consultant}
+                onPress={() => mainNav.push('OfferScreen', {
+                    data
+                })}
+                title={data.user.firstName + ' ' + data.user.lastName}
+                right={props => <List.Icon {...props}
+                                           icon={props => <Ionicons {...props}
+                                                                    style={data.isCustomer ? {color: colorScheme.background} : {color: colorScheme.neutral}}
+                                                                    name={data.isCustomer ? 'book' : 'cash'}/>}/>}
+                left={props => <List.Icon {...props}
+                                          style={styles.profilePic_noob}
+                                          icon={props => <Avatar.Image source={{
+                                              uri: `data:image/${data.user.pictureType};base64,${data.user.profilePicture}`
+                                          }}/>}/>}
+            />
+            <Divider style={styles.divider}/>
+        </>
 
 
-        )
-    }
+    )
+
 }
 
+export default OfferListItem
 
 const styles = StyleSheet.create({
     divider: {

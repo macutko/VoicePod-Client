@@ -1,4 +1,4 @@
-import OfferScreenSlider from "./OfferScreenSlider";
+import CreateOfferSlider from "./CreateOfferSlider";
 import React from "react";
 
 export const HoursSlider = ({returnHours}) => {
@@ -14,7 +14,7 @@ export const HoursSlider = ({returnHours}) => {
 
     };
 
-    return (<OfferScreenSlider label={'Hours'} minimumValue={0} maximumValue={10} defaultValue={0}
+    return (<CreateOfferSlider label={'Hours'} minimumValue={0} maximumValue={10} defaultValue={0}
                                changeValue={changeHours}/>)
 }
 
