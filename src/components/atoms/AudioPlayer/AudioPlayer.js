@@ -43,7 +43,6 @@ const AudioPlayer = ({fileName, soundBits, style, pathToSound}, props) => {
                     }
                 }).catch(e => console.log(e))
             }
-            console.log('loaded sound')
 
         }
     }, [loading]);
@@ -60,7 +59,6 @@ const AudioPlayer = ({fileName, soundBits, style, pathToSound}, props) => {
         // Handle play changes
         if (sound) {
             sound.setOnPlaybackStatusUpdate((status) => {
-                console.log(status.positionMillis)
                 if (_isMounted) {
                     if (status.isPlaying) setPosition(status.positionMillis)
                     setPlaying(status.isPlaying)

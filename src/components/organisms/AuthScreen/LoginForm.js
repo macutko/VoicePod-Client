@@ -10,7 +10,7 @@ import authenticateAPI from "../../../api/user/authenticate";
 
 export default class LoginForm extends React.Component {
     static contextType = GlobalContext;
-//TODO: REFACTOR
+
     constructor(props, context) {
         super(props, context);
         this._isMounted = false;

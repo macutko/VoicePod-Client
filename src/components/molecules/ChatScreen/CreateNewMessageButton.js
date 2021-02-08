@@ -35,7 +35,7 @@ const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
 
 
             </RecordButton>
-            <Title>Seconds left {secondsLeft - usedSeconds}</Title>
+            <Title>Seconds left {secondsLeft - usedSeconds === -1 ? 0 : secondsLeft - usedSeconds}</Title>
         </>
     )
 }

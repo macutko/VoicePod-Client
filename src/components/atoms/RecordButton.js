@@ -1,92 +1,110 @@
-import {TouchableOpacity} from "react-native";
-import React, {useEffect, useRef, useState} from "react";
+import React from "react";
 import {Audio} from 'expo-av';
+import {TouchableOpacity} from "react-native";
+import {Title} from "react-native-paper";
+import {FileSystem} from "react-native-unimodules";
 
-export const RecordButton = ({disabled = false, children, returnData, returnSeconds, limit}) => {
-    const [recording, setRecording] = useState();
-    const [seconds, setSeconds] = useState(0);
-    const _isMounted = useRef(true);
-
-
-    useEffect(() => {
-        let interval = null;
-        if (recording) {
-            interval = setInterval(() => {
-                setSeconds(seconds => seconds + 1);
-            }, 1000);
-        } else {
-            setSeconds(0);
-            clearInterval(interval);
+class RecordButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this._isMounted = false
+        this.state = {
+            permissionsGranted: false
         }
-        return () => {
-            clearInterval(interval);
-        };
-    }, [recording])
+        this.recording = null
+    }
 
-    useEffect(() => {
-        returnSeconds(seconds)
-        if (!!limit && seconds > limit) {
-            stopRecording().then(r => console.log(r)).catch(e => console.log(e))
-        }
-    }, [seconds])
+    onRecordingUpdate = (status) => {
+        let seconds = Math.round(status.durationMillis / 1000)
+        console.log(`Seconds: ${seconds}`)
+        this.props.returnSeconds(seconds === -1 ? 0 : seconds)
+        if (!status.isDoneRecording && status.isRecording && seconds >= this.props.limit) this.stopRecording()
+    }
 
-    useEffect(() => {
-        return () => { // ComponentWillUnmount in Class Component
-            _isMounted.current = false;
-            if (recording) recording.stopAndUnloadAsync();
-        }
-    }, []);
-
-    async function startRecording() {
-        try {
-            console.log('Requesting permissions..');
-            await Audio.requestPermissionsAsync();
-            await Audio.setAudioModeAsync({
-                allowsRecordingIOS: true,
-                playsInSilentModeIOS: true,
-            });
-            console.log('Starting recording..');
-            let recording = new Audio.Recording();
-            await recording.prepareToRecordAsync({
-                ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, android: {
-                    extension: '.m4a',
-                    outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
-                },
-                ios: {
-                    extension: '.m4a',
-                    outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
-                },
-            });
-            await recording.startAsync();
-            if (_isMounted) {
-                setRecording(recording);
+    startRecording = () => {
+        this.recording = new Audio.Recording();
+        this.recording.prepareToRecordAsync({
+            ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, android: {
+                extension: '.m4a',
+                outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
+            },
+            ios: {
+                extension: '.m4a',
+                outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
+            },
+        }).then(r => {
+            if (r.canRecord) {
+                this.recording.setOnRecordingStatusUpdate(this.onRecordingUpdate)
+                this.recording.setProgressUpdateInterval(1000)
+                this.recording.startAsync().then(r => console.log(`Started ${JSON.stringify(r)}`)).catch(e => console.log(e));
             }
-            console.log('Recording started');
-        } catch (err) {
-            console.error('Failed to start recording', err);
+        }).catch(e => console.log(e));
+    }
+
+    stopRecording = () => {
+        if (this.recording !== null) {
+            this.recording.stopAndUnloadAsync().then(r => {
+                console.log(`Stopped ${JSON.stringify(r)}`)
+                let uri = this.recording.getURI()
+                this.recording = null
+
+                FileSystem.readAsStringAsync(uri, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
+                    console.log(data)
+                    this.props.returnData({
+                        voiceClip: data,
+                        pathToFile: uri
+                    })
+                }).catch(e => (console.log(e)))
+
+
+            }).catch(e => {
+                console.log(`Error on stop ${e}`)
+                this.recording = null
+            });
         }
     }
 
-    async function stopRecording() {
-        console.log('Stopping recording..');
-        if (_isMounted) {
-            setRecording(undefined);
-        }
-        if (recording) {
-            await recording.stopAndUnloadAsync();
-            const uri = recording.getURI();
-            console.log('Recording stopped and stored at', uri);
+
+    componentDidMount() {
+        this._isMounted = true
+        Audio.requestPermissionsAsync().then(r => {
+            if (r.status === "granted" && this._isMounted) {
+                this.setState({
+                    permissionsGranted: true
+                })
+            }
+        }).catch(e => console.log(e));
+
+        Audio.setAudioModeAsync({
+            allowsRecordingIOS: true,
+            playsInSilentModeIOS: true,
+        }).then(r => console.log(`Set audio mode ${r}`)).catch(e => console.log(e));
+
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
+        if (this.recording !== null) {
+            this.recording.stopAndUnloadAsync().then(r => console.log(`Stop and unload unount ${r}`)).catch(e => console.log(e))
+            this.recording = null
         }
     }
 
+    render() {
+        return (
 
-    return (
-        <>
-            <TouchableOpacity disabled={disabled} onPressIn={startRecording} onPressOut={stopRecording}>
-                {children}
-            </TouchableOpacity>
-        </>
+            this.state.permissionsGranted ?
+                <TouchableOpacity disabled={this.props.disabled} onPressIn={this.startRecording}
+                                  onPressOut={this.stopRecording}>
+                    {this.props.children}
+                </TouchableOpacity> :
 
-    )
+                // TODO: Make this nicer
+                <Title> We need microphone permissions for you to be able to record messages</Title>
+
+
+        )
+    }
 }
+
 export default RecordButton
