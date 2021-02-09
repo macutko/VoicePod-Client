@@ -3,7 +3,7 @@ import {FlatList, StyleSheet} from "react-native";
 import OutlineTopScreen from "../../components/atoms/OutlineTopScreen";
 import SearchboxCustom from "../../components/molecules/SearchTab/SearchboxCustom";
 import UserCard from "../../components/molecules/SearchTab/UserCard";
-import {search} from "../../api/search";
+import {searchAPI} from "../../api/searchAPI";
 import {ActivityIndicator} from "react-native-paper";
 import {colorScheme} from "../../constants/Colors";
 
@@ -33,7 +33,7 @@ export const SearchTab = (props) => {
     useEffect(() => {
         if (isFetching) {
 
-            search({socket: props.socket, data: {searchQuery: searchQuery}}).then(r => {
+            searchAPI({socket: props.socket, data: {searchQuery: searchQuery}}).then(r => {
                 if (_isMounted) {
                     setResults(r)
                     setIsFetching(false)

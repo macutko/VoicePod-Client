@@ -7,6 +7,9 @@ import AuthScreen from "./screens/screens/AuthScreen";
 
 
 export default class Main extends React.Component {
+    //TODO: refactor
+    //TODO: add splash screen
+
     constructor(props) {
         super(props);
         this.state = {

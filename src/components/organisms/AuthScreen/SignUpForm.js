@@ -1,18 +1,18 @@
 import * as React from "react";
-import {ScrollView, StyleSheet, View} from "react-native";
-import {Button, Checkbox, Dialog, HelperText, Modal, Portal, Text, TextInput,} from "react-native-paper";
+import {StyleSheet, View} from "react-native";
+import {Button, Checkbox, HelperText, Modal, Portal, Text, TextInput,} from "react-native-paper";
 import {colorScheme} from "../../../constants/Colors";
 import GLOBAL_VAR from "../../../constants/Global";
 import * as layout from "../../../constants/Layout";
 import {CustomExistenceValidator} from "../../../utilities/validators/CustomExistenceValidator";
 import {CustomFieldValidator} from "../../../utilities/validators/CustomFieldValidator";
 import GlobalContext from "../../atoms/GlobalState";
-import {TermsAndConditions} from "../../molecules/AuthScreen/TermsAndConditions";
 import createAPI from "../../../api/user/create";
+import LicenseDialog from "../../molecules/AuthScreen/LicenseDialog";
 
 export default class SignUpForm extends React.Component {
     static contextType = GlobalContext;
-//TODO: REFACTOR
+
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -241,27 +241,7 @@ export default class SignUpForm extends React.Component {
                             </Text>
                         </View>
 
-                        {/* License Dialog - not sure where to put it */}
-                        <Portal>
-                            <Dialog
-                                visible={this.state.licenseDialogVisible}
-                                onDismiss={() => this.toggleLicenseDialog()}
-                                style={styles.licenseDialog}
-                            >
-                                <Dialog.ScrollArea>
-                                    <ScrollView
-                                        contentContainerStyle={
-                                            styles.licenseDialogScrollViewContainer
-                                        }
-                                    >
-                                        <TermsAndConditions/>
-                                        <Button onPress={() => this.toggleLicenseDialog()}>
-                                            OK
-                                        </Button>
-                                    </ScrollView>
-                                </Dialog.ScrollArea>
-                            </Dialog>
-                        </Portal>
+                        <LicenseDialog toggleLicenseDialog={this.toggleLicenseDialog}/>
 
                         <View style={styles.submitContainer}>
                             <Button
@@ -323,19 +303,5 @@ const styles = StyleSheet.create({
     },
     errorMessage: {
         color: colorScheme.error,
-    },
-    licenseContainer: {
-        flexDirection: "row",
-        width: "90%",
-        alignItems: "center",
-    },
-    licenseAnchor: {
-        color: colorScheme.secondary,
-    },
-    licenseCheckbox: {
-        marginBottom: 10,
-    },
-    licenseDialogScrollViewContainer: {
-        padding: 10,
     },
 });

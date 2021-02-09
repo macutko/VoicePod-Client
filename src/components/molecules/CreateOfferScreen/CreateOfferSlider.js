@@ -4,7 +4,7 @@ import Slider from "@react-native-community/slider";
 import {colorScheme} from "../../../constants/Colors";
 import React, {useEffect, useRef, useState} from "react";
 
-export const OfferScreenSlider = ({changeValue, defaultValue, label, minimumValue, maximumValue}) => {
+export const CreateOfferSlider = ({changeValue, defaultValue, label, minimumValue, maximumValue}) => {
     const [value, setValue] = useState(defaultValue)
     const input = useRef(null)
 
@@ -55,7 +55,7 @@ export const OfferScreenSlider = ({changeValue, defaultValue, label, minimumValu
         </View>
     )
 }
-export default OfferScreenSlider
+export default CreateOfferSlider
 
 
 const styles = StyleSheet.create({

@@ -4,6 +4,7 @@ import Title from "react-native-paper/src/components/Typography/Title";
 import Button from "react-native-paper/src/components/Button";
 import {Modal, Portal} from "react-native-paper";
 import {StyleSheet} from "react-native";
+import {getPaymentMethodAPI} from "../../../api/getPaymentMethodAPI";
 // import stripe from 'tipsi-stripe'
 
 //TODO: REFACTOR
@@ -22,14 +23,9 @@ export default class AddCard extends React.Component {
     }
 
     getPaymentDetails = () => {
-        this.props.socket.emit('getPaymentMethod', {}, (err, res) => {
-            if (err) console.log(`Error in add card ${err}`)
-            else {
-                console.log(`Res ${Object.keys(res)}`)
-                // console.log(res.data.length)
-                // console.log(res.data[0].card.last4)
-            }
-        })
+        getPaymentMethodAPI(this.props.socket, {}).then(r => {
+            console.log(`Res ${Object.keys(r)}`)
+        }).catch(e => console.log(e))
     }
 
     componentDidMount() {

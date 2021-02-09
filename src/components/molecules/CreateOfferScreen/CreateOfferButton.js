@@ -27,7 +27,7 @@ export const CreateOfferButton = ({navigation, username, intro, problem, budget}
             //     .then((r) => {
             //         console.log(r);
             //         navigation.navigate("TabNavWrapper", {
-            //             screen: "OffersTab",
+            //             screen: "OffersList",
             //         });
             //     })
             //     .catch((e) => {

@@ -1,7 +1,7 @@
 import {Appbar} from "react-native-paper";
 import React from "react";
 
-export const OfferCreationStatusBar = ({navigation, title, allowSubmit, submit}) => {
+export const CreateOfferStatusBar = ({navigation, title, allowSubmit, submit}) => {
     return (
         <Appbar.Header statusBarHeight={0}>
             <Appbar.BackAction
@@ -19,4 +19,4 @@ export const OfferCreationStatusBar = ({navigation, title, allowSubmit, submit})
         </Appbar.Header>
     )
 }
-export default OfferCreationStatusBar
+export default CreateOfferStatusBar

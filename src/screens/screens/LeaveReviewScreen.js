@@ -1,13 +1,13 @@
-//TODO: REFACTOR
-
 import {Button, TextInput, Title} from "react-native-paper";
 import React from "react";
 import {StyleSheet} from "react-native";
 import {colorScheme} from "../../constants/Colors";
 import LargeTextInput from "../../components/atoms/LargeTextInput";
+import {updateReviewByChatIdAPI} from "../../api/review/updateReviewByChatIdAPI";
+import {getReviewByChatIdAPI} from "../../api/review/getReviewByChatIdAPI";
 
 export default class LeaveReviewScreen extends React.Component {
-
+    // TODO: make into fucntional component and finish
     constructor(props) {
         super(props);
         this._isMounted = false;
@@ -20,30 +20,23 @@ export default class LeaveReviewScreen extends React.Component {
     }
 
     sendReview = () => {
-        this.props.socket.emit('updateReviewByChatId', {
+        updateReviewByChatIdAPI(this.props.socket, {
             chatId: this.props.route.params.chatId,
             title: this.state.title,
             review: this.state.review,
             stars: this.state.stars
-        }, (err, res) => {
-            if (err) console.log(`Error in leave reivew ${err}`)
-            else {
-                console.log(`Res ${res}`)
-                if (res) {
-                    this.props.navigation.goBack(null)
-                }
+        }).then(res => {
+            if (res) {
+                this.props.navigation.goBack(null)
             }
-        })
+        }).catch(e => console.log(`Error in leave reivew ${e}`))
     }
 
     getReview = () => {
-        this.props.socket.emit('getReviewByChatId', {chatId: this.props.route.params.chatId}, (err, res) => {
-            if (err) console.log(`Error in leave review ${err}`)
-            else {
-                console.log(`Res ${!!res ? Object.keys(res) : res}`)
-                this.setState({...res})
-            }
-        })
+        getReviewByChatIdAPI(this.props.socket, {chatId: this.props.route.params.chatId}).then(res => {
+            console.log(`Res ${!!res ? Object.keys(res) : res}`)
+            this.setState({...res})
+        }).catch(e => console.log(e))
     }
 
     componentDidMount() {

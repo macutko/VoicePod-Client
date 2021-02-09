@@ -15,7 +15,7 @@ const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
     useEffect(() => {
         getMinutesBalanceAPI(context.socket, {chatId: chatId}).then(res => {
             let left = res.minutes * 60 + res.seconds
-            setSecondsLeft(left - usedSeconds)
+            if (_isMounted.current) setSecondsLeft(left - usedSeconds)
         }).catch(e => console.log(e))
 
 
@@ -35,7 +35,7 @@ const CreateNewMessageButton = ({chatId, returnNewMessage}) => {
 
 
             </RecordButton>
-            <Title>Seconds left {secondsLeft - usedSeconds}</Title>
+            <Title>Seconds left {secondsLeft - usedSeconds === -1 ? 0 : secondsLeft - usedSeconds}</Title>
         </>
     )
 }

@@ -18,7 +18,7 @@ export const IntroCreateOfferScreen = (props) => {
             {...props}
             submit={(voiceClip) => submit(voiceClip)}
             current={"IntroCreateOfferScreen"}
-            description={"Press the microphone and speak for 1 minute."}
+            description={"Press and hold the microphone and speak for 1 minute."}
             title={"Intro"}
         >
             <>

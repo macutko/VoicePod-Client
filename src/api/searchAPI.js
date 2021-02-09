@@ -1,4 +1,4 @@
-export const search = ({socket, data}) => {
+export const searchAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
 
         socket.emit('search', data, (error, response) => {

@@ -1,40 +1,41 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+
 import {colorScheme} from "../../constants/Colors";
-import OffersList from "../../components/molecules/OffersTab/OffersList";
+import ChatsList from "../../components/molecules/ChatsTab/ChatsList";
 
-const OffersTab = createMaterialTopTabNavigator();
+const ChatTab = createMaterialTopTabNavigator();
 
-export const OfferNavigator = (inheritance) => {
+export const ChatNavigator = (inheritance) => {
     return (
-        <OffersTab.Navigator
+        <ChatTab.Navigator
             initialRouteName="SearchTab"
             activeColor={colorScheme.primary}
             inactiveColor={colorScheme.accent}
             barStyle={{backgroundColor: colorScheme.background}}>
-            <OffersTab.Screen
-                name="Pending Offers"
-                options={{tabBarLabel: "Pending",}}
+            <ChatTab.Screen
+                name="StandardChats"
+                options={{tabBarLabel: "Standard",}}
             >
                 {(props) => (
-                    <OffersList
+                    <ChatsList
                         {...inheritance}
                         {...props}
                     />
                 )}
-            </OffersTab.Screen>
-            <OffersTab.Screen
-                name="Resolved Offers"
-                options={{tabBarLabel: "Resolved Offers",}}
+            </ChatTab.Screen>
+            <ChatTab.Screen
+                name="PaidChats"
+                options={{tabBarLabel: "Paid",}}
             >
                 {(props) => (
-                    <OffersList
+                    <ChatsList
                         {...inheritance}
                         {...props}
                     />
                 )}
-            </OffersTab.Screen>
-        </OffersTab.Navigator>
+            </ChatTab.Screen>
+        </ChatTab.Navigator>
 
     );
 };
