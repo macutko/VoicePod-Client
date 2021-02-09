@@ -6,8 +6,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React from "react";
 import SettingsTab from "./SettingsNav";
 import {SearchNavigator} from "./SearchNav";
-import {ChatNavigator} from "./ChatNav";
-import {OfferNavigator} from "./OfferNav";
+import {ChatNavigator} from "../screens/tabs/ChatTab";
+import {OfferNavigator} from "../screens/tabs/OffersTab";
 
 const Nav = createMaterialBottomTabNavigator();
 

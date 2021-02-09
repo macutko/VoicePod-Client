@@ -1,41 +1,41 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {colorScheme} from "../constants/Colors";
-import ChatsTab from "../screens/tabs/ChatsTab";
+import {colorScheme} from "../../constants/Colors";
+import ChatsList from "../../components/molecules/ChatsTab/ChatsList";
 
-const ChatNav = createMaterialTopTabNavigator();
+const ChatTab = createMaterialTopTabNavigator();
 
 export const ChatNavigator = (inheritance) => {
     return (
-        <ChatNav.Navigator
+        <ChatTab.Navigator
             initialRouteName="SearchTab"
             activeColor={colorScheme.primary}
             inactiveColor={colorScheme.accent}
             barStyle={{backgroundColor: colorScheme.background}}>
-            <ChatNav.Screen
+            <ChatTab.Screen
                 name="StandardChats"
                 options={{tabBarLabel: "Standard",}}
             >
                 {(props) => (
-                    <ChatsTab
+                    <ChatsList
                         {...inheritance}
                         {...props}
                     />
                 )}
-            </ChatNav.Screen>
-            <ChatNav.Screen
+            </ChatTab.Screen>
+            <ChatTab.Screen
                 name="PaidChats"
                 options={{tabBarLabel: "Paid",}}
             >
                 {(props) => (
-                    <ChatsTab
+                    <ChatsList
                         {...inheritance}
                         {...props}
                     />
                 )}
-            </ChatNav.Screen>
-        </ChatNav.Navigator>
+            </ChatTab.Screen>
+        </ChatTab.Navigator>
 
     );
 };

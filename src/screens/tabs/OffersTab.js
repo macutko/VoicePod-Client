@@ -1,15 +1,41 @@
 import React from "react";
-import OfferListItem from "../../components/molecules/OffersTab/OfferList.item";
-import {getOffersByUserIdAPI} from "../../api/offer/getOffersByUserIdAPI";
-import ItemListHOC from "../../components/atoms/ItemListHOC";
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {colorScheme} from "../../constants/Colors";
+import OffersList from "../../components/molecules/OffersTab/OffersList";
 
-export const OffersTab = (props) => {
+const OffersTab = createMaterialTopTabNavigator();
 
+export const OfferNavigator = (inheritance) => {
     return (
-        <ItemListHOC api={getOffersByUserIdAPI} apiProps={{socket: props.socket, data: {}}} listItem={OfferListItem}
-                     listItemProps={{mainNav: props.mainNav}}/>
+        <OffersTab.Navigator
+            initialRouteName="SearchTab"
+            activeColor={colorScheme.primary}
+            inactiveColor={colorScheme.accent}
+            barStyle={{backgroundColor: colorScheme.background}}>
+            <OffersTab.Screen
+                name="Pending Offers"
+                options={{tabBarLabel: "Pending",}}
+            >
+                {(props) => (
+                    <OffersList
+                        {...inheritance}
+                        {...props}
+                    />
+                )}
+            </OffersTab.Screen>
+            <OffersTab.Screen
+                name="Resolved Offers"
+                options={{tabBarLabel: "Resolved Offers",}}
+            >
+                {(props) => (
+                    <OffersList
+                        {...inheritance}
+                        {...props}
+                    />
+                )}
+            </OffersTab.Screen>
+        </OffersTab.Navigator>
 
-    )
-}
+    );
+};
 
-export default OffersTab
