@@ -82,7 +82,7 @@ const OfferBody = (props) => {
                             null
                     }
 
-                    {/*    TODO: add cancel option*/}
+                    {/*    TODO: UI add cancel option*/}
                 </>
             }
 

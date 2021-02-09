@@ -22,6 +22,10 @@ class RecordButton extends React.Component {
     }
 
     startRecording = () => {
+        this.props.returnData({
+            voiceClip: null,
+            pathToFile: null
+        })
         this.recording = new Audio.Recording();
         this.recording.prepareToRecordAsync({
             ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, android: {
@@ -47,14 +51,13 @@ class RecordButton extends React.Component {
                 console.log(`Stopped ${JSON.stringify(r)}`)
                 let uri = this.recording.getURI()
                 this.recording = null
-
+                console.log(uri)
                 FileSystem.readAsStringAsync(uri, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
-                    console.log(data)
                     this.props.returnData({
                         voiceClip: data,
                         pathToFile: uri
                     })
-                }).catch(e => (console.log(e)))
+                }).catch(e => (console.log(`Error on read file ${e}`)))
 
 
             }).catch(e => {
@@ -99,9 +102,8 @@ class RecordButton extends React.Component {
                     {this.props.children}
                 </TouchableOpacity> :
 
-                // TODO: Make this nicer
+                // TODO: UI Make this nicer
                 <Title> We need microphone permissions for you to be able to record messages</Title>
-
 
         )
     }

@@ -17,7 +17,7 @@ import {SocketContext} from "../components/atoms/SocketContext"
 
 export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
-
+//TODO: make permission getting done here for record and audio
 
 export const MainNav = () => {
     return (

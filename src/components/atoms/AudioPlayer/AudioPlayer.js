@@ -10,6 +10,7 @@ import {Audio} from "expo-av";
 
 export default class AudioPlayer extends React.Component {
     constructor(props) {
+        console.log(props.fileName)
         super(props);
         this.state = {
             playing: false,
@@ -22,8 +23,10 @@ export default class AudioPlayer extends React.Component {
     }
 
     onSoundUpdate = (status) => {
+
         if (this._isMounted) {
             if (!status.isBuffering) {
+
                 this.setState({
                     loading: false
                 })
@@ -57,7 +60,7 @@ export default class AudioPlayer extends React.Component {
 
     componentDidMount() {
         this._isMounted = true
-        Audio.requestPermissionsAsync().then(r => {
+        Audio.getPermissionsAsync().then(r => {
             if (r.status !== "granted" && this._isMounted) {
                 this.setState({
                     permissionsGranted: false
@@ -74,14 +77,25 @@ export default class AudioPlayer extends React.Component {
             let path = FileSystem.documentDirectory + `${this.props.fileName}.m4a`;
 
             FileSystem.writeAsStringAsync(path, this.props.soundBits, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
-                Audio.Sound.createAsync(require('./600b0d2a87eb3b48503eaf21_600aee7e4b8080307c5d150c.wav')).then(r => {
+                Audio.Sound.createAsync({uri: path}).then(r => {
                     if (this._isMounted) {
                         this.sound = r.sound
-                        this.sound.setProgressUpdateIntervalAsync(100).then(r => console.log(r)).catch(e => console.log(e))
+                        this.sound.setProgressUpdateIntervalAsync(100).then(r => {
+                        }).catch(e => console.log(e))
                         this.sound.setOnPlaybackStatusUpdate(this.onSoundUpdate)
                     }
                 }).catch(e => console.log(e))
             }).catch(e => (console.log(e)))
+
+        } else if (this.props.pathToSound) {
+            Audio.Sound.createAsync({uri: this.props.pathToSound}).then(r => {
+                if (this._isMounted) {
+                    this.sound = r.sound
+                    this.sound.setProgressUpdateIntervalAsync(100).then().catch(e => console.log(e))
+                    this.sound.setOnPlaybackStatusUpdate(this.onSoundUpdate)
+                }
+            }).catch(e => console.log(`Error on reading audio ${e}`))
+
         }
     }
 
@@ -96,7 +110,8 @@ export default class AudioPlayer extends React.Component {
                             <>
                                 {this.state.playing ? <PauseButton sound={this.sound}/> :
                                     <PlayButton sound={this.sound}/>}
-                                <TrackSlider sound={this.sound} width={this.props.width} position={this.state.position} />
+                                <TrackSlider sound={this.sound} width={this.props.width}
+                                             position={this.state.position}/>
                             </>}
                     </View>
                 </View>

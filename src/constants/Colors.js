@@ -1,20 +1,24 @@
 export const colorScheme = {
     blue: "#0B7ACA",
-    yellow: "#f7c204",
-    white: "#fff",
     black: "#000",
     red: "#da1b1b",
     // Primarily lets use these defs:
-    accent: "#da1b74",
     neutral: "#000",
     neutral_subtle: "#282828",
     background: "#F7F7F7",
     background_subtle: "#cfcfcf",
 
-    // New design colors 
+    // New design colors
     secondary: "#753B8E", // dark violet
-    primary: "#9B63B3", // light violet 
     grey: "#ebebeb",
-    dark_grey: "#848484",
-    error: "#b1151f"
+    error: "#b1151f",
+
+    //Juraj design
+    primary: "#64b5f6", // violet
+    accent: '#f05454', // red
+    dark_grey: "#35424a",
+    light_grey: '#d2dae2',
+    white: '#ffffff',
+    yellow: '#fec63d',
+    green: '#38873a',
 };

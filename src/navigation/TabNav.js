@@ -1,13 +1,13 @@
 import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
 import {colorScheme} from "../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import ChatsTab from "../screens/tabs/ChatsTab";
 
 
 import React from "react";
-import OffersTab from "../screens/tabs/OffersTab";
 import SettingsTab from "./SettingsNav";
 import {SearchNavigator} from "./SearchNav";
+import {ChatNavigator} from "./ChatNav";
+import {OfferNavigator} from "./OfferNav";
 
 const Nav = createMaterialBottomTabNavigator();
 
@@ -33,7 +33,7 @@ export const TabNav = (inheritance) => {
                 }}
             >
                 {(props) => (
-                    <ChatsTab
+                    <ChatNavigator
                         {...inheritance}
                         {...props}
                         mainNav={inheritance.navigation}
@@ -54,7 +54,7 @@ export const TabNav = (inheritance) => {
                 }}
             >
                 {(props) => (
-                    <OffersTab
+                    <OfferNavigator
                         {...inheritance}
                         {...props}
                         mainNav={inheritance.navigation}
