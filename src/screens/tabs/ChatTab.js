@@ -2,7 +2,8 @@ import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import {colorScheme} from "../../constants/Colors";
-import ChatsList from "../../components/molecules/ChatsTab/ChatsList";
+import PaidChatsList from "../../components/molecules/ChatsTab/PaidChatsList";
+import FreeChatsList from "../../components/molecules/ChatsTab/FreeChatsList";
 
 const ChatTab = createMaterialTopTabNavigator();
 
@@ -18,7 +19,7 @@ export const ChatNavigator = (inheritance) => {
                 options={{tabBarLabel: "Standard",}}
             >
                 {(props) => (
-                    <ChatsList
+                    <FreeChatsList
                         {...inheritance}
                         {...props}
                     />
@@ -29,7 +30,7 @@ export const ChatNavigator = (inheritance) => {
                 options={{tabBarLabel: "Paid",}}
             >
                 {(props) => (
-                    <ChatsList
+                    <PaidChatsList
                         {...inheritance}
                         {...props}
                     />

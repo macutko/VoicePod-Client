@@ -4,7 +4,7 @@ import {Avatar, Divider, List} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
 
-export default class ChatListItem extends React.Component {
+export default class PaidChatListItem extends React.Component {
     constructor(props) {
         super(props);
         //TODO: REfactor to use BusinessProfile field
