@@ -46,6 +46,8 @@ const UserProfile = (props) => {
                 Send Offer
             </Button>
 
+
+
             <StartFreeChat navigation={props.navigation} username={props.route.params.username}/>
 
 
