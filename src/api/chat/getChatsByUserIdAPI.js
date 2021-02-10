@@ -1,9 +1,9 @@
-export const getPaidChatsByUserIdAPI = ({socket, data}) => {
+export const getChatsByUserIdAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
 
-        socket.emit('getPaidChatsByUserId', data, (error, response) => {
+        socket.emit('getChatsByUserId', data, (error, response) => {
             if (error) {
-                console.log(`Error in getPaidChatsByUserId ${error}`)
+                console.log(`Error in getChatsByUserId ${error}`)
                 reject({})
             } else {
                 console.log(`Amount of chats: ${response.length}`)
