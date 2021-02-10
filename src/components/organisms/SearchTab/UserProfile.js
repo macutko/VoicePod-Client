@@ -6,7 +6,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {AddPaymentWarning} from "../../molecules/SearchTab/AddPaymentWarning";
 import {ReviewsList} from "../../molecules/SearchTab/ReviewsList";
 import {checkDefaultPaymentMethodAPI} from "../../../api/checkDefaultPaymentMethodAPI";
-import StartFreeChat from "../../molecules/SearchTab/StartFreeChat";
 
 const UserProfile = (props) => {
     const _isMounted = useRef(true);
@@ -24,10 +23,11 @@ const UserProfile = (props) => {
             if (r) {
                 props.mainNav.navigate('IntroCreateOfferScreen', {...props.route.params})
             } else {
-                if (_isMounted.current) setShowDialog(!showDialog)
+                if (_isMounted) setShowDialog(!showDialog)
             }
         }).catch(e => console.log(e))
     }
+
 
     return (
         <View style={styles.containerStyle}>
@@ -46,12 +46,9 @@ const UserProfile = (props) => {
                 Send Offer
             </Button>
 
-            <StartFreeChat navigation={props.navigation} username={props.route.params.username}/>
-
-
             <ReviewsList username={props.route.params.username}/>
 
-            <AddPaymentWarning toggleDialog={_isMounted.current ? () => setShowDialog(!showDialog) : null}
+            <AddPaymentWarning toggleDialog={_isMounted ? () => setShowDialog(!showDialog) : null}
                                navigation={props.navigation}
                                showDialog={showDialog}/>
 
