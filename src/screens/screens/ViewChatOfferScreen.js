@@ -10,15 +10,23 @@ const ViewChatOfferScreen = (props) => {
     const [fetchedData, setFetchedData] = useState({});
     const _isMounted = useRef(true);
 
+
+    useEffect(() => {
+        return () => {
+            _isMounted.current = false;
+        }
+    }, []);
+
+
     useEffect(() => {
         if (isFetching) {
             getOfferFromChatAPI(props.socket, {chatId: props.route.params.chatId}).then(r => {
-                if (_isMounted) {
+                if (_isMounted.current) {
                     setFetchedData(r)
                     setIsFetching(false)
                     console.log(Object.keys(r))
                 }
-            }).catch(e => _isMounted ? setIsFetching(false) : null)
+            }).catch(e => _isMounted.current ? setIsFetching(false) : null)
         }
     }, [isFetching]);
 
