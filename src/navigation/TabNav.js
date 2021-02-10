@@ -6,8 +6,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React from "react";
 import SettingsTab from "./SettingsNav";
 import {SearchNavigator} from "./SearchNav";
-import {ChatNavigator} from "../screens/tabs/ChatTab";
-import {OfferNavigator} from "../screens/tabs/OffersTab";
+import {ChatNav} from "./ChatNav";
+import {OfferNav} from "./OfferNav";
 
 const Nav = createMaterialBottomTabNavigator();
 
@@ -33,7 +33,7 @@ export const TabNav = (inheritance) => {
                 }}
             >
                 {(props) => (
-                    <ChatNavigator
+                    <ChatNav
                         {...inheritance}
                         {...props}
                         mainNav={inheritance.navigation}
@@ -54,7 +54,7 @@ export const TabNav = (inheritance) => {
                 }}
             >
                 {(props) => (
-                    <OfferNavigator
+                    <OfferNav
                         {...inheritance}
                         {...props}
                         mainNav={inheritance.navigation}

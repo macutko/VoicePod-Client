@@ -1,13 +1,13 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {colorScheme} from "../../constants/Colors";
-import PaidChatsList from "../../components/molecules/ChatsTab/PaidChatsList";
-import FreeChatsList from "../../components/molecules/ChatsTab/FreeChatsList";
+import {colorScheme} from "../constants/Colors";
+import PaidChatsList from "../components/molecules/ChatsTab/PaidChatsList";
+import FreeChatsList from "../components/molecules/ChatsTab/FreeChatsList";
 
 const ChatTab = createMaterialTopTabNavigator();
 
-export const ChatNavigator = (inheritance) => {
+export const ChatNav = (inheritance) => {
     return (
         <ChatTab.Navigator
             initialRouteName="SearchTab"
