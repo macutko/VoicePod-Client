@@ -3,6 +3,8 @@ import {Audio} from 'expo-av';
 import {TouchableOpacity} from "react-native";
 import {Title} from "react-native-paper";
 import {FileSystem} from "react-native-unimodules";
+import PropTypes from 'prop-types';
+
 
 class RecordButton extends React.Component {
     constructor(props) {
@@ -17,7 +19,7 @@ class RecordButton extends React.Component {
     onRecordingUpdate = (status) => {
         let seconds = Math.round(status.durationMillis / 1000)
         console.log(`Seconds: ${seconds}`)
-        this.props.returnSeconds(seconds === -1 ? 0 : seconds)
+        this.props.returnSeconds(seconds)
         if (!status.isDoneRecording && status.isRecording && seconds >= this.props.limit) this.stopRecording()
     }
 
@@ -110,3 +112,10 @@ class RecordButton extends React.Component {
 }
 
 export default RecordButton
+
+RecordButton.propTypes = {
+    disabled: PropTypes.bool,
+    returnSeconds: PropTypes.func,
+    returnData: PropTypes.func,
+    limit: PropTypes.number
+};
