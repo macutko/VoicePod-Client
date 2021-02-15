@@ -1,12 +1,11 @@
 import * as React from "react";
-
-import {StyleSheet, View} from "react-native";
+import { StyleSheet, View } from "react-native";
 import LoginForm from "../../components/organisms/AuthScreen/LoginForm";
 import SignUpForm from "../../components/organisms/AuthScreen/SignUpForm";
-import {colorScheme} from "../../constants/Colors";
-import AuthScreenHeader from "../../components/organisms/AuthScreen/AuthScreenHeader";
+import { colorScheme } from "../../constants/Colors";
 
-export default class AuthScreen extends React.Component {
+
+export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,11 +21,9 @@ export default class AuthScreen extends React.Component {
     };
 
     render = () => {
+        console.log("Login");
         return (
             <View style={styles.container}>
-
-                <AuthScreenHeader toggleModal={this.toggleModal}/>
-
 
                 <LoginForm
                     visible={this.state.login}
