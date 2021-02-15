@@ -17,14 +17,18 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Logo />
-        {/* <View style={styles.titleWrapper}></View> */}
         <TitleWithDescription description="Welcome back!">
           Login
         </TitleWithDescription>
-        <LoginForm navigation={this.props.navigation} />
+        <LoginForm />
         <View style={styles.signupLink}>
           <TitleCustom secondary>New to VoicePod?</TitleCustom>
-          <ButtonCustom text>SignUp</ButtonCustom>
+          <ButtonCustom
+            onPress={() => this.props.navigation.push("SignupScreen")}
+            text
+          >
+            SignUp
+          </ButtonCustom>
         </View>
       </View>
     );
@@ -32,9 +36,6 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    alignSelf: "flex-start",
-  },
   container: {
     backgroundColor: colorScheme.background,
     width: "100%",
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     flexDirection: "row",
+    justifyContent: "space-between",
     width: "100%",
   },
 });

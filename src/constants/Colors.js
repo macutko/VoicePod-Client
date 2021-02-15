@@ -5,7 +5,7 @@ export const colorScheme = {
   accent: "#ec5f6f",
   background: "#ffffff",
   text: "#35424a",
-  surface: "#bbbbb7",
+  surface: "#ffffff",
   placeholder: "#bbbbb7",
 
   // other

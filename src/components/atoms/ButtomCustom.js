@@ -6,6 +6,7 @@ import { colorScheme } from "../../constants/Colors";
 const ButtonCustom = (props) => {
   return (
     <Button
+      onPress={props.onPress}
       mode={props.text ? "text" : "contained"}
       uppercase={false}
       style={[
@@ -38,13 +39,15 @@ const styles = StyleSheet.create({
   },
 
   // text style button
-  text: {},
+  text: {
+    width: undefined,
+  },
   textLabel: {
     color: colorScheme.accent,
   },
   textContent: {
     height: 45,
-    width: "45%",
+    justifyContent: "flex-start",
   },
   spaced: {
     marginVertical: "5%",

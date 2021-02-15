@@ -5,7 +5,13 @@ import { colorScheme } from "../../constants/Colors";
 
 const TitleCustom = (props) => {
   return (
-    <Title style={[styles.title, props.secondary && { ...styles.secondary }]}>
+    <Title
+      style={[
+        styles.title,
+        props.secondary && { ...styles.secondary },
+        props.center && { ...styles.center },
+      ]}
+    >
       {props.children}
     </Title>
   );
@@ -17,9 +23,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     lineHeight: 40,
     fontFamily: "Asap-Regular",
+    alignSelf: "flex-start",
   },
   secondary: {
     fontSize: 20,
     color: colorScheme.placeholder,
+  },
+  center: {
+    alignSelf: "center",
   },
 });

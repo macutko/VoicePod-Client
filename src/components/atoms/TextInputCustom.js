@@ -15,6 +15,7 @@ const TextInputCustom = (props) => {
         password={props.password}
         error={props.error}
         onChangeText={props.onChangeText}
+        onEndEditing={props.onEndEditing}
         style={styles.inputStyle}
         theme={{
           colors: {
@@ -35,8 +36,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     backgroundColor: "transparent",
     width: "100%",
-    // backgroundColor: "red",
     height: 50,
-    marginVertical: -3,
+    marginVertical: -5,
   },
 });
