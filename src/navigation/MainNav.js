@@ -1,4 +1,3 @@
-import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import React from "react";
 import {StatusBar} from "react-native-web";
@@ -15,7 +14,6 @@ import LeaveReviewScreen from "../screens/screens/LeaveReviewScreen";
 import SocketContextWrapper from "../components/molecules/SocketContextWrapper";
 import {SocketContext} from "../components/atoms/SocketContext"
 
-export const navigationRef = React.createRef();
 const MainStack = createStackNavigator();
 //TODO: make permission getting done here for record and audio
 
@@ -26,7 +24,7 @@ export const MainNav = () => {
                 {globalState => (
                     <SocketContext.Consumer>
                         {socket => (
-                            <NavigationContainer ref={navigationRef}>
+                            <>
                                 <StatusBar hidden={true} translucent backgroundColor='transparent'/>
                                 <MainStack.Navigator screenOptions={{headerShown: false}}>
                                     <MainStack.Screen name="TabNavWrapper">
@@ -58,9 +56,8 @@ export const MainNav = () => {
                                     </MainStack.Screen>
                                     {/* here will go other chat menu screens (Settings, Search, Block...) */}
                                 </MainStack.Navigator>
-                            </NavigationContainer>
+                            </>
                         )}
-
                     </SocketContext.Consumer>
                 )}
             </GlobalContext.Consumer>
