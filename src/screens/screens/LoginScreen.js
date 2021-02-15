@@ -1,10 +1,10 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { Title } from "react-native-paper";
+import ButtonCustom from "../../components/atoms/ButtomCustom";
 import Logo from "../../components/atoms/Logo";
 import TitleCustom from "../../components/atoms/TitleCustom";
+import TitleWithDescription from "../../components/atoms/TitleWithDescription";
 import LoginForm from "../../components/organisms/AuthScreen/LoginForm";
-import SignUpForm from "../../components/organisms/AuthScreen/SignUpForm";
 import { colorScheme } from "../../constants/Colors";
 
 export default class LoginScreen extends React.Component {
@@ -17,21 +17,34 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Logo />
-        <TitleCustom>Login</TitleCustom>
-        <Title>Login</Title>
+        {/* <View style={styles.titleWrapper}></View> */}
+        <TitleWithDescription description="Welcome back!">
+          Login
+        </TitleWithDescription>
         <LoginForm navigation={this.props.navigation} />
+        <View style={styles.signupLink}>
+          <TitleCustom secondary>New to VoicePod?</TitleCustom>
+          <ButtonCustom text>SignUp</ButtonCustom>
+        </View>
       </View>
     );
   };
 }
 
 const styles = StyleSheet.create({
-  // TO DO: make it more responsive, change the font
+  title: {
+    alignSelf: "flex-start",
+  },
   container: {
+    backgroundColor: colorScheme.background,
     width: "100%",
     height: "100%",
-    position: "relative",
+    paddingHorizontal: "10%",
     justifyContent: "space-evenly",
     alignItems: "center",
+  },
+  signupLink: {
+    flexDirection: "row",
+    width: "100%",
   },
 });
