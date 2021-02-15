@@ -18,6 +18,7 @@ export default class LoginScreen extends React.Component {
       <View style={styles.container}>
         <Logo />
         <TitleCustom>Login</TitleCustom>
+        <Title>Login</Title>
         <LoginForm navigation={this.props.navigation} />
       </View>
     );
@@ -27,7 +28,6 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   // TO DO: make it more responsive, change the font
   container: {
-    backgroundColor: colorScheme.background,
     width: "100%",
     height: "100%",
     position: "relative",

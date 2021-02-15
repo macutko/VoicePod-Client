@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet} from "react-native";
+import { StyleSheet, Text} from "react-native";
 import { Title } from "react-native-paper";
 
 const TitleCustom = (props) => {
@@ -14,7 +14,8 @@ export default TitleCustom;
 
 const styles = StyleSheet.create({
     title: {
-      fontSize: 30,
-      // color: "red"
+      fontSize: 40,
+      lineHeight: 40,
+      fontFamily: "Asap-Regular"
     }
 });
