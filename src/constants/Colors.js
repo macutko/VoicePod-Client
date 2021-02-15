@@ -5,7 +5,7 @@ export const colorScheme = {
     // Primarily lets use these defs:
     neutral: "#000",
     neutral_subtle: "#282828",
-    background: "#F7F7F7",
+    background: '#ffffff',
     background_subtle: "#cfcfcf",
 
     // New design colors
