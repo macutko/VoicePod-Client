@@ -5,7 +5,6 @@ import ButtonCustom from "../../atoms/ButtomCustom";
 import { TermsAndConditions } from "./TermsAndConditions";
 
 const LicenseDialog = (props) => {
-  console.log(props);
   return (
     <Portal>
       <Dialog

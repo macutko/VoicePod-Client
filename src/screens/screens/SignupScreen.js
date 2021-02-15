@@ -13,6 +13,7 @@ export default class LoginScreen extends React.Component {
     };
   }
 
+  // TODO: outsource keyboard into it's own wrapping component
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",

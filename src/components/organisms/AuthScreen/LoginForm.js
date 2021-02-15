@@ -1,21 +1,11 @@
 import * as React from "react";
-import * as layout from "../../../constants/Layout";
-
-import {
-  Button,
-  HelperText,
-  Modal,
-  Portal,
-  TextInput,
-} from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-
-import GlobalContext from "../../atoms/GlobalState";
-import { colorScheme } from "../../../constants/Colors";
 import authenticateAPI from "../../../api/user/authenticate";
-import TextInputCustom from "../../atoms/TextInputCustom";
 import ButtonCustom from "../../atoms/ButtomCustom";
-import TitleCustom from "../../atoms/TitleCustom";
+import GlobalContext from "../../atoms/GlobalState";
+import TextInputCustom from "../../atoms/TextInputCustom";
+
+
 
 export default class LoginForm extends React.Component {
   static contextType = GlobalContext;
