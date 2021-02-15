@@ -18,6 +18,7 @@ export const colorScheme = {
     accent: '#f05454', // red
     dark_grey: "#35424a",
     light_grey: '#d2dae2',
+    dark_blue: '#30475e',
     white: '#ffffff',
     yellow: '#fec63d',
     green: '#38873a',
