@@ -5,7 +5,7 @@ import Text from "react-native-paper/src/components/Typography/Text";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {AddPaymentWarning} from "../../molecules/SearchTab/AddPaymentWarning";
 import {ReviewsList} from "../../molecules/SearchTab/ReviewsList";
-import {checkDefaultPaymentMethodAPI} from "../../../api/checkDefaultPaymentMethodAPI";
+import {getCheckDefaultPaymentMethodAPI} from "../../../api/getCheckDefaultPaymentMethodAPI";
 import StartFreeChat from "../../molecules/SearchTab/StartFreeChat";
 
 const UserProfile = (props) => {
@@ -20,7 +20,7 @@ const UserProfile = (props) => {
 
 
     const navigateToOfferCreation = () => {
-        checkDefaultPaymentMethodAPI(props.socket).then(r => {
+        getCheckDefaultPaymentMethodAPI(props.socket).then(r => {
             if (r) {
                 props.mainNav.navigate('IntroCreateOfferScreen', {...props.route.params})
             } else {

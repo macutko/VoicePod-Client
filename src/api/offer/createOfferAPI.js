@@ -5,7 +5,7 @@ export const createOfferAPI = (socket, data) => {
                 console.log(`Error in checkDefaultPaymentMethod ${error}`)
                 reject({})
             } else {
-                console.log(`Default payment method ${response}`)
+                console.log(`Create offer ${response}`)
                 fulfill(response)
             }
         })

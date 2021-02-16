@@ -16,7 +16,7 @@ const OfferBody = (props) => {
 
 
     useEffect(() => {
-        getOfferByIdAPI(props.socket, {offerId: props.route.params.data.id}).then(res => {
+        getOfferByIdAPI(props.socket, {offerId: props.route.params.data.offerId}).then(res => {
             if (_isMounted) {
                 setIsFetching(false)
                 setOffer(res)
@@ -46,9 +46,9 @@ const OfferBody = (props) => {
                         <View style={styles.mainContainer}>
                             <View style={styles.container}>
                                 <AcceptOfferButton navigation={props.navigation} socket={props.socket}
-                                                   offerId={props.route.params.data.id}/>
+                                                   offerId={props.route.params.data.offerId}/>
                                 <RejectOfferButton navigation={props.navigation} socket={props.socket}
-                                                   offerId={props.route.params.data.id}/>
+                                                   offerId={props.route.params.data.offerId}/>
                             </View>
                         </View>
 

@@ -1,33 +1,44 @@
-import React from "react"
+import React, {useContext, useEffect, useRef, useState} from "react"
 import {StyleSheet} from "react-native";
 import {Avatar, Divider, List} from "react-native-paper";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
+import {SocketContext} from "../../atoms/SocketContext";
+import {getOtherPartyDetailsByOfferIdAPI} from "../../../api/offer/getOtherPartyDetailsByOfferIdAPI";
 
 const OfferListItem = ({mainNav, data}) => {
+    const _isMounted = useRef(true);
+    const context = useContext(SocketContext);
+    const [user, setUser] = useState(null)
 
-    return (
-        <>
-            <List.Item
-                titleStyle={styles.profileTitle_consultant}
-                style={styles.container_consultant}
-                descriptionStyle={styles.profileDesc_consultant}
-                onPress={() => mainNav.push('OfferScreen', {
-                    data
-                })}
-                title={data.user.firstName + ' ' + data.user.lastName}
-                right={props => <List.Icon {...props}
-                                           icon={props => <Ionicons {...props}
-                                                                    style={data.isCustomer ? {color: colorScheme.background} : {color: colorScheme.neutral}}
-                                                                    name={data.isCustomer ? 'book' : 'cash'}/>}/>}
-                left={props => <List.Icon {...props}
-                                          style={styles.profilePic_noob}
-                                          icon={props => <Avatar.Image source={{
-                                              uri: `data:image/${data.user.pictureType};base64,${data.user.profilePicture}`
-                                          }}/>}/>}
-            />
-            <Divider style={styles.divider}/>
-        </>
+    useEffect(() => {
+        getOtherPartyDetailsByOfferIdAPI(context.socket, {offerId: data.id}).then(res => {
+            if (_isMounted) setUser(res)
+            console.log(`Offer list item keys ${Object.keys(res)}`)
+        }).catch(e => console.log(e))
+        return () => {
+            _isMounted.current = false;
+        }
+    }, []);
+
+    return (user != null ?
+            <>
+
+                <List.Item
+                    onPress={() => mainNav.push('OfferScreen', {
+                        offerId: data.id,
+                        user: user
+                    })}
+                    title={user.firstName + ' ' + user.lastName}
+                    left={props => <List.Icon {...props}
+                                              style={styles.profilePic_noob}
+                                              icon={props => <Avatar.Image source={{
+                                                  uri: `data:image/${user.pictureType};base64,${user.profilePicture}`
+                                              }}/>}/>}
+                />
+
+                <Divider style={styles.divider}/>
+            </>
+            : null
 
 
     )

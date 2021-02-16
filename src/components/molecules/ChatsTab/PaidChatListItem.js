@@ -6,13 +6,13 @@ import {SocketContext} from "../../atoms/SocketContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
 
-const PaidChatListItem = (props) => {
+const PaidChatListItem = ({mainNav, data}) => {
     const _isMounted = useRef(true);
     const context = useContext(SocketContext);
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        getOtherPartyDetailsByChatIdAPI(context.socket, {chatId: props.data.id}).then(res => {
+        getOtherPartyDetailsByChatIdAPI(context.socket, {chatId: data.id}).then(res => {
             if (_isMounted) setUser(res)
             console.log(`Paid chat list item keys ${Object.keys(res)}`)
         }).catch(e => console.log(e))
@@ -29,8 +29,8 @@ const PaidChatListItem = (props) => {
                     style={!user.customer ? styles.container_consultant : styles.container_noob}
                     description={!user.customer ? 'Advisor' : 'Client'}
                     descriptionStyle={!user.customer ? styles.profileDesc_consultant : styles.profileDesc_noob}
-                    onPress={() => props.mainNav.push('ChatScreen', {
-                        chatId: props.data.id
+                    onPress={() => mainNav.push('ChatScreen', {
+                        chatId: data.id
                     })}
                     title={user.firstName + ' ' + user.lastName}
                     right={props => <List.Icon {...props}

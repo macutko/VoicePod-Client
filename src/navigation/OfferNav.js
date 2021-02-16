@@ -1,7 +1,9 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {colorScheme} from "../constants/Colors";
-import OffersList from "../components/molecules/OffersTab/OffersList";
+import PendingOffersList from "../components/molecules/OffersTab/PendingOffersList";
+import SentOffersList from "../components/molecules/OffersTab/SentOffersList";
+import ResolvedOffersList from "../components/molecules/OffersTab/ResolvedOffersList";
 
 const OffersTab = createMaterialTopTabNavigator();
 
@@ -17,7 +19,7 @@ export const OfferNav = (inheritance) => {
                 options={{tabBarLabel: "Pending Offers",}}
             >
                 {(props) => (
-                    <OffersList
+                    <PendingOffersList
                         {...inheritance}
                         {...props}
                     />
@@ -28,7 +30,7 @@ export const OfferNav = (inheritance) => {
                 options={{tabBarLabel: "Sent Offers"}}
             >
                 {(props) => (
-                    <OffersList
+                    <SentOffersList
                         {...inheritance}
                         {...props}
                     />
@@ -39,7 +41,7 @@ export const OfferNav = (inheritance) => {
                 options={{tabBarLabel: "Resolved Offers",}}
             >
                 {(props) => (
-                    <OffersList
+                    <ResolvedOffersList
                         {...inheritance}
                         {...props}
                     />

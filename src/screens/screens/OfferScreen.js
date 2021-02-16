@@ -4,10 +4,9 @@ import OfferBody from "../../components/organisms/OfferScreen/OfferBody";
 
 const OfferScreen = (props) => {
 
-
     return (
         <>
-            <OfferHeader navigation={props.navigation} data={props.route.params.data.user}/>
+            <OfferHeader navigation={props.navigation} data={props.route.params}/>
             <OfferBody {...props} />
         </>
 
