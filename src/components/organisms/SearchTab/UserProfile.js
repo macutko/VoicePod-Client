@@ -24,7 +24,7 @@ const UserProfile = (props) => {
             if (r) {
                 props.mainNav.navigate('IntroCreateOfferScreen', {...props.route.params})
             } else {
-                if (_isMounted.current) setShowDialog(!showDialog)
+                if (_isMounted) setShowDialog(!showDialog)
             }
         }).catch(e => console.log(e))
     }
@@ -48,12 +48,12 @@ const UserProfile = (props) => {
 
 
 
-            <StartFreeChat navigation={props.navigation} username={props.route.params.username}/>
+            <StartFreeChat mainNav={props.mainNav} username={props.route.params.username}/>
 
 
             <ReviewsList username={props.route.params.username}/>
 
-            <AddPaymentWarning toggleDialog={_isMounted.current ? () => setShowDialog(!showDialog) : null}
+            <AddPaymentWarning toggleDialog={_isMounted ? () => setShowDialog(!showDialog) : null}
                                navigation={props.navigation}
                                showDialog={showDialog}/>
 

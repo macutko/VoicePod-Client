@@ -18,11 +18,11 @@ export const ItemListHOC = ({api, apiProps, listItem, listItemProps, style}) => 
         if (isFetching) {
 
             api(apiProps).then(r => {
-                if (_isMounted.current) {
+                if (_isMounted) {
                     setFetchedData(r)
                     setIsFetching(false)
                 }
-            }).catch(e => _isMounted.current ? setIsFetching(false) : null)
+            }).catch(e => _isMounted ? setIsFetching(false) : null)
         }
     }, [isFetching]);
 

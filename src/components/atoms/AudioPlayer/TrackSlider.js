@@ -15,7 +15,7 @@ const TrackSlider = ({width, position, sound}) => {
     }
 
     useEffect(() => {
-        if (_isMounted.current) {
+        if (_isMounted) {
             sound.getStatusAsync().then(status => {
                 setMaxVal(status.durationMillis)
             }).catch(e => console.log(e))

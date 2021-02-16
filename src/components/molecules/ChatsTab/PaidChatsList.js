@@ -1,7 +1,8 @@
 import React from "react";
-import PaidChatListItem from "./PaidChatListItem";
+
 import ItemListHOC from "../../atoms/ItemListHOC";
 import {getPaidChatsByUserIdAPI} from "../../../api/chat/getPaidChatsByUserIdAPI";
+import PaidChatListItem from "./PaidChatListItem";
 
 export const PaidChatsList = (props) => {
     return (

@@ -25,7 +25,7 @@ export const UserProfileSettings = (props) => {
             .then(r => context.refreshState(context.globalState.token))
             .catch(e => context.refreshState(context.globalState.token))
 
-        if (_isMounted.current) {
+        if (_isMounted) {
             setDescriptionModal(false)
             setNameModal(false)
         }
@@ -39,7 +39,7 @@ export const UserProfileSettings = (props) => {
 
             <Text style={styles.handle}>@{context.globalState.user.username}</Text>
             <TouchableOpacity onPress={() => {
-                if (_isMounted.current) setNameModal(true)
+                if (_isMounted) setNameModal(true)
             }}>
                 <Title
                     style={styles.nameTag}>{context.globalState.user.firstName} {context.globalState.user.lastName}</Title>
@@ -52,12 +52,12 @@ export const UserProfileSettings = (props) => {
             </TouchableOpacity>
 
             <EditUserNameModal visible={nameModal}
-                               close={() => _isMounted.current ? setNameModal(false) : null}
+                               close={() => _isMounted ? setNameModal(false) : null}
                                submit={submitUpdate}/>
 
 
             <EditUserDescriptionModal visible={descriptionModal}
-                                      close={() => _isMounted.current ? setDescriptionModal(false) : null}
+                                      close={() => _isMounted ? setDescriptionModal(false) : null}
                                       submit={submitUpdate}/>
         </View>);
 

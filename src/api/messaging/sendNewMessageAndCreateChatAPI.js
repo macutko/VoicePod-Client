@@ -5,7 +5,7 @@ export const sendNewMessageAndCreateChatAPI = (socket, data) => {
                 console.log(`Error in sendNewMessageAndCreateChat ${error}`)
                 reject({})
             } else {
-                console.log(`Result sendNewMessageAndCreateChat: ${response.length}`)
+                console.log(`Result sendNewMessageAndCreateChat: ${response}`)
                 fulfill(response)
 
             }

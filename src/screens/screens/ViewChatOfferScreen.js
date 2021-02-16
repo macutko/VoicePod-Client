@@ -21,12 +21,12 @@ const ViewChatOfferScreen = (props) => {
     useEffect(() => {
         if (isFetching) {
             getOfferFromChatAPI(props.socket, {chatId: props.route.params.chatId}).then(r => {
-                if (_isMounted.current) {
+                if (_isMounted) {
                     setFetchedData(r)
                     setIsFetching(false)
                     console.log(Object.keys(r))
                 }
-            }).catch(e => _isMounted.current ? setIsFetching(false) : null)
+            }).catch(e => _isMounted ? setIsFetching(false) : null)
         }
     }, [isFetching]);
 
