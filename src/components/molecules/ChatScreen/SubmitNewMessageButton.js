@@ -3,7 +3,7 @@ import {StyleSheet, View} from "react-native";
 import IconButton from "react-native-paper/src/components/IconButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
-import {sendNewMessageAPI} from "../../../api/chat/sendNewMessageAPI";
+import {sendNewMessageAPI} from "../../../api/messaging/sendNewMessageAPI";
 import {SocketContext} from "../../atoms/SocketContext";
 import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
 
