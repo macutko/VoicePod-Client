@@ -44,7 +44,12 @@ export default class LoginScreen extends React.Component {
 
   render = () => {
     return (
-      <View style={[styles.container, this.state.isKeyboadVisible && styles.withKeyboard]}>
+      <View
+        style={[
+          styles.container,
+          this.state.isKeyboadVisible && styles.withKeyboard,
+        ]}
+      >
         {!this.state.isKeyboadVisible && <TitleCustom>Sign Up</TitleCustom>}
         <SignUpForm />
         <View style={styles.signupLink}>
@@ -71,9 +76,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-
   },
   withKeyboard: {
     justifyContent: "flex-start",
-  }
+  },
 });

@@ -57,7 +57,7 @@ export const SearchTab = (props) => {
                     renderItem={({item, index}) =>
                         <UserCard
                             user={item}
-                            number={index}
+                            key={index}
                             onPress={() => {
                                 props.navigation.push("UserProfile", {
                                     ...item,
