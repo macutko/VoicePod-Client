@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   star: {
-    fontSize: 22,
+    fontSize: 21,
     marginRight: 1,
   },
   reviews: {
-    fontSize: 17,
+    fontSize: 15,
     marginLeft: 4,
     fontFamily: "Asap-Regular",
     color: colorScheme.placeholder,

@@ -1,13 +1,15 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Divider, Text } from "react-native-paper";
+import { Badge, Divider, Text } from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { colorScheme } from "../../../constants/Colors";
 import AvatarCustom from "../../atoms/AvatarCustom";
 import StarRating from "../../atoms/StarRating";
+import Time from "../../atoms/Time";
 
 const UserCard = (props) => {
+  console.log(props);
   return (
     <TouchableOpacity onPress={() => props.onPress()}>
       <View style={styles.container}>
@@ -27,11 +29,12 @@ const UserCard = (props) => {
 
         <View style={styles.right}>
           <View style={styles.rightText}>
-            {<Text style={styles.title}>View profile</Text>}
+            {props.time ? <Time time={props.time}/> : <Text style={styles.title}>View profile</Text>}
             <Ionicons style={styles.icon} name={"chevron-forward"} />
           </View>
 
-          <Text style={styles.price}>80p/min</Text>
+          {props.price && <Text style={styles.price}>{props.price}p/min</Text>}
+          {props.messages && <Badge style={styles.messages} size={25}>{props.messages}</Badge>}
         </View>
       </View>
       <Divider />
@@ -58,7 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   title: {
-    marginTop: -5,
     fontSize: 14,
     color: colorScheme.placeholder,
   },
@@ -72,16 +74,23 @@ const styles = StyleSheet.create({
     color: colorScheme.accent,
     fontWeight: "bold",
     fontSize: 20,
+    marginRight: 4,
   },
   icon: {
     fontSize: 20,
     marginLeft: -3,
-    marginBottom: 2,
+    marginBottom: -2,
     color: colorScheme.placeholder,
   },
   rightText: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
+    paddingBottom: 4,
   },
+  messages: {
+    backgroundColor: colorScheme.accent,
+    marginRight: 3,
+    color: colorScheme.background,
+    fontWeight: "bold"
+  }
 });
