@@ -13,6 +13,9 @@ import { StyleSheet, View } from "react-native";
 import GlobalContext from "../../atoms/GlobalState";
 import { colorScheme } from "../../../constants/Colors";
 import authenticateAPI from "../../../api/user/authenticate";
+import TextInputCustom from "../../atoms/TextInputCustom";
+import ButtonCustom from "../../atoms/ButtomCustom";
+import TitleCustom from "../../atoms/TitleCustom";
 
 export default class LoginForm extends React.Component {
   static contextType = GlobalContext;
@@ -55,88 +58,40 @@ export default class LoginForm extends React.Component {
 
   render() {
     return (
-      <View style={styles.formContainer}>
-        <TextInput
+      <View style={styles.container}>
+        <TextInputCustom
           label="Username"
-          mode="flat"
           autoCompleteType={"username"}
           textContentType={"username"}
-          onChangeText={(text) => this.onChangeText(text, "username")}
           style={styles.inputStyle}
           error={this.state.isUsernameWrong}
+          errorMessage={this.state.passwordError}
+          onChangeText={(text) => this.onChangeText(text, "username")}
         />
-        <HelperText
-          style={styles.errorMessage}
-          type="error"
-          visible={this.state.isUsernameWrong}
-        >
-          {this.state.passwordError}
-        </HelperText>
 
-        <TextInput
+        <TextInputCustom
           label="Password"
-          mode="flat"
           secureTextEntry={true}
           textContentType={"password"}
           autoCompleteType={"password"}
           password={true}
           error={this.state.isPasswordWrong}
+          errorMessage={this.state.passwordError}
           onChangeText={(text) => this.onChangeText(text, "password")}
-          style={styles.inputStyle}
         />
-        <HelperText
-          style={styles.errorMessage}
-          type="error"
-          visible={this.state.isPasswordWrong}
-        >
-          {this.state.passwordError}
-        </HelperText>
 
-        <View style={styles.submitContainer}>
-          <Button
-            mode="text"
-            uppercase={false}
-            onPress={() => this.submitForm()}
-            labelStyle={styles.buttonLabelStyle}
-          >
-            Log In &gt;&gt;
-          </Button>
-        </View>
+        <ButtonCustom onPress={() => this.submitForm()} spaced>
+          Login
+        </ButtonCustom>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    top: layout.default.window.height / 7,
-    backgroundColor: "transparent",
-    position: "relative",
-    left: "-50%",
-    width: "200%",
-    height: layout.default.window.width,
-    padding: 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  formContainer: {
-    width: "50%",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  inputStyle: {
-    marginBottom: "5%",
-    backgroundColor: "transparent",
-    width: "85%",
-  },
-  submitContainer: {
-    width: "85%",
-    flexDirection: "row-reverse",
-  },
-  buttonLabelStyle: {
-    fontSize: 20,
-  },
-  errorMessage: {
-    // color: colorScheme.error,
+  container: {
+    width: "90%",
+    alignItems: "flex-start",
+    alignSelf: "flex-start",
   },
 });

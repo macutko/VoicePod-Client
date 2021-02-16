@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import LoginScreen from "../screens/screens/LoginScreen";
-// import { SignupScreen } from "../screens/screens/SignupScreen";
+import SignupScreen from "../screens/screens/SignupScreen";
 
 const LandingStack = createStackNavigator();
 
@@ -12,9 +12,9 @@ export const LandingNav = (inheritance) => {
       <LandingStack.Screen name="LoginScreen">
         {(props) => <LoginScreen {...inheritance} {...props} />}
       </LandingStack.Screen>
-      {/* <LandingStack.Screen name="SignupScreen">
+      <LandingStack.Screen name="SignupScreen">
         {(props) => <SignupScreen {...inheritance} {...props} />}
-      </LandingStack.Screen> */}
+      </LandingStack.Screen>
     </LandingStack.Navigator>
   );
 };

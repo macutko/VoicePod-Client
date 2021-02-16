@@ -1,54 +1,78 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import LoginForm from "../../components/organisms/AuthScreen/LoginForm";
+import { Keyboard, StyleSheet, View } from "react-native";
+import ButtonCustom from "../../components/atoms/ButtomCustom";
+import TitleCustom from "../../components/atoms/TitleCustom";
 import SignUpForm from "../../components/organisms/AuthScreen/SignUpForm";
 import { colorScheme } from "../../constants/Colors";
 
-
 export default class LoginScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            login: false,
-            signUp: false,
-        };
-    }
-
-    toggleModal = (name) => {
-        this.setState((prevState) => ({
-            [name]: !prevState[name],
-        }));
+  constructor(props) {
+    super(props);
+    this.state = {
+      isKeyboadVisible: false,
     };
+  }
 
-    render = () => {
-        console.log("Login");
-        return (
-            <View style={styles.container}>
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this._keyboardDidShow
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this._keyboardDidHide
+    );
+  }
 
-                <LoginForm
-                    visible={this.state.login}
-                    close={() => this.toggleModal("login")}
-                    navigation={this.props.navigation}
-                />
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
 
-                <SignUpForm
-                    navigation={this.props.navigation}
-                    visible={this.state.signUp}
-                    close={() => this.toggleModal("signUp")}
-                />
-            </View>
-        );
-    };
+  _keyboardDidShow = () => {
+    this.setState({
+      isKeyboadVisible: true,
+    });
+  };
+
+  _keyboardDidHide = () => {
+    this.setState({
+      isKeyboadVisible: false,
+    });
+  };
+
+  render = () => {
+    return (
+      <View style={[styles.container, this.state.isKeyboadVisible && styles.withKeyboard]}>
+        {!this.state.isKeyboadVisible && <TitleCustom>Sign Up</TitleCustom>}
+        <SignUpForm />
+        <View style={styles.signupLink}>
+          <TitleCustom secondary>Have an Account?</TitleCustom>
+          <ButtonCustom onPress={() => this.props.navigation.goBack()} text>
+            Login
+          </ButtonCustom>
+        </View>
+      </View>
+    );
+  };
 }
 
 const styles = StyleSheet.create({
-    // TO DO: make it more responsive, change the font
-    container: {
-        backgroundColor: colorScheme.background,
-        width: "100%",
-        height: "100%",
-        position: "relative",
-        justifyContent: "space-evenly",
-        alignItems: "center"
-    },
+  container: {
+    backgroundColor: colorScheme.background,
+    width: "100%",
+    height: "100%",
+    paddingHorizontal: "10%",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  signupLink: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+
+  },
+  withKeyboard: {
+    justifyContent: "flex-start",
+  }
 });

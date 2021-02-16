@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     title: {
         color: colorScheme.white,
         fontSize: 45,
-        fontFamily: "Cutive-Regular",
+        // fontFamily: "Cutive-Regular",
         top: -layout.default.window.height / 8,
     },
 });

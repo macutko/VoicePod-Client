@@ -1,50 +1,40 @@
-import {Button, Dialog, Portal} from "react-native-paper";
-import {ScrollView, StyleSheet} from "react-native";
-import {TermsAndConditions} from "./TermsAndConditions";
 import React from "react";
-import {colorScheme} from "../../../constants/Colors";
+import { ScrollView, StyleSheet } from "react-native";
+import { Dialog, Portal } from "react-native-paper";
+import ButtonCustom from "../../atoms/ButtomCustom";
+import { TermsAndConditions } from "./TermsAndConditions";
 
-const LicenseDialog = ({toggleLicenseDialog}) => {
-    return (
-        <Portal>
-            <Dialog
-                visible={this.state.licenseDialogVisible}
-                onDismiss={() => toggleLicenseDialog()}
-                style={styles.licenseDialog}
+const LicenseDialog = (props) => {
+  console.log(props);
+  return (
+    <Portal>
+      <Dialog
+        visible={props.visible}
+        onDismiss={() => props.toggleLicenseDialog()}
+        style={styles.licenseDialog}
+      >
+        <Dialog.ScrollArea>
+          <ScrollView
+            contentContainerStyle={styles.licenseDialogScrollViewContainer}
+          >
+            <TermsAndConditions />
+            <ButtonCustom
+              onPress={() => props.toggleLicenseDialog()}
+              spaced
+              text
             >
-                <Dialog.ScrollArea>
-                    <ScrollView
-                        contentContainerStyle={
-                            styles.licenseDialogScrollViewContainer
-                        }
-                    >
-                        <TermsAndConditions/>
-                        <Button onPress={() => toggleLicenseDialog()}>
-                            OK
-                        </Button>
-                    </ScrollView>
-                </Dialog.ScrollArea>
-            </Dialog>
-        </Portal>
-    )
-}
-export default LicenseDialog
-
+              Close
+            </ButtonCustom>
+          </ScrollView>
+        </Dialog.ScrollArea>
+      </Dialog>
+    </Portal>
+  );
+};
+export default LicenseDialog;
 
 const styles = StyleSheet.create({
-    licenseDialog: {},
-    licenseContainer: {
-        flexDirection: "row",
-        width: "90%",
-        alignItems: "center",
-    },
-    licenseAnchor: {
-        color: colorScheme.secondary,
-    },
-    licenseCheckbox: {
-        marginBottom: 10,
-    },
-    licenseDialogScrollViewContainer: {
-        padding: 10,
-    },
+  licenseDialogScrollViewContainer: {
+    padding: 10,
+  },
 });
