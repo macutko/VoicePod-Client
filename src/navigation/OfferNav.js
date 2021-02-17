@@ -1,11 +1,11 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {colorScheme} from "../../constants/Colors";
-import OffersList from "../../components/molecules/OffersTab/OffersList";
+import {colorScheme} from "../constants/Colors";
+import OffersList from "../components/molecules/OffersTab/OffersList";
 
 const OffersTab = createMaterialTopTabNavigator();
 
-export const OfferNavigator = (inheritance) => {
+export const OfferNav = (inheritance) => {
     return (
         <OffersTab.Navigator
             initialRouteName="SearchTab"
@@ -14,7 +14,18 @@ export const OfferNavigator = (inheritance) => {
             barStyle={{backgroundColor: colorScheme.background}}>
             <OffersTab.Screen
                 name="Pending Offers"
-                options={{tabBarLabel: "Pending",}}
+                options={{tabBarLabel: "Pending Offers",}}
+            >
+                {(props) => (
+                    <OffersList
+                        {...inheritance}
+                        {...props}
+                    />
+                )}
+            </OffersTab.Screen>
+            <OffersTab.Screen
+                name="Sent Offers"
+                options={{tabBarLabel: "Sent Offers"}}
             >
                 {(props) => (
                     <OffersList

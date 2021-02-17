@@ -1,6 +1,5 @@
 export const searchAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
-
         socket.emit('searchUser', data, (error, response) => {
             if (error) {
                 console.log(`Error in search ${error}`)

@@ -11,7 +11,7 @@ export const getOtherPartyDetailsByChatIdAPI = (socket, data) => {
                 console.log(`Error in getOtherPartyDetailsByChatId ${error}`)
                 reject({})
             } else {
-                console.log(`Response length: ${Object.keys(response)}`)
+                console.log(`Response length: ${Object.keys(response).length}`)
                 fulfill(response)
 
             }
