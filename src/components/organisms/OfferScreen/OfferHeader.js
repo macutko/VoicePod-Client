@@ -9,7 +9,7 @@ const OfferHeader = ({navigation, data}) => {
         <>
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => navigation.goBack(null)}/>
-                <Appbar.Content title={data.firstName + " " + data.lastName}/>
+                <Appbar.Content title={data.user.firstName + " " + data.user.lastName}/>
                 <Appbar.Action icon="dots-vertical" onPress={() => setMenu(!menu)}/>
             </Appbar.Header>
 

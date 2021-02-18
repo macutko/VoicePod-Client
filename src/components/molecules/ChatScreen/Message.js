@@ -1,44 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import {StyleSheet, View} from "react-native";
 import GlobalContext from "../../atoms/GlobalState";
-import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
+import BufferedAudioPlayer from "../../atoms/BufferedAudioPlayer";
 
 
-//TODO: REFACTOR
-//TODO : pull data on play
-export default class Message extends React.Component {
-    static contextType = GlobalContext;
+const Message = ({data}) => {
+    const context = useContext(GlobalContext)
+    const ownMessage = data.from.username === context.globalState.user.username
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            ownMessage: this.props.data.from.username === context.globalState.user.username
-        }
-        //    TODO: make "read" prop true when opened
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false
-    }
-
-    componentDidMount() {
-        this._isMounted = true
-    }
-
-    render() {
-        return (
-
-            <View style={{paddingTop: 10}}>
-                <View style={this.state.ownMessage ? styles.ownMessage : styles.otherMessage}>
-                    <AudioPlayer fileName={`${this.props.data.id}_${this.props.data.chatId}`}
-                                 soundBits={this.props.data.soundBits}/>
-                </View>
+    return (
+        <View style={{paddingTop: 10}}>
+            <View style={ownMessage ? styles.ownMessage : styles.otherMessage}>
+                <BufferedAudioPlayer
+                    fileName={`${data.id}_${data.chatId}`}
+                    soundId={data.sound}/>
             </View>
+        </View>
 
-        );
-    }
+
+    )
 }
 
+export default Message
 
 const styles = StyleSheet.create({
     ownMessage: {

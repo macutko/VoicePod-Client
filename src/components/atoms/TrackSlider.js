@@ -1,5 +1,5 @@
 import Slider from "@react-native-community/slider";
-import {colorScheme} from "../../../constants/Colors";
+import {colorScheme} from "../../constants/Colors";
 import React, {useEffect, useRef, useState} from "react";
 import {StyleSheet} from "react-native";
 

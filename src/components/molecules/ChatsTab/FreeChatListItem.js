@@ -4,13 +4,13 @@ import {Avatar, Divider, List} from "react-native-paper";
 import {getOtherPartyDetailsByChatIdAPI} from "../../../api/chat/getOtherPartyDetailsByChatIdAPI";
 import {SocketContext} from "../../atoms/SocketContext";
 
-const FreeChatListItem = (props) => {
+const FreeChatListItem = ({mainNav, data}) => {
     const _isMounted = useRef(true);
     const context = useContext(SocketContext);
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        getOtherPartyDetailsByChatIdAPI(context.socket, {chatId: props.data.id}).then(res => {
+        getOtherPartyDetailsByChatIdAPI(context.socket, {chatId: data.id}).then(res => {
             if (_isMounted) setUser(res)
             console.log(`Free chat list item keys ${Object.keys(res)}`)
         }).catch(e => console.log(e))
@@ -23,8 +23,8 @@ const FreeChatListItem = (props) => {
             <>
 
                 <List.Item
-                    onPress={() => props.mainNav.push('ChatScreen', {
-                        chatId: props.data.id
+                    onPress={() => mainNav.push('ChatScreen', {
+                        chatId: data.id
                     })}
                     title={user.firstName + ' ' + user.lastName}
                     left={props => <List.Icon {...props}

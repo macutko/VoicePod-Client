@@ -1,6 +1,6 @@
-export const checkDefaultPaymentMethodAPI = (socket, data) => {
+export const getCheckDefaultPaymentMethodAPI = (socket, data) => {
     return new Promise((fulfill, reject) => {
-        socket.emit('checkDefaultPaymentMethod', data, (error, response) => {
+        socket.emit('getCheckDefaultPaymentMethod', data, (error, response) => {
             if (error) {
                 console.log(`Error in checkDefaultPaymentMethod ${error}`)
                 reject({})

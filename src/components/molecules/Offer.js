@@ -1,23 +1,21 @@
 import {StyleSheet, View} from "react-native";
 import {Title} from "react-native-paper";
 import React from "react";
-import AudioPlayer from "../atoms/AudioPlayer/AudioPlayer";
+import BufferedAudioPlayer from "../atoms/BufferedAudioPlayer";
 
-const Offer = ({data}) => {
+const Offer = ({offerId, introSoundBits, problemSoundBits, budgetMinutes}) => {
     return (
         <View style={styles.offer_container}>
             <Title style={styles.container_theirs}>Who?</Title>
-            <AudioPlayer
-                fileName={`${data.id}_intro`}
-                soundBits={data.introSoundBits}
-            />
+
+            <BufferedAudioPlayer fileName={`${offerId}_intro`} soundId={introSoundBits}/>
 
             <Title style={styles.container_theirs}>Problem?</Title>
-            <AudioPlayer
-                fileName={`${data.id}_problem`}
-                soundBits={data.problemSoundBits}
-            />
-            <Title>Original budget: {data.budgetMinutes} minutes</Title>
+
+            <BufferedAudioPlayer fileName={`${offerId}_problem`}
+                                 soundId={problemSoundBits}/>
+
+            <Title>Original budget: {budgetMinutes} minutes</Title>
         </View>
     );
 
