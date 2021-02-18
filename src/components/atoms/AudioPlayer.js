@@ -1,22 +1,19 @@
 import {StyleSheet, View} from "react-native";
 import React from "react";
-import {colorScheme} from "../../../constants/Colors";
+import {colorScheme} from "../../constants/Colors";
 import PlayButton from "./PlayButton";
 import ActivityIndicator from "react-native-paper/src/components/ActivityIndicator";
 import TrackSlider from "./TrackSlider";
 import PauseButton from "./PauseButton";
-import {FileSystem} from "react-native-unimodules";
 import {Audio} from "expo-av";
 
 export default class AudioPlayer extends React.Component {
     constructor(props) {
-        console.log(props.fileName)
         super(props);
         this.state = {
             playing: false,
             loading: true,
             position: 0,
-            permissionsGranted: false
         }
         this.sound = null;
         this._isMounted = false
@@ -26,7 +23,6 @@ export default class AudioPlayer extends React.Component {
 
         if (this._isMounted) {
             if (!status.isBuffering) {
-
                 this.setState({
                     loading: false
                 })
@@ -52,7 +48,6 @@ export default class AudioPlayer extends React.Component {
         this._isMounted = false
         if (this.sound !== null) {
             this.sound.unloadAsync().then(r => {
-                console.log(r)
                 this.sound = null
             }).catch(e => console.log(e))
         }
@@ -60,52 +55,23 @@ export default class AudioPlayer extends React.Component {
 
     componentDidMount() {
         this._isMounted = true
-        Audio.getPermissionsAsync().then(r => {
-            if (r.status !== "granted" && this._isMounted) {
-                this.setState({
-                    permissionsGranted: false
-                })
-            } else {
-                if (this._isMounted) {
-                    this.setState({
-                        permissionsGranted: true
-                    })
-                }
+
+        Audio.Sound.createAsync({uri: this.props.pathToSound}).then(r => {
+            if (this._isMounted) {
+                this.sound = r.sound
+                this.sound.setProgressUpdateIntervalAsync(100).then().catch(e => console.log(e))
+                this.sound.setOnPlaybackStatusUpdate(this.onSoundUpdate)
             }
-        })
-        if (this.props.soundBits) {
-            let path = FileSystem.documentDirectory + `${this.props.fileName}.m4a`;
+        }).catch(e => console.log(`Error on reading audio ${e}`))
 
-            FileSystem.writeAsStringAsync(path, this.props.soundBits, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
-                Audio.Sound.createAsync({uri: path}).then(r => {
-                    if (this._isMounted) {
-                        this.sound = r.sound
-                        this.sound.setProgressUpdateIntervalAsync(100).then(r => {
-                        }).catch(e => console.log(e))
-                        this.sound.setOnPlaybackStatusUpdate(this.onSoundUpdate)
-                    }
-                }).catch(e => console.log(e))
-            }).catch(e => (console.log(e)))
-
-        } else if (this.props.pathToSound) {
-            Audio.Sound.createAsync({uri: this.props.pathToSound}).then(r => {
-                if (this._isMounted) {
-                    this.sound = r.sound
-                    this.sound.setProgressUpdateIntervalAsync(100).then().catch(e => console.log(e))
-                    this.sound.setOnPlaybackStatusUpdate(this.onSoundUpdate)
-                }
-            }).catch(e => console.log(`Error on reading audio ${e}`))
-
-        }
     }
-
 
     render() {
         return (
             <View style={this.props.style}>
                 <View style={styles.mainContainer}>
                     <View style={styles.container}>
-                        {this.state.loading || !this.state.permissionsGranted ?
+                        {this.state.loading ?
                             <ActivityIndicator animating={true} color={colorScheme.accent}/> :
                             <>
                                 {this.state.playing ? <PauseButton sound={this.sound}/> :

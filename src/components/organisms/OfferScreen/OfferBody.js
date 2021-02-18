@@ -9,25 +9,23 @@ import {getOfferByIdAPI} from "../../../api/offer/getOfferByIdAPI";
 import React, {useEffect, useRef, useState} from "react";
 
 const OfferBody = (props) => {
-
     const _isMounted = useRef(true);
     const [isFetching, setIsFetching] = useState(true)
     const [offer, setOffer] = useState({})
 
 
     useEffect(() => {
-        getOfferByIdAPI(props.socket, {offerId: props.route.params.data.offerId}).then(res => {
+        getOfferByIdAPI(props.socket, {offerId: props.route.params.offerId}).then(res => {
             if (_isMounted) {
-                setIsFetching(false)
                 setOffer(res)
+                setIsFetching(false)
             }
         }).catch(e => {
             if (_isMounted) {
-                setIsFetching(false)
                 setOffer({})
+                setIsFetching(false)
 
             }
-            console.log(e)
         })
 
         return () => {
@@ -40,15 +38,16 @@ const OfferBody = (props) => {
         <View style={{flexDirection: "column"}}>
             {isFetching ? <ActivityIndicator animating={true} color={colorScheme.accent}/> :
                 <>
-                    <Offer data={offer}/>
+                    <Offer offerId={offer.id} budgetMinutes={offer.budgetMinutes} introSoundBits={offer.introSoundBits}
+                           problemSoundBits={offer.problemSoundBits}/>
 
-                    {!offer.accepted && !props.route.params.data.isCustomer ?
+                    {offer.status === "pending" && props.route.params.user.customer ?
                         <View style={styles.mainContainer}>
                             <View style={styles.container}>
                                 <AcceptOfferButton navigation={props.navigation} socket={props.socket}
-                                                   offerId={props.route.params.data.offerId}/>
+                                                   offerId={props.route.params.offerId}/>
                                 <RejectOfferButton navigation={props.navigation} socket={props.socket}
-                                                   offerId={props.route.params.data.offerId}/>
+                                                   offerId={props.route.params.offerId}/>
                             </View>
                         </View>
 
@@ -58,7 +57,7 @@ const OfferBody = (props) => {
                     }
 
                     {
-                        offer.accepted && props.route.params.data.isCustomer ?
+                        offer.status === "accepted" && !props.route.params.user.customer ?
 
                             <>
                                 <Title>
@@ -71,7 +70,7 @@ const OfferBody = (props) => {
                     }
 
                     {
-                        offer.accepted && !props.route.params.data.isCustomer ?
+                        offer.status === "accepted" && props.route.params.user.customer ?
 
                             <>
                                 <Title>

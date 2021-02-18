@@ -1,4 +1,4 @@
-import {colorScheme} from "../../../constants/Colors";
+import {colorScheme} from "../../constants/Colors";
 import React from "react";
 import {IconButton} from "react-native-paper";
 import Ionicons from "react-native-vector-icons/Ionicons";

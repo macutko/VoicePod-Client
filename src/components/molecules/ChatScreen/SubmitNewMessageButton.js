@@ -5,7 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import {colorScheme} from "../../../constants/Colors";
 import {sendNewMessageAPI} from "../../../api/messaging/sendNewMessageAPI";
 import {SocketContext} from "../../atoms/SocketContext";
-import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
+import AudioPlayer from "../../atoms/AudioPlayer";
 
 const SubmitNewMessageButton = ({newMessageSound, setNewMessage, chatId}) => {
     const context = useContext(SocketContext)

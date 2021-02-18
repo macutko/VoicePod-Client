@@ -5,7 +5,7 @@ import {Text} from "react-native-paper";
 import {colorScheme} from "../../../constants/Colors";
 import CreateOfferStatusBar from "../../molecules/CreateOfferScreen/CreateOfferStatusBar";
 import RecordButton from "../../atoms/RecordButton";
-import AudioPlayer from "../../atoms/AudioPlayer/AudioPlayer";
+import AudioPlayer from "../../atoms/AudioPlayer";
 
 
 export default class CreateOfferTemplate extends React.Component {
