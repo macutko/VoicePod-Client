@@ -1,88 +1,71 @@
 import React from "react";
 import GlobalContext from "./components/atoms/GlobalState";
 import {NavigationContainer} from "@react-navigation/native";
-import { axiosInstance } from "./utilities/ConnectionUtils";
-import { getFromMemory } from "./utilities/StorageUtils";
-import { MainNav } from "./navigation/MainNav";
-import { LandingNav } from "./navigation/LandingNav";
+import {getFromMemory} from "./utilities/StorageUtils";
+import {MainNav} from "./navigation/MainNav";
+import {LandingNav} from "./navigation/LandingNav";
+import getCurrentUserAPI from "./api/user/getCurrentUserAPI";
 
 export const navigationRef = React.createRef();
 
 export default class Main extends React.Component {
-  //TODO: refactor
-  //TODO: add splash screen
+    //TODO: refactor
+    //TODO: add splash screen
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      globalState: {},
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            globalState: {},
+        };
+    }
 
-  updateGlobalState = (user, token, loggedIn = false, callback = null) => {
-    this.setState(
-      {
-        globalState: {
-          loggedIn: loggedIn,
-          user: user,
-          token: token,
-        },
-      },
-      () => (callback !== null ? callback() : null)
-    );
-  };
-
-  refreshState = (token, callback = null) => {
-    axiosInstance
-      .get("/user/getCurrent", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(
-          `Tried checking current user ${JSON.stringify(
-            response.data.user.username
-          )}`
+    updateGlobalState = (user, token, loggedIn = false, callback = null) => {
+        this.setState(
+            {
+                globalState: {
+                    loggedIn: loggedIn,
+                    user: user,
+                    token: token,
+                },
+            },
+            () => (callback !== null ? callback() : null)
         );
-        if (response.data.user.username != null) {
-          this.updateGlobalState(response.data.user, token, true, () => {
-            callback !== null ? callback() : null;
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(`Error in App.js ${error}`);
-        console.log(error);
-      });
-  };
+    };
 
-  componentDidMount() {
-    getFromMemory("token").then((memToken) => {
-      let token;
-      if (memToken != null) token = memToken;
-      else if (this.state.globalState.token != null)
-        token = this.state.globalState.token;
+    refreshState = (token, callback = null) => {
+        getCurrentUserAPI(token, callback).then(r => {
+            this.updateGlobalState(r, token, true, () => {
+                callback !== null ? callback() : null;
+            })
+        }).catch(e => console.log(e))
+    };
 
-      if (token != null) {
-        this.refreshState(token);
-      }
-    });
-  }
+    componentDidMount() {
+        getFromMemory("token").then((memToken) => {
+            let token;
+            if (memToken != null) token = memToken;
+            else if (this.state.globalState.token != null)
+                token = this.state.globalState.token;
 
-  render() {
-    return (
-      <GlobalContext.Provider
-        value={{
-          globalState: this.state.globalState,
-          updateGlobalState: this.updateGlobalState,
-          refreshState: this.refreshState,
-        }}
-      >
-        <NavigationContainer ref={navigationRef}>
-          {this.state.globalState.loggedIn ? <MainNav /> : <LandingNav />}
-        </NavigationContainer>
-      </GlobalContext.Provider>
-    );
-  }
+            if (token != null) {
+                this.refreshState(token);
+            }
+        });
+    }
+
+    render() {
+        return (
+            <GlobalContext.Provider
+                value={{
+                    globalState: this.state.globalState,
+                    updateGlobalState: this.updateGlobalState,
+                    refreshState: this.refreshState,
+                }}
+            >
+                <NavigationContainer ref={navigationRef}>
+                    {this.state.globalState.loggedIn ? <MainNav/> : <LandingNav/>}
+                </NavigationContainer>
+            </GlobalContext.Provider>
+        );
+    }
 }

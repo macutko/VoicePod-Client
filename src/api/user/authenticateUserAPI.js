@@ -2,10 +2,10 @@ import {axiosInstance} from "../../utilities/ConnectionUtils";
 import {storeData} from "../../utilities/StorageUtils";
 
 
-const authenticateAPI = async (username, password) => {
+const authenticateUserAPI = async (username, password) => {
 
     return new Promise((fulfill, reject) => {
-        axiosInstance.post("/user/authenticate", {
+        axiosInstance.post("/user/authenticateUser", {
             username: username,
             password: password,
         }).then((response) => {
@@ -41,4 +41,4 @@ const authenticateAPI = async (username, password) => {
 
 }
 
-export default authenticateAPI
+export default authenticateUserAPI
