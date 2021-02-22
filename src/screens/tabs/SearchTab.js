@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import OutlineTopScreen from "../../components/atoms/OutlineTopScreen";
+import { FlatList } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { searchAPI } from "../../api/searchAPI";
 import SearchboxCustom from "../../components/molecules/SearchTab/SearchboxCustom";
 import UserCard from "../../components/molecules/SearchTab/UserCard";
-import { searchAPI } from "../../api/searchAPI";
-import { ActivityIndicator } from "react-native-paper";
 import { colorScheme } from "../../constants/Colors";
 
 export const SearchTab = (props) => {
@@ -44,7 +43,7 @@ export const SearchTab = (props) => {
   }, [isFetching]);
 
   return (
-    <OutlineTopScreen title={"Search"}>
+    <>
       <SearchboxCustom
         onChangeText={onChangeSearch}
         value={searchQuery}
@@ -72,7 +71,7 @@ export const SearchTab = (props) => {
       ) : (
         <ActivityIndicator animating={true} color={colorScheme.accent} />
       )}
-    </OutlineTopScreen>
+    </>
   );
 };
 
