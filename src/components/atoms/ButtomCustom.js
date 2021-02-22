@@ -13,6 +13,7 @@ const ButtonCustom = (props) => {
         styles.button,
         props.text && styles.text,
         props.spaced && styles.spaced,
+        props.half && styles.half,
       ]}
       contentStyle={[styles.content, props.text && styles.textContent]}
       labelStyle={[styles.label, props.text && styles.textLabel]}
@@ -52,4 +53,8 @@ const styles = StyleSheet.create({
   spaced: {
     marginVertical: "5%",
   },
+  half: {
+    width: "47%",
+  }
+  
 });
