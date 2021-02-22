@@ -1,4 +1,4 @@
-package com.voicepod;
+package voice.pod.client;
 
 import android.os.Bundle;
 

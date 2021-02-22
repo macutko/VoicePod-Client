@@ -48,5 +48,7 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "name": "VoicePod",
+  "version": "1.0.0"
 }

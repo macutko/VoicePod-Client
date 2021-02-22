@@ -1,4 +1,4 @@
-package com.voicepod.generated;
+package voice.pod.client.generated;
 
 import java.util.Arrays;
 import java.util.List;
