@@ -21,4 +21,6 @@ target 'VoicePod' do
   #  post_install do |installer|
   #    flipper_post_install(installer)
   #  end
+  pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
+
 end
