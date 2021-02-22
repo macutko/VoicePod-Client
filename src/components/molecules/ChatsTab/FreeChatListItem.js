@@ -12,7 +12,6 @@ const FreeChatListItem = ({mainNav, data}) => {
     useEffect(() => {
         getOtherPartyDetailsByChatIdAPI(context.socket, {chatId: data.id}).then(res => {
             if (_isMounted) setUser(res)
-            console.log(`Free chat list item keys ${Object.keys(res)}`)
         }).catch(e => console.log(e))
         return () => {
             _isMounted.current = false;

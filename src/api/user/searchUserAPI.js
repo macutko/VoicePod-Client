@@ -1,4 +1,4 @@
-export const searchAPI = ({socket, data}) => {
+export const searchUserAPI = ({socket, data}) => {
     return new Promise((fulfill, reject) => {
         socket.emit('searchUser', data, (error, response) => {
             if (error) {
@@ -7,7 +7,6 @@ export const searchAPI = ({socket, data}) => {
             } else {
                 console.log(`Amount of search results: ${response.length}`)
                 fulfill(response)
-
             }
         })
     })

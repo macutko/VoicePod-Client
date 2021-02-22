@@ -8,7 +8,7 @@ import {colorScheme} from "../../../constants/Colors";
 import ChangePrice from "../../molecules/SettingsTab/ChangePrice";
 import ChangeCountry from "../../molecules/SettingsTab/ChangeCountry";
 import AddCard from "../../molecules/SettingsTab/AddCard";
-import updateAccountAPI from "../../../api/user/updateAccount";
+import updateUserAPI from "../../../api/user/updateUserAPI";
 
 
 export default class PaymentsSettings extends React.Component {
@@ -18,7 +18,7 @@ export default class PaymentsSettings extends React.Component {
     }
 
     submitUpdate = async (data) => {
-        updateAccountAPI(data, this.props.globalState.token)
+        updateUserAPI(data, this.props.globalState.token)
             .then(r => {
                 if (r && r.url) {
                     console.log(r.url)
