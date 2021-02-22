@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "expo-payments-stripe",
+      {
+        "scheme": "your-redirect-uri",
+        "merchantId": "merchant.<com.example.development>"
+      }
+    ]
+  ]
+}
