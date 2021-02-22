@@ -10,6 +10,7 @@ const TitleCustom = (props) => {
         styles.title,
         props.secondary && { ...styles.secondary },
         props.center && { ...styles.center },
+        props.space && { ...styles.space },
       ]}
     >
       {props.children}
@@ -32,4 +33,7 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center",
   },
+  space: {
+    paddingVertical: 10,
+  }
 });

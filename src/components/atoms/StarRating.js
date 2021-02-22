@@ -22,7 +22,7 @@ const StarRating = (props) => {
   return (
     <View style={styles.container}>
       {stars}
-      <Text style={styles.reviews}>({props.reviews})</Text>
+      {props.reviews && <Text style={styles.reviews}>({props.reviews})</Text>}
     </View>
   );
 };
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginRight: 1,
   },
   reviews: {
-    fontSize: 15,
+    fontSize: 17,
     marginLeft: 4,
     fontFamily: "Asap-Regular",
     color: colorScheme.placeholder,
