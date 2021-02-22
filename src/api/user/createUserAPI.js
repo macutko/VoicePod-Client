@@ -2,11 +2,11 @@ import {axiosInstance} from "../../utilities/ConnectionUtils";
 import {storeData} from "../../utilities/StorageUtils";
 
 
-const createAPI = async (firstName, lastName, email, username, password) => {
+const createUserAPI = async (firstName, lastName, email, username, password) => {
     console.log(email)
     return new Promise((fulfill, reject) => {
         axiosInstance
-            .post("/user/create", {
+            .post("/user/createUser", {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
@@ -25,4 +25,4 @@ const createAPI = async (firstName, lastName, email, username, password) => {
 
 }
 
-export default createAPI
+export default createUserAPI

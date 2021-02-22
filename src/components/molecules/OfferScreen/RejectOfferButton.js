@@ -3,12 +3,12 @@ import {StyleSheet} from "react-native";
 import {colorScheme} from "../../../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React from "react";
-import {rejectOfferAPI} from "../../../api/offer/rejectOfferAPI";
+import {setRejectOfferAPI} from "../../../api/offer/setRejectOfferAPI";
 
 const RejectOfferButton = ({navigation, socket, offerId}) => {
 
     const rejectOffer = () => {
-        rejectOfferAPI(socket, {offerId: offerId}).then(r => {
+        setRejectOfferAPI(socket, {offerId: offerId}).then(r => {
             console.log(`Res r`)
             navigation.navigate('OffersTab')
         }).catch(e => console.log(e))

@@ -1,25 +1,25 @@
 import {axiosInstance} from "../../utilities/ConnectionUtils";
 
 
-const deleteAccountAPI = async (token) => {
+const updateUserAPI = async (data, token) => {
 
     return new Promise((fulfill, reject) => {
         axiosInstance
-            .get("/user/deleteAccount", {
+            .post("/user/updateUser", data, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
             })
             .then((response) => {
-                console.log(`Response on delete User ${response.status}`)
-                fulfill()
+                console.log(`Response from updateAccount ${response.status}`)
+                fulfill(response.data)
             })
             .catch((error) => {
-                console.log(`Error in deleteAccountAPI ${error}`)
+                console.log(`Error in updateAccount ${error}`)
                 reject()
             });
     })
 
 }
 
-export default deleteAccountAPI
+export default updateUserAPI
