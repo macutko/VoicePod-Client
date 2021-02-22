@@ -4,14 +4,14 @@ export const colorScheme = {
   // accent: "#f05454",
   accent: "#ec5f6f",
   background: "#ffffff",
-  text: "#35424a",
-  surface: "#ffffff",
+  text: "#30475e",
+  surface: "#eef2f6",
   placeholder: "#bbbbb7",
 
   // other
   yellow: "#fec63d",
   green: "#38873a",
   error: "#b1151f",
-  dark_grey: "#30475e",
+  dark_grey: "#35424a",
   white_shaded: "#f1f1f1",
 };
