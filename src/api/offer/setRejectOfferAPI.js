@@ -1,4 +1,4 @@
-export const rejectOfferAPI = (socket, data) => {
+export const setRejectOfferAPI = (socket, data) => {
     return new Promise((fulfill, reject) => {
         socket.emit('setRejectOffer', data, (error, response) => {
             if (!error) {

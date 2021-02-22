@@ -3,14 +3,14 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, {useContext, useState} from "react";
 import InChatMenu from "../../molecules/ChatScreen/InChatMenu";
 import {SocketContext} from "../../atoms/SocketContext";
-import {closeChatAPI} from "../../../api/chat/closeChatAPI";
+import {setCloseChatAPI} from "../../../api/chat/setCloseChatAPI";
 
 export const ChatHeader = ({navigation, data, chatId}) => {
     const context = useContext(SocketContext)
     const [menuVisible, setMenuVisible] = useState(false)
 
     const closeChat = () => {
-        closeChatAPI(context.socket, {chatId: chatId}).then(res => {
+        setCloseChatAPI(context.socket, {chatId: chatId}).then(res => {
             if (res) {
                 navigation.navigate('LeaveReview', {chatId: chatId})
             }

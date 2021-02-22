@@ -1,13 +1,13 @@
 import {Button, Dialog, Paragraph, Portal} from "react-native-paper";
 import React, {useContext} from "react";
-import deleteAccountAPI from "../../../api/user/deleteAccount";
+import deleteUserAPI from "../../../api/user/deleteUserAPI";
 import GlobalContext from "../../atoms/GlobalState";
 
 const ConfirmDelete = ({deleteUserDialog, toggleDialog, logOut}) => {
     const context = useContext(GlobalContext);
 
     const confirmDelete = async () => {
-        deleteAccountAPI(context.globalState.token).then(logOut()).catch(logOut())
+        deleteUserAPI(context.globalState.token).then(logOut()).catch(logOut())
     }
 
     return (
