@@ -1,7 +1,6 @@
-import {List, Switch} from "react-native-paper";
+import React, {useContext, useEffect, useRef} from "react";
 import GlobalContext from "../../atoms/GlobalState";
-import {useContext, useEffect, useRef} from "react/cjs/react.production.min";
-import React from "react";
+import {List, Switch} from 'react-native-paper'
 
 const ToggleBusinessProfile = ({submitUpdate}) => {
     const context = useContext(GlobalContext)
@@ -29,9 +28,9 @@ const ToggleBusinessProfile = ({submitUpdate}) => {
 
 
     return (
-        <List.Item title="Business account"
-                   right={() => <Switch value={context.user.businessActivated}
-                                        onValueChange={toggleBusinessAccount}/>}/>
+        <List.Item title="Business account" right={() => <Switch value={context.user.businessActivated}
+                                                                 onValueChange={toggleBusinessAccount}/>
+        }/>
     )
 }
 

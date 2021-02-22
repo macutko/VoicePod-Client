@@ -5,7 +5,6 @@ import Button from "react-native-paper/src/components/Button";
 import {Modal, Portal} from "react-native-paper";
 import {StyleSheet} from "react-native";
 import {getPaymentMethodAPI} from "../../../api/getPaymentMethodAPI";
-// import stripe from 'tipsi-stripe'
 
 //TODO: REFACTOR
 // stripe.setOptions({
