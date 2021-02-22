@@ -2,7 +2,7 @@ import {Text, Title} from "react-native-paper";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import GlobalContext from "../../atoms/GlobalState";
-import updateAccountAPI from "../../../api/user/updateAccount";
+import updateUserAPI from "../../../api/user/updateUserAPI";
 import EditUserDescriptionModal from "../../molecules/SettingsTab/EditUserDescriptionModal";
 import EditUserNameModal from "../../molecules/SettingsTab/EditUserNameModal";
 import {EditUserProfilePicture} from "../../molecules/SettingsTab/EditUserProfilePicture";
@@ -21,7 +21,7 @@ export const UserProfileSettings = (props) => {
     }, []);
 
     const submitUpdate = async (data) => {
-        updateAccountAPI(data, context.globalState.token)
+        updateUserAPI(data, context.globalState.token)
             .then(r => context.refreshState(context.globalState.token))
             .catch(e => context.refreshState(context.globalState.token))
 
