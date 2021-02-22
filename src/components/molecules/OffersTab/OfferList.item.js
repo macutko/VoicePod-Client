@@ -13,7 +13,6 @@ const OfferListItem = ({mainNav, data}) => {
     useEffect(() => {
         getOtherPartyDetailsByOfferIdAPI(context.socket, {offerId: data.id}).then(res => {
             if (_isMounted) setUser(res)
-            console.log(`Offer list item keys ${Object.keys(res)}`)
         }).catch(e => console.log(e))
         return () => {
             _isMounted.current = false;
