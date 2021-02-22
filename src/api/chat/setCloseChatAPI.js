@@ -1,6 +1,6 @@
-export const closeChatAPI = (socket, data) => {
+export const setCloseChatAPI = (socket, data) => {
     return new Promise((fulfill, reject) => {
-        socket.emit('closeChat', data, (error, response) => {
+        socket.emit('setCloseChat', data, (error, response) => {
             if (error) {
                 console.log(`Error in closeChat ${error}`)
                 reject({})

@@ -7,7 +7,7 @@ import {
 
   Text
 } from "react-native-paper";
-import createAPI from "../../../api/user/create";
+import createUserAPI from "../../../api/user/createUserAPI";
 import { colorScheme } from "../../../constants/Colors";
 import GLOBAL_VAR from "../../../constants/Global";
 import { CustomExistenceValidator } from "../../../utilities/validators/CustomExistenceValidator";
@@ -113,7 +113,7 @@ export default class SignUpForm extends React.Component {
       return;
     }
     // send request if valid
-    createAPI(
+    createUserAPI(
       this.state.user.firstname,
       this.state.user.lastname,
       this.state.user.email,
