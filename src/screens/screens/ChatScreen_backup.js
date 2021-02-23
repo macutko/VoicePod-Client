@@ -1,10 +1,10 @@
-import React from "react";
-import {StyleSheet} from "react-native";
+import React from "react"
+import {StyleSheet} from "react-native"
 
 export default class ChatScreen extends React.Component {
     constructor(props) {
 
-        super(props);
+        super(props)
         this.state = {
             messages: [],
             offer: null,
@@ -12,7 +12,7 @@ export default class ChatScreen extends React.Component {
             isFetching: true,
             thisIsMyClient: !props.route.params.consultant,
             offerEndLifeCycleDialog: false,
-        };
+        }
         this._isMounted = false
     }
 
@@ -20,7 +20,7 @@ export default class ChatScreen extends React.Component {
         if (this._isMounted) {
             this.setState((prevState) => ({
                 offerEndLifeCycleDialog: !prevState.offerEndLifeCycleDialog,
-            }));
+            }))
         }
     };
 
@@ -30,14 +30,14 @@ export default class ChatScreen extends React.Component {
 
         this.props.socket.on("newMessage", (data) => {
             if (data.chatId === this.props.route.params.id) {
-                const joined = [data.message].concat(this.state.messages);
+                const joined = [data.message].concat(this.state.messages)
                 if (this._isMounted) {
                     this.setState((prevState) => ({
                         messages: joined,
-                    }));
+                    }))
                 }
             }
-        });
+        })
     }
 
 
@@ -61,7 +61,7 @@ export default class ChatScreen extends React.Component {
                             </Paragraph>
                         </Dialog.Content>
                         <Dialog.Actions>
-                            {/*<Button onPress={() => console.log('increase budget')}>Increase budget</Button>*/}
+                            {/* <Button onPress={() => console.log('increase budget')}>Increase budget</Button>*/}
                             <Button onPress={() => this.closeChat()}>Close</Button>
                         </Dialog.Actions>
                     </Dialog>
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
     messagesContainer: {
         height: "80%",
     },
-});
+})

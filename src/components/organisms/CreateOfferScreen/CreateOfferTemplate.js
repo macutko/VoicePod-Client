@@ -1,21 +1,21 @@
-import React from "react";
-import {Image, StyleSheet, View} from "react-native";
-import {Text} from "react-native-paper";
+import React from "react"
+import {Image, StyleSheet, View} from "react-native"
+import {Text} from "react-native-paper"
 
-import {colorScheme} from "../../../constants/Colors";
-import CreateOfferStatusBar from "../../molecules/CreateOfferScreen/CreateOfferStatusBar";
-import RecordButton from "../../atoms/RecordButton";
-import AudioPlayer from "../../atoms/AudioPlayer";
+import {colorScheme} from "../../../constants/Colors"
+import CreateOfferStatusBar from "../../molecules/CreateOfferScreen/CreateOfferStatusBar"
+import RecordButton from "../../atoms/RecordButton"
+import AudioPlayer from "../../atoms/AudioPlayer"
 
 
 export default class CreateOfferTemplate extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             voiceClip: null,
             pathToFile: null,
             counter: 0,
-        };
+        }
     }
 
     async componentDidMount() {
@@ -27,7 +27,7 @@ export default class CreateOfferTemplate extends React.Component {
     }
     returnSeconds = (s) => {
         this.setState({
-            counter: s
+            counter: s,
         })
     }
 
@@ -35,8 +35,8 @@ export default class CreateOfferTemplate extends React.Component {
         return (
             <>
                 <CreateOfferStatusBar navigation={this.props.navigation}
-                                      submit={() => this.props.submit(this.state.voiceClip)}
-                                      allowSubmit={!!this.state.voiceClip} title={this.props.title}/>
+                    submit={() => this.props.submit(this.state.voiceClip)}
+                    allowSubmit={!!this.state.voiceClip} title={this.props.title}/>
 
                 <View style={styles.container}>
                     {this.props.children}
@@ -60,7 +60,7 @@ export default class CreateOfferTemplate extends React.Component {
                     )}
                 </View>
             </>
-        );
+        )
     }
 }
 
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
         fontSize: 13,
         lineHeight: 50,
     },
-});
+})

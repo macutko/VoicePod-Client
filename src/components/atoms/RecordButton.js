@@ -1,17 +1,17 @@
-import React from "react";
-import {Audio} from 'expo-av';
-import {TouchableOpacity} from "react-native";
-import {Title} from "react-native-paper";
-import {FileSystem} from "react-native-unimodules";
-import PropTypes from 'prop-types';
+import React from "react"
+import {Audio} from "expo-av"
+import {TouchableOpacity} from "react-native"
+import {Title} from "react-native-paper"
+import {FileSystem} from "react-native-unimodules"
+import PropTypes from "prop-types"
 
 
 class RecordButton extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this._isMounted = false
         this.state = {
-            permissionsGranted: false
+            permissionsGranted: false,
         }
         this.recording = null
     }
@@ -26,25 +26,25 @@ class RecordButton extends React.Component {
     startRecording = () => {
         this.props.returnData({
             voiceClip: null,
-            pathToFile: null
+            pathToFile: null,
         })
-        this.recording = new Audio.Recording();
+        this.recording = new Audio.Recording()
         this.recording.prepareToRecordAsync({
             ...Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY, android: {
-                extension: '.m4a',
+                extension: ".m4a",
                 outputFormat: Audio.RECORDING_OPTION_ANDROID_OUTPUT_FORMAT_MPEG_4,
             },
             ios: {
-                extension: '.m4a',
+                extension: ".m4a",
                 outputFormat: Audio.RECORDING_OPTION_IOS_OUTPUT_FORMAT_MPEG4AAC,
             },
         }).then(r => {
             if (r.canRecord) {
                 this.recording.setOnRecordingStatusUpdate(this.onRecordingUpdate)
                 this.recording.setProgressUpdateInterval(1000)
-                this.recording.startAsync().then(r => console.log(`Started ${JSON.stringify(r)}`)).catch(e => console.log(e));
+                this.recording.startAsync().then(r => console.log(`Started ${JSON.stringify(r)}`)).catch(e => console.log(e))
             }
-        }).catch(e => console.log(e));
+        }).catch(e => console.log(e))
     }
 
     stopRecording = () => {
@@ -57,7 +57,7 @@ class RecordButton extends React.Component {
                 FileSystem.readAsStringAsync(uri, {encoding: FileSystem.EncodingType.Base64}).then((data) => {
                     this.props.returnData({
                         voiceClip: data,
-                        pathToFile: uri
+                        pathToFile: uri,
                     })
                 }).catch(e => (console.log(`Error on read file ${e}`)))
 
@@ -65,7 +65,7 @@ class RecordButton extends React.Component {
             }).catch(e => {
                 console.log(`Error on stop ${e}`)
                 this.recording = null
-            });
+            })
         }
     }
 
@@ -75,15 +75,15 @@ class RecordButton extends React.Component {
         Audio.requestPermissionsAsync().then(r => {
             if (r.status === "granted" && this._isMounted) {
                 this.setState({
-                    permissionsGranted: true
+                    permissionsGranted: true,
                 })
             }
-        }).catch(e => console.log(e));
+        }).catch(e => console.log(e))
 
         Audio.setAudioModeAsync({
             allowsRecordingIOS: true,
             playsInSilentModeIOS: true,
-        }).then(r => console.log(`Set audio mode ${r}`)).catch(e => console.log(e));
+        }).then(r => console.log(`Set audio mode ${r}`)).catch(e => console.log(e))
 
     }
 
@@ -100,7 +100,7 @@ class RecordButton extends React.Component {
 
             this.state.permissionsGranted ?
                 <TouchableOpacity disabled={this.props.disabled} onPressIn={this.startRecording}
-                                  onPressOut={this.stopRecording}>
+                    onPressOut={this.stopRecording}>
                     {this.props.children}
                 </TouchableOpacity> :
 
@@ -117,5 +117,5 @@ RecordButton.propTypes = {
     disabled: PropTypes.bool,
     returnSeconds: PropTypes.func,
     returnData: PropTypes.func,
-    limit: PropTypes.number
-};
+    limit: PropTypes.number,
+}

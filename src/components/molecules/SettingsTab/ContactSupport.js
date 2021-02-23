@@ -1,16 +1,16 @@
-import React from "react";
-import {StyleSheet, View} from "react-native";
-import {Button, Dialog, Paragraph, Portal, TextInput, Title} from "react-native-paper";
-import {colorScheme} from "../../../constants/Colors";
-//TODO: REFACTOR
+import React from "react"
+import {StyleSheet, View} from "react-native"
+import {Button, Dialog, Paragraph, Portal, TextInput, Title} from "react-native-paper"
+import {colorScheme} from "../../../constants/Colors"
+// TODO: REFACTOR
 export default class ContactSupport extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
-            title: '',
-            message: '',
+            title: "",
+            message: "",
             successSend: false,
-            failSend: false
+            failSend: false,
         }
     }
 
@@ -23,29 +23,29 @@ export default class ContactSupport extends React.Component {
     }
 
     sendMessage = () => {
-        if (this.state.title === '') {
+        if (this.state.title === "") {
             this.setState({
-                titleError: 'Please add some text'
+                titleError: "Please add some text",
             })
-        } else if (this.state.message === '') {
+        } else if (this.state.message === "") {
             this.setState({
-                messageError: 'Please add some text'
+                messageError: "Please add some text",
             })
         } else {
-            this.props.socket.emit('contactSupport', {
+            this.props.socket.emit("contactSupport", {
                 title: this.state.title,
-                message: this.state.message
+                message: this.state.message,
             }, (err, res) => {
                 if (err) console.log(`Error in contact support ${err}`)
                 else {
                     console.log(`Res ${res}`)
                     if (this._isMounted && res) {
                         this.setState({
-                            successSend: true
+                            successSend: true,
                         })
                     } else if (this._isMounted && !res) {
                         this.setState({
-                            failSend: true
+                            failSend: true,
                         })
                     }
                 }
@@ -56,7 +56,7 @@ export default class ContactSupport extends React.Component {
     closeDialogSuccess = () => {
         if (this._isMounted) {
             this.setState(prevState => ({
-                successSend: false
+                successSend: false,
             }), () => this.props.navigation.goBack(null))
         }
     }
@@ -64,7 +64,7 @@ export default class ContactSupport extends React.Component {
     closeDialogFail = () => {
         if (this._isMounted) {
             this.setState(prevState => ({
-                failSend: false
+                failSend: false,
             }), () => this.props.navigation.goBack(null))
         }
     }
@@ -130,14 +130,14 @@ export default class ContactSupport extends React.Component {
                 </Portal>
 
 
-            </View>);
+            </View>)
     }
 }
 
 const styles = StyleSheet.create({
     containerStyle: {
         paddingTop: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     errorMessage: {
         color: colorScheme.error,
@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-});
+})

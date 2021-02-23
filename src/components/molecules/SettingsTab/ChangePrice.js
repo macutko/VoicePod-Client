@@ -1,15 +1,15 @@
-import TextInput from "react-native-paper/src/components/TextInput/TextInput";
-import {StyleSheet} from "react-native";
-import React from "react";
-import {colorScheme} from "../../../constants/Colors";
+import TextInput from "react-native-paper/src/components/TextInput/TextInput"
+import {StyleSheet} from "react-native"
+import React from "react"
+import {colorScheme} from "../../../constants/Colors"
 
-//TODO: REFACTOR
+// TODO: REFACTOR
 export default class ChangePrice extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             price: null,
-            currency: null
+            currency: null,
         }
         this._isMounted = false
     }
@@ -20,14 +20,14 @@ export default class ChangePrice extends React.Component {
 
     componentDidMount() {
         this._isMounted = true
-        this.props.socket.emit('getBusinessPrice', {}, (err, res) => {
+        this.props.socket.emit("getBusinessPrice", {}, (err, res) => {
             if (err) console.log(`Err in change price ${err}`)
             else {
                 console.log(`res ${Object.keys(res)}`)
                 if (this._isMounted) {
                     this.setState({
                         price: res.price,
-                        currency: res.currency
+                        currency: res.currency,
                     })
                 }
             }
@@ -39,14 +39,14 @@ export default class ChangePrice extends React.Component {
     onChangePrice = (text) => {
         if (this._isMounted) {
             this.setState({
-                price: text
+                price: text,
             })
         }
     }
 
     onSubmitPrice = () => {
         if (this.state.price > 0) {
-            this.props.socket.emit('setBusinessPrice', {price: this.state.price}, (err, res) => {
+            this.props.socket.emit("setBusinessPrice", {price: this.state.price}, (err, res) => {
                 if (err) console.log(`Error in change price ${err}`)
                 else {
                     console.log(`Res ${res}`)
@@ -63,25 +63,25 @@ export default class ChangePrice extends React.Component {
                 <TextInput
                     style={styles.textInput}
                     label="Price per minute"
-                    type={'outlined'}
-                    keyboardType={'number-pad'}
+                    type={"outlined"}
+                    keyboardType={"number-pad"}
                     value={`${this.state.price.toString()}`}
                     onSubmitEditing={this.onSubmitPrice}
                     onChangeText={this.onChangePrice}
                 />
 
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     containerStyle: {
-        paddingTop: 20
+        paddingTop: 20,
     },
     textInput: {
         width: "80%",
         paddingHorizontal: "10%",
         marginBottom: 5,
-        backgroundColor: colorScheme.background
+        backgroundColor: colorScheme.background,
     },
-});
+})

@@ -1,10 +1,10 @@
-import axios from "axios";
-import config from "../constants/Config";
+import axios from "axios"
+import config from "../constants/Config"
 
 const axiosInstance = axios.create({
-  baseURL: config.baseURL,
-});
+	baseURL: config.baseURL,
+})
 
-axiosInstance.defaults.timeout = 10000;
+axiosInstance.defaults.timeout = 10000
 
 export {axiosInstance}

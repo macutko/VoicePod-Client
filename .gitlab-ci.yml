@@ -1,0 +1,40 @@
+# For syntax:
+#  https://docs.gitlab.com/ee/ci/yaml/
+
+###########
+# Var def:
+# RUNNER_PRIVATE_KEY: private key to ssh into runner@Verser
+###########
+# THIS DOES NOT NEED TO HAPPEN
+# if we were running a pure box then yes, but since this is docker in docker
+# then this whole thing just disappears, but for reference, this would need to happen
+# in case builds fail:
+#
+#docker rmi $(docker images -f "dangling=true" -q)
+#docker container rm $(docker ps --filter "status=exited" -q)
+######################################
+
+default:
+  tags:
+    - docker-ci
+services:
+  - name: docker:dind
+    alias: thedockerhost
+
+
+variables:
+  DOCKER_HOST: tcp://thedockerhost:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+build:
+  image: reactnativecommunity/react-native-android
+  only:
+    refs:
+      - merge_requests
+  stage: build
+  script:
+    - npm install
+    - npm test
+    - cd android && chmod +x gradlew
+    - ./gradlew assembleDebug

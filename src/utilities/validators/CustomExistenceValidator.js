@@ -1,21 +1,21 @@
-import {axiosInstance} from "../ConnectionUtils";
+import {axiosInstance} from "../ConnectionUtils"
 
-const CustomExistenceValidator = (field_name, text) => {
+const CustomExistenceValidator = (fieldName, text) => {
 
-    return new Promise((resolve, reject) => {
-        axiosInstance
-            .get("/user/exists", {
-                params: {
-                    [field_name]: text,
-                },
-            })
-            .then((response) => {
-                resolve(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    });
+	return new Promise((resolve) => {
+		axiosInstance
+			.get("/user/exists", {
+				params: {
+					[fieldName]: text,
+				},
+			})
+			.then((response) => {
+				resolve(response.data)
+			})
+			.catch((error) => {
+				console.log(error)
+			})
+	})
 }
 
 export {CustomExistenceValidator}

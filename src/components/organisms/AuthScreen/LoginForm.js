@@ -1,48 +1,48 @@
-import * as React from "react";
-import {StyleSheet, View} from "react-native";
+import * as React from "react"
+import {StyleSheet, View} from "react-native"
 
-import GlobalContext from "../../atoms/GlobalState";
-import authenticateUserAPI from "../../../api/user/authenticateUserAPI";
-import TextInputCustom from "../../atoms/TextInputCustom";
-import ButtonCustom from "../../atoms/ButtomCustom";
+import GlobalContext from "../../atoms/GlobalState"
+import authenticateUserAPI from "../../../api/user/authenticateUserAPI"
+import TextInputCustom from "../../atoms/TextInputCustom"
+import ButtonCustom from "../../atoms/ButtomCustom"
 
 export default class LoginForm extends React.Component {
     static contextType = GlobalContext;
 
     constructor(props, context) {
-        super(props, context);
-        this._isMounted = false;
+        super(props, context)
+        this._isMounted = false
         this.state = {
             isUsernameWrong: false,
             isPasswordWrong: false,
-        };
+        }
     }
 
     componentDidMount() {
-        this._isMounted = true;
+        this._isMounted = true
     }
 
     componentWillUnmount() {
-        this._isMounted = false;
+        this._isMounted = false
     }
 
     onChangeText = (text, name) => {
         this.setState({
             [name]: text,
             passwordError: undefined,
-        });
+        })
     };
 
     submitForm = () => {
         authenticateUserAPI(this.state.username, this.state.password)
             .then(([user, token]) => {
-                this.context.updateGlobalState(user, token, true);
+                this.context.updateGlobalState(user, token, true)
             })
             .catch((e) => {
                 if (this._isMounted) {
-                    this.setState({...e});
+                    this.setState({...e})
                 }
-            });
+            })
     };
 
     render() {
@@ -73,7 +73,7 @@ export default class LoginForm extends React.Component {
                     Login
                 </ButtonCustom>
             </View>
-        );
+        )
     }
 }
 
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         alignSelf: "flex-start",
     },
-});
+})

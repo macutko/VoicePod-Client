@@ -1,30 +1,30 @@
-import React from "react";
-import {Image, StyleSheet, View} from "react-native";
-import {colorScheme} from "../../constants/Colors";
-import Title from "react-native-paper/src/components/Typography/Title";
-import Paragraph from "react-native-paper/src/components/Typography/Paragraph";
-import CreateOfferButton from "../../components/molecules/CreateOfferScreen/CreateOfferButton";
-import MinutesSlider from "../../components/molecules/CreateOfferScreen/MinutesSlider";
-import {HoursSlider} from "../../components/molecules/CreateOfferScreen/HoursSlider";
-import {getBusinessProfileAPI} from "../../api/getBusinessProfileAPI";
+import React from "react"
+import {Image, StyleSheet, View} from "react-native"
+import {colorScheme} from "../../constants/Colors"
+import Title from "react-native-paper/src/components/Typography/Title"
+import Paragraph from "react-native-paper/src/components/Typography/Paragraph"
+import CreateOfferButton from "../../components/molecules/CreateOfferScreen/CreateOfferButton"
+import MinutesSlider from "../../components/molecules/CreateOfferScreen/MinutesSlider"
+import {HoursSlider} from "../../components/molecules/CreateOfferScreen/HoursSlider"
+import {getBusinessProfileAPI} from "../../api/getBusinessProfileAPI"
 
 export default class SetBudgetCreateOfferScreen extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             budget: 0,
             businessProfile: {},
-        };
-        this._isMounted = false;
+        }
+        this._isMounted = false
     }
 
     componentWillUnmount() {
-        this._isMounted = false;
+        this._isMounted = false
     }
 
     componentDidMount() {
 
-        this._isMounted = true;
+        this._isMounted = true
 
         getBusinessProfileAPI(this.props.socket, {
             username: this.props.route.params.username,
@@ -34,7 +34,7 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
                 this.setState({
                     businessProfile: res,
                     budget: res.price * this.state.minutes,
-                });
+                })
             }
         }).catch(e => {
             console.log(e)
@@ -45,7 +45,7 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
         if (this._isMounted) {
             this.setState({
                 budget: (this.state.hours * 60 + m) * (this.state.businessProfile.price ? this.state.businessProfile.price : 0),
-                minutes: m
+                minutes: m,
             })
         }
     }
@@ -54,7 +54,7 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
         if (this._isMounted) {
             this.setState({
                 budget: (h * 60 + this.state.minutes) * (this.state.businessProfile.price ? this.state.businessProfile.price : 0),
-                hours: h
+                hours: h,
             })
         }
     }
@@ -82,11 +82,11 @@ export default class SetBudgetCreateOfferScreen extends React.Component {
                     <Title style={styles.budget}>{`${this.state.budget ? this.state.budget : 0} $`}</Title>
 
                     <CreateOfferButton navigation={this.props.navigation} username={this.props.route.params.username}
-                                       budget={this.state.hours * 60 + this.state.minutes}
-                                       intro={this.props.route.params.intro}
-                                       problem={this.props.route.params.problem}/></>
+                        budget={this.state.hours * 60 + this.state.minutes}
+                        intro={this.props.route.params.intro}
+                        problem={this.props.route.params.problem}/></>
             </View>
-        );
+        )
     }
 }
 
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
         fontSize: 28,
         paddingVertical: "3%",
     },
-});
+})
