@@ -15,12 +15,11 @@
 ######################################
 
 default:
-  image: reactnativecommunity/react-native-android
   tags:
     - docker-ci
-  services:
-    - name: docker:dind
-      alias: thedockerhost
+services:
+  - name: docker:dind
+    alias: thedockerhost
 
 
 variables:
@@ -29,6 +28,10 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 image: reactnativecommunity/react-native-android
+
+stages:
+  - .pre
+  - test
 
 setup:
   stage: .pre
@@ -39,22 +42,22 @@ setup:
     - npm install
 jest:
   stage: test
-  needs: [".pre"]
+  needs: ["setup"]
   only:
     refs:
       - merge_requests
-  scripts:
+  script:
     - npm test
 
 gradle:
   stage: test
-  needs: [".pre"]
+  needs: ["setup"]
   only:
     refs:
       - merge_requests
-    scripts:
-      - cd android && chmod +x gradlew
-      - ./gradlew assembleDebug
+  script:
+    - cd android && chmod +x gradlew
+    - ./gradlew assembleDebug
 #      -
 #build:
 ##  parallel: 10
