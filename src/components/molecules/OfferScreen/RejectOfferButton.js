@@ -1,37 +1,37 @@
-import {Button} from "react-native-paper";
-import {StyleSheet} from "react-native";
-import {colorScheme} from "../../../constants/Colors";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import React from "react";
-import {setRejectOfferAPI} from "../../../api/offer/setRejectOfferAPI";
+import {Button} from "react-native-paper"
+import {StyleSheet} from "react-native"
+import {colorScheme} from "../../../constants/Colors"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import React from "react"
+import {setRejectOfferAPI} from "../../../api/offer/setRejectOfferAPI"
 
 const RejectOfferButton = ({navigation, socket, offerId}) => {
 
-    const rejectOffer = () => {
-        setRejectOfferAPI(socket, {offerId: offerId}).then(r => {
-            console.log(`Res r`)
-            navigation.navigate('OffersTab')
-        }).catch(e => console.log(e))
-    }
+	const rejectOffer = () => {
+		setRejectOfferAPI(socket, {offerId: offerId}).then(r => {
+			console.log("Res r")
+			navigation.navigate("OffersTab")
+		}).catch(e => console.log(e))
+	}
 
-    return (
+	return (
 
-        <Button style={styles.button}
-                icon={props => <Ionicons {...props} name={'close-circle'}/>}
-                mode="outlined"
-                onPress={() => rejectOffer()}>
+		<Button style={styles.button}
+			icon={props => <Ionicons {...props} name={"close-circle"}/>}
+			mode="outlined"
+			onPress={() => rejectOffer()}>
             Reject
-        </Button>
+		</Button>
 
-    )
+	)
 
 }
 export default RejectOfferButton
 
 
 const styles = StyleSheet.create({
-    button: {
-        alignSelf: "center",
-        backgroundColor: colorScheme.background
-    }
+	button: {
+		alignSelf: "center",
+		backgroundColor: colorScheme.background,
+	},
 })

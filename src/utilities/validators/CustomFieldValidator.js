@@ -1,8 +1,8 @@
-import { getValidateFieldStrategyFactory } from "./ValidateFieldStrategy";
+import { getValidateFieldStrategyFactory } from "./ValidateFieldStrategy"
 
-const CustomFieldValidator = (field_name, text) => {
-    const validateStrategyFactory = getValidateFieldStrategyFactory();
-    const strategy = validateStrategyFactory.create(field_name);
-    return strategy.validateText(text);
-  };
+const CustomFieldValidator = (fieldName, text) => {
+	const validateStrategyFactory = getValidateFieldStrategyFactory()
+	const strategy = validateStrategyFactory.create(fieldName)
+	return strategy.validateText(text)
+}
 export {CustomFieldValidator}

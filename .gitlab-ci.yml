@@ -28,7 +28,6 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 build:
-  parallel: 3
   image: reactnativecommunity/react-native-android
   only:
     refs:

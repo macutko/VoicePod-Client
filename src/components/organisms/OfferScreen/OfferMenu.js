@@ -1,15 +1,15 @@
-import {List, Modal, Portal} from "react-native-paper";
-import * as React from "react";
-import {Animated, StyleSheet} from "react-native";
+import {List, Modal, Portal} from "react-native-paper"
+import * as React from "react"
+import {Animated, StyleSheet} from "react-native"
 
 export default class OfferMenu extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             fadeAnim: new Animated.Value(0),
             fadeAnimOffer: new Animated.Value(0),
-            offerVisible: false
-        };
+            offerVisible: false,
+        }
     }
 
     fadeIn = (name) => {
@@ -17,8 +17,8 @@ export default class OfferMenu extends React.Component {
         Animated.timing(this.state[name], {
             toValue: 1,
             duration: 2500,
-            useNativeDriver: true
-        }).start();
+            useNativeDriver: true,
+        }).start()
     };
 
     fadeOut = (name) => {
@@ -26,17 +26,17 @@ export default class OfferMenu extends React.Component {
         Animated.timing(this.state[name], {
             toValue: 0,
             duration: 2500,
-            useNativeDriver: true
-        }).start();
+            useNativeDriver: true,
+        }).start()
     };
 
     componentDidMount() {
-        this.fadeIn('fadeAnim')
+        this.fadeIn("fadeAnim")
     }
 
     toggleOffer = () => {
         this.setState(prevState => ({
-            offerVisible: !prevState.offerVisible
+            offerVisible: !prevState.offerVisible,
         }), () => {
             if (this.state.offerVisible) {
                 this.fadeOut("fadeAnim")
@@ -50,7 +50,7 @@ export default class OfferMenu extends React.Component {
     }
 
     cancelOffer = () => {
-        this.props.socket.emit('rejectOrCancelOffer', {offerId: this.props.data.id}, (err, res) => {
+        this.props.socket.emit("rejectOrCancelOffer", {offerId: this.props.data.id}, (err, res) => {
             if (err) console.log(`Error in OfferMenu ${err}`)
             else {
                 console.log(`Res ${res}`)
@@ -71,8 +71,8 @@ export default class OfferMenu extends React.Component {
                         <Animated.View
                             style={[
                                 {
-                                    opacity: this.state.fadeAnim // Bind opacity to animated value
-                                }
+                                    opacity: this.state.fadeAnim, // Bind opacity to animated value
+                                },
                             ]}
                         >
 
@@ -83,7 +83,7 @@ export default class OfferMenu extends React.Component {
                         :
                         <Animated.View style={[
                             {
-                                opacity: this.state.fadeAnimOffer // Bind opacity to animated value
+                                opacity: this.state.fadeAnimOffer, // Bind opacity to animated value
                             }]}>
 
                             <List.Item
@@ -95,13 +95,13 @@ export default class OfferMenu extends React.Component {
 
                 </Modal>
             </Portal>
-        );
+        )
     }
 }
 
 
 const styles = StyleSheet.create({
-    containerStyle: {backgroundColor: 'white', padding: 20, marginHorizontal: "5%"},
-});
+    containerStyle: {backgroundColor: "white", padding: 20, marginHorizontal: "5%"},
+})
 
 

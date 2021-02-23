@@ -1,21 +1,21 @@
-import {StyleSheet, View} from "react-native";
-import React from "react";
-import {colorScheme} from "../../constants/Colors";
-import PlayButton from "./PlayButton";
-import ActivityIndicator from "react-native-paper/src/components/ActivityIndicator";
-import TrackSlider from "./TrackSlider";
-import PauseButton from "./PauseButton";
-import {Audio} from "expo-av";
+import {StyleSheet, View} from "react-native"
+import React from "react"
+import {colorScheme} from "../../constants/Colors"
+import PlayButton from "./PlayButton"
+import ActivityIndicator from "react-native-paper/src/components/ActivityIndicator"
+import TrackSlider from "./TrackSlider"
+import PauseButton from "./PauseButton"
+import {Audio} from "expo-av"
 
 export default class AudioPlayer extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             playing: false,
             loading: true,
             position: 0,
         }
-        this.sound = null;
+        this.sound = null
         this._isMounted = false
     }
 
@@ -24,21 +24,21 @@ export default class AudioPlayer extends React.Component {
         if (this._isMounted) {
             if (!status.isBuffering) {
                 this.setState({
-                    loading: false
+                    loading: false,
                 })
             }
             if (status.isPlaying) {
                 this.setState({
-                    playing: true
+                    playing: true,
                 })
             }
             if (!status.isPlaying) {
                 this.setState({
-                    playing: false
+                    playing: false,
                 })
             }
             this.setState({
-                position: status.positionMillis
+                position: status.positionMillis,
             })
         }
 
@@ -77,7 +77,7 @@ export default class AudioPlayer extends React.Component {
                                 {this.state.playing ? <PauseButton sound={this.sound}/> :
                                     <PlayButton sound={this.sound}/>}
                                 <TrackSlider sound={this.sound} width={this.props.width}
-                                             position={this.state.position}/>
+                                    position={this.state.position}/>
                             </>}
                     </View>
                 </View>
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: "row",
     },
-});
+})
