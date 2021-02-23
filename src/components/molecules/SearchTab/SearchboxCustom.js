@@ -16,7 +16,11 @@ const SearchboxCustom = (props) => {
                 placeholderTextColor={colorScheme.surface}
                 selectionColor={colorScheme.surface}
             />
-            <Ionicons style={styles.deleteIcon} name="close" onPress={props.clearInput}/>
+            <Ionicons
+                style={styles.deleteIcon}
+                name="close"
+                onPress={props.clearInput}
+            />
         </View>
     );
 };
@@ -25,7 +29,7 @@ export default SearchboxCustom;
 
 const styles = StyleSheet.create({
     searchSection: {
-        width: "100%",
+        flex: 1,
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
@@ -52,6 +56,6 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "transparent",
         fontSize: 19,
-		color: colorScheme.surface,
+        color: colorScheme.surface,
     },
 });

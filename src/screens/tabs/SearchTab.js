@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { ActivityIndicator, Appbar } from "react-native-paper";
+import SwitchSelector from "react-native-switch-selector";
 import { searchUserAPI } from "../../api/user/searchUserAPI";
 import SearchboxCustom from "../../components/molecules/SearchTab/SearchboxCustom";
 import UserCard from "../../components/molecules/SearchTab/UserCard";
@@ -49,15 +50,55 @@ export const SearchTab = (props) => {
         }
     }, [isFetching]);
 
+    const options = [
+        {
+            label: "",
+            value: "1",
+            imageIcon: require("../../assets/images/users-icon.png"),
+        },
+        {
+            label: "",
+            value: "1",
+            imageIcon: require("../../assets/images/dolar-icon.png"),
+        },
+    ];
+
+    //   const options = [
+    //     { label: "Standard", value: "standard"},
+    //     { label: "Business", value: "busines"},
+    //   ];
+
     return (
         <>
             <Appbar.Header statusBarHeight={0}>
-                <SearchboxCustom
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}
-                    placeholder={"Search"}
-                    clearInput={() => clearInput()}
-                />
+                <View style={styles.appbarContainer}>
+                    <SearchboxCustom
+                        onChangeText={onChangeSearch}
+                        value={searchQuery}
+                        placeholder={"Search"}
+                        clearInput={() => clearInput()}
+                    />
+                    <View style={styles.switch}>
+                        <SwitchSelector
+                            options={options}
+                            initial={0}
+                            onPress={(value) =>
+                                console.log(`Call onPress with value: ${value}`)
+                            }
+                            textColor={colorScheme.background} //'#7a44cf'
+                            selectedColor={colorScheme.background}
+                            buttonColor={colorScheme.accent}
+                            borderColor={colorScheme.background}
+                            height={30}
+                            imageStyle={{
+                                flex: 0.6,
+                                resizeMode: "contain",
+                                marginBottom: 1,
+                            }}
+                            hasPadding
+                        />
+                    </View>
+                </View>
             </Appbar.Header>
 
             <View style={styles.container}>
@@ -95,7 +136,18 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 10,
     },
+    appbarContainer: {
+        // width: "100%",
+        flex: 1,
+        paddingRight: 5,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
     activityIndicator: {
         marginTop: "50%",
+    },
+    switch: {
+        width: 70,
     },
 });
