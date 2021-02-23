@@ -32,6 +32,7 @@ variables:
 
 # since docker build also needs to do test, no point in wasting time doing it separately
 build:
+  parallel: 10
   image: reactnativecommunity/react-native-android
   only:
     refs:
