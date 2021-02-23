@@ -78,7 +78,3 @@ export const SearchTab = (props) => {
 
 export default SearchTab
 
-SearchTab.propTypes = {
-	socket: PropTypes.object,
-	navigation: PropTypes.object.isRequired,
-}
