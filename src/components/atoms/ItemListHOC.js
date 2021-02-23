@@ -29,8 +29,6 @@ export const ItemListHOC = ({api, apiProps, listItem, listItemProps, style}) => 
 
 	return (
 		<>
-
-
 			<FlatList
 				data={fetchedData}
 				style={style}

@@ -59,13 +59,13 @@ export default Metrics
 
 const styles = StyleSheet.create({
 	container: {
-		paddingVertical: 20,
+		paddingVertical: 16,
 		width: "100%",
 	},
 	content: {
 		flexDirection: "row",
 		justifyContent: "space-around",
-		height: 80,
+		height: 65,
 	},
 	item: {
 		flexDirection: "column",

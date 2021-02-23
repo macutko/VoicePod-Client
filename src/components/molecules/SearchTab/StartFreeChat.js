@@ -1,11 +1,13 @@
 import {ActivityIndicator} from "react-native-paper"
 import React, {useContext, useEffect, useRef, useState} from "react"
 import RecordButton from "../../atoms/RecordButton"
-import Ionicons from "react-native-vector-icons/Ionicons"
+
 import {colorScheme} from "../../../constants/Colors"
 import {sendNewMessageAndCreateChatAPI} from "../../../api/messaging/sendNewMessageAndCreateChatAPI"
 import {SocketContext} from "../../atoms/SocketContext"
 import IconButton from "react-native-paper/src/components/IconButton"
+import Ionicons from "react-native-vector-icons/Ionicons"
+
 
 const StartFreeChat = ({mainNav, username}) => {
 	const [voiceClip, setVoiceClip] = useState(null)
@@ -45,12 +47,7 @@ const StartFreeChat = ({mainNav, username}) => {
 	return (
 
 		loading ? <ActivityIndicator animating={true} color={colorScheme.accent}/> : <>
-			<RecordButton returnSeconds={(e) => console.log(e)} returnData={returnData}>
-
-				<Ionicons size={30} name={"mic-circle-outline"}/>
-
-
-			</RecordButton>
+			<RecordButton returnSeconds={(e) => console.log(e)} returnData={returnData}/>
 			{
 				voiceClip !== null ? <>
 					<IconButton

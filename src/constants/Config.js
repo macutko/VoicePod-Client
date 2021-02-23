@@ -1,5 +1,5 @@
 const config = {
-	baseURL: "http://192.168.0.88:12345/",
+	baseURL: "http://192.168.43.93:12345/",
 }
 // TODO: import Config from 'react-native-config';
 
