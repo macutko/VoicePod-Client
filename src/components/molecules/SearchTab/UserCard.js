@@ -33,7 +33,7 @@ const UserCard = (props) => {
 						<Ionicons style={styles.icon} name={"chevron-forward"}/>
 					</View>
 
-					{props.price && <Text style={styles.price}>{props.price}p/min</Text>}
+					{props.user.price && <Text style={styles.price}>{props.user.price}p/min</Text>}
 					{props.messages && <Badge style={styles.messages} size={25}>{props.messages}</Badge>}
 				</View>
 			</View>
@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
 	},
 	right: {
 		flex: 1,
+		paddingVertical: 5,
 		flexDirection: "column",
 		alignItems: "flex-end",
-		justifyContent: "flex-end",
+		justifyContent: "space-between",
 	},
 	price: {
 		color: colorScheme.accent,
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
 	},
 	icon: {
 		fontSize: 20,
-		marginLeft: -3,
+		marginLeft: -2,
 		marginBottom: -2,
 		color: colorScheme.placeholder,
 	},

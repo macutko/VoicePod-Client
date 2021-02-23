@@ -7,24 +7,29 @@ import StarRating from "../atoms/StarRating";
 import TitleCustom from "../atoms/TitleCustom";
 
 const UserProfileTemplate = (props) => {
+    console.log(props.user);
     return (
         <View style={styles.containerStyle}>
             <View style={styles.avatarContainer}>
                 <View style={styles.avatarColorStripe}>
                     <View style={styles.avatar}>
-                        <AvatarCustom size={180} />
+                        <AvatarCustom
+                            size={180}
+                            pictureType={props.user.pictureType}
+                            profilePicture={props.user.profilePicture}
+                        />
                     </View>
                 </View>
             </View>
 
             <TitleCustom center>
-                {props.firstName} {props.lastName}
+                {props.user.firstName} {props.user.lastName}
             </TitleCustom>
-            <StarRating rating={props.rating} />
+            <StarRating rating={3} />
             <Metrics
-                reviews={props.reviews}
-                cases={props.cases}
-                budget={props.budget}
+                reviews={30}
+                cases={46}
+                budget={50}
             />
             {props.children}
         </View>

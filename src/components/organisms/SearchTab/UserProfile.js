@@ -37,12 +37,7 @@ const UserProfile = (props) => {
 
     return (
         <UserProfileTemplate
-            firstName={props.route.params.firstName}
-            lastName={props.route.params.lastName}
-            rating={4}
-            reviews={48}
-            cases={12}
-            budget={50}
+            user={props.route.params}
         >
             <Tags tagsList={tags} />
             <View style={styles.descriptionContainer}>
