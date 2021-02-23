@@ -4,8 +4,6 @@
 ###########
 # Var def:
 # RUNNER_PRIVATE_KEY: private key to ssh into runner@Verser
-# DOCKER_PASS: password to docker hub
-# DOCKER_USER: user to docker hub
 ###########
 # THIS DOES NOT NEED TO HAPPEN
 # if we were running a pure box then yes, but since this is docker in docker
@@ -17,49 +15,27 @@
 ######################################
 
 default:
-  image: docker:git
   tags:
     - docker-ci
-  services:
-    - name: docker:dind
-      alias: thedockerhost
-stages:
-  - setup
-  - test
+services:
+  - name: docker:dind
+    alias: thedockerhost
+
 
 variables:
   DOCKER_HOST: tcp://thedockerhost:2375/
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
-  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
-setup:
-  stage: setup
+build:
+  parallel: 3
+  image: reactnativecommunity/react-native-android
   only:
     refs:
       - merge_requests
+  stage: build
   script:
-    - echo "Running build"
-    - docker build -t $CONTAINER_TEST_IMAGE --target development .
-
-
-jest:
-  stage: test
-  needs: ["setup"]
-  only:
-    refs:
-      - merge_requests
-  script:
-    - echo "Running build"
-    - docker build -t ($CONTAINER_TEST_IMAGE)_jest --target jest .
-
-gradle:
-  stage: test
-  needs: ["setup"]
-  only:
-    refs:
-      - merge_requests
-  script:
-    - echo "Running build"
-    - docker build -t ($CONTAINER_TEST_IMAGE)_gradle --target gradle .
-
+    - npm install
+    - npm test
+    - cd android && chmod +x gradlew
+    - ./gradlew assembleDebug
